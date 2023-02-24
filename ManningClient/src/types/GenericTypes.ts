@@ -1,5 +1,5 @@
 /**
- * Asset that Number MUST be positive (Greater than or Equal to 0)
+ * Assert that Number MUST be positive (Greater than or Equal to 0)
  */
 type NonNegativeInteger<N extends number> = `${N}` extends `-${string}` ? never : N;
 
