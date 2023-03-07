@@ -14,7 +14,7 @@ namespace ReactManningPoCAPI.Services
             _opStationRepository = opStationRepository;
         }
 
-        public async Task<List<Zone>> GetAllZones() => await _zonesRepository.GetAllZones();
+        public async Task<List<Zone>> GetAllZones() => await _zonesRepository.GetAll();
 
         public async Task<List<Zone>> GetAllZonesAndOpStations() => await _zonesRepository.GetAllZonesAndOpStations();
 

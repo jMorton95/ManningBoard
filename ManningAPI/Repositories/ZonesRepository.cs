@@ -4,32 +4,15 @@ using ReactManningPoCAPI.Repositories.Interfaces;
 
 namespace ReactManningPoCAPI.Repositories
 {
-    public class ZonesRepository : IZonesRepository
+    public class ZonesRepository  : BaseRepository<Zone>, IZonesRepository
     {
-        private readonly ManningDbContext _dbContext;
-        public ZonesRepository(ManningDbContext dbContext)
+        public ZonesRepository(ManningDbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
-        }
-
-        public Task<List<Zone>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<Zone>> GetAllZones()
-        {
-            return await _dbContext.Zone.ToListAsync();
         }
 
         public async Task<List<Zone>> GetAllZonesAndOpStations()
         {
             return await _dbContext.Zone.Include(x => x.OpStations!).ThenInclude(x => x.TrainingRequirements!).ThenInclude(x => x.TrainingRequirementType).ToListAsync();
-        }
-
-        public Task<Zone> GetById(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
