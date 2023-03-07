@@ -12,6 +12,11 @@ namespace ReactManningPoCAPI.Repositories
             _dbContext = dbContext;
         }
 
+        public Task<List<Zone>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Zone>> GetAllZones()
         {
             return await _dbContext.Zone.ToListAsync();
@@ -20,6 +25,11 @@ namespace ReactManningPoCAPI.Repositories
         public async Task<List<Zone>> GetAllZonesAndOpStations()
         {
             return await _dbContext.Zone.Include(x => x.OpStations!).ThenInclude(x => x.TrainingRequirements!).ThenInclude(x => x.TrainingRequirementType).ToListAsync();
+        }
+
+        public Task<Zone> GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
