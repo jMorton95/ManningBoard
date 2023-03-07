@@ -18,7 +18,7 @@ namespace ReactManningPoCAPI.Repositories
 
         public Task<T> GetById(int id)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_dbContext.Set<T>().Single(x => x.ID == id));
         }
     }
 }
