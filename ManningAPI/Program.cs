@@ -29,9 +29,9 @@ namespace ReactManningPoCAPI
                     policy.AllowAnyOrigin().AllowAnyHeader();
                 });
             });
-           
+
             // Add services to the container.
-            string connString = builder.Configuration?.GetConnectionString("userConnectionString");
+            string connString = builder.Configuration.GetConnectionString("userConnectionString") ?? "";
             builder.Services.AddDbContext<ManningDbContext>(options => options.UseSqlServer(connString));
 
             builder.Services.AddScoped<IZonesRepository, ZonesRepository>();
