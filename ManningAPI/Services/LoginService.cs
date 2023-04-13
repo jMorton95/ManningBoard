@@ -35,11 +35,16 @@ namespace ReactManningPoCAPI.Services
 
         public string GenerateJwtToken(Operator op)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, op.ClockCardNumber.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
+
+            if (op.IsAdministrator)
+            {
+                claims.Add(new Claim("isAdministrator", "admin"));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -8,5 +8,7 @@ namespace ReactManningPoCAPI.Models
         public int ClockCardNumber { get; set; }
         [Required, StringLength(50)]
         public string? OperatorName { get; set; }
+        [Required]
+        public bool IsAdministrator { get; set; }
     }
 }
