@@ -23,7 +23,15 @@ namespace ReactManningPoCAPI.Controllers
         {
             return await _trainingRequirementService.AddNewPrerequisite(requirementDescription, opstationID);
         }
-        [HttpGet]
-        public async Task<TrainingRequirement> GetById(int ID) => await _trainingRequirementRepository.GetTrainingRequirementByIDAsync(ID);
+        [HttpGet("{ID}")]
+        public async Task<ActionResult<TrainingRequirement>> GetByIdTask(int ID)
+        {
+           var trainingRequirement = await _trainingRequirementRepository.GetTrainingRequirementByIDAsync(ID);
+            if (trainingRequirement == null)
+            {
+                return NotFound();
+            }
+            return Ok(trainingRequirement);
+        }
     }
 }

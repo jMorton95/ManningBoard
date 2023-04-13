@@ -4,7 +4,7 @@ namespace ReactManningPoCAPI.Repositories.Interfaces
 {
     public interface ITrainingRequirementRepository
     {
-        Task<TrainingRequirement> GetTrainingRequirementByIDAsync(int ID);
-        Task<TrainingRequirement> AddNewPrerequisite(string requirementDescription, int opstationID);
+        Task<TrainingRequirement?> GetTrainingRequirementByIDAsync(int ID);
+        Task<TrainingRequirement> AddNewPrerequisite(TrainingRequirement newRequirement);
     }
 }

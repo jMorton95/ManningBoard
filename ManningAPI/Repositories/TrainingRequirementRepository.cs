@@ -11,16 +11,15 @@ namespace ReactManningPoCAPI.Repositories
         {
             _context = context;
         }
-        public async Task<TrainingRequirement> GetTrainingRequirementByIDAsync(int ID)
+        public async Task<TrainingRequirement?> GetTrainingRequirementByIDAsync(int ID)
         {
-            return await Task.FromResult(_context.TrainingRequirement.Include(x => x.TrainingRequirementType).First(x => x.ID == ID));
+            return await _context.TrainingRequirement.Include(x => x.TrainingRequirementType).FirstOrDefaultAsync(x => x.ID == ID);
         }
-        public async Task<TrainingRequirement> AddNewPrerequisite(string requirementDescription, int opstationID)
+        public async Task<TrainingRequirement> AddNewPrerequisite(TrainingRequirement newRequirement)
         {
-            TrainingRequirement post = new TrainingRequirement { RequirementDescription = requirementDescription, OpStationID = opstationID, TrainingRequirementTypeId = 1 };
-            _context.TrainingRequirement.Add(post);
-            _context.SaveChanges();
-            return await GetTrainingRequirementByIDAsync(post.ID);
+            _context.TrainingRequirement.Add(newRequirement);
+            await _context.SaveChangesAsync();
+            return newRequirement;
         }
     }
 }
