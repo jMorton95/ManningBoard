@@ -20,30 +20,7 @@ namespace ReactManningPoCAPI.Migrations
                 .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("StationName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("ZoneID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ZoneID");
-
-                    b.ToTable("OpStation");
-                });
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.Operator", b =>
                 {
@@ -51,7 +28,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("ClockCardNumber")
                         .HasColumnType("int");
@@ -63,7 +40,7 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Operator");
+                    b.ToTable("Operator", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.OperatorCompletedTraining", b =>
@@ -72,7 +49,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("OperatorID")
                         .HasColumnType("int");
@@ -89,7 +66,30 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasIndex("TrainingRequirementID");
 
-                    b.ToTable("OperatorCompletedTraining");
+                    b.ToTable("OperatorCompletedTraining", (string)null);
+                });
+
+            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("StationName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int?>("ZoneID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ZoneID");
+
+                    b.ToTable("OpStation", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.ShiftType", b =>
@@ -98,7 +98,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("ShiftName")
                         .IsRequired()
@@ -107,7 +107,7 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShiftType");
+                    b.ToTable("ShiftType", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.TrainingRequirement", b =>
@@ -116,7 +116,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("OpStationID")
                         .HasColumnType("int");
@@ -135,7 +135,7 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasIndex("TrainingRequirementTypeId");
 
-                    b.ToTable("TrainingRequirement");
+                    b.ToTable("TrainingRequirement", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.TrainingRequirementType", b =>
@@ -144,7 +144,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("TrainingType")
                         .IsRequired()
@@ -153,7 +153,7 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TrainingRequirementsType");
+                    b.ToTable("TrainingRequirementsType", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.WorkingDayHistory", b =>
@@ -162,7 +162,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("OpStationID")
                         .HasColumnType("int");
@@ -184,7 +184,7 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasIndex("ShiftID");
 
-                    b.ToTable("WorkdayHistory");
+                    b.ToTable("WorkdayHistory", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.Zone", b =>
@@ -193,7 +193,7 @@ namespace ReactManningPoCAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("ZoneName")
                         .IsRequired()
@@ -202,14 +202,7 @@ namespace ReactManningPoCAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Zone");
-                });
-
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
-                {
-                    b.HasOne("ReactManningPoCAPI.Models.Zone", null)
-                        .WithMany("OpStations")
-                        .HasForeignKey("ZoneID");
+                    b.ToTable("Zone", (string)null);
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.OperatorCompletedTraining", b =>
@@ -229,6 +222,13 @@ namespace ReactManningPoCAPI.Migrations
                     b.Navigation("Operator");
 
                     b.Navigation("TrainingRequirement");
+                });
+
+            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
+                {
+                    b.HasOne("ReactManningPoCAPI.Models.Zone", null)
+                        .WithMany("OpStations")
+                        .HasForeignKey("ZoneID");
                 });
 
             modelBuilder.Entity("ReactManningPoCAPI.Models.TrainingRequirement", b =>

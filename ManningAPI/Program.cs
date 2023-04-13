@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ReactManningPoCAPI.Repositories;
 using ReactManningPoCAPI.Repositories.Interfaces;
 using ReactManningPoCAPI.Services;
 using ReactManningPoCAPI.Services.Interfaces;
+using System.Text;
 
 namespace ReactManningPoCAPI
 {
@@ -39,13 +42,28 @@ namespace ReactManningPoCAPI
             builder.Services.AddScoped<ITrainingRequirementRepository, TrainingRequirementRepository>();
             builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
             builder.Services.AddScoped<IOperatorCompletedTrainingRepository, OperatorCompletedTrainingRepository>();
+            builder.Services.AddScoped<IClockInRepository, ClockInRepository>();
 
             builder.Services.AddScoped<ILineService, LineService>();
             builder.Services.AddScoped<ITrainingRequirementService, TrainingRequirementService>();
             builder.Services.AddScoped<IOpStationService, OpStationService>();
+            builder.Services.AddScoped<ILoginService, LoginService>();
 
 
-
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+            });
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
