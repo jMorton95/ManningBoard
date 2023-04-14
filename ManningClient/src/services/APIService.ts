@@ -97,4 +97,4 @@ const FetchPost = async <R, T extends Object>(
 		});
 };
 
-export { AsyncFetchEndpointAndSetState, AsyncFetchEndpointAndSetStateWithRetry, FetchPost, PostRequestBase }
+export { AsyncFetchEndpointAndSetState, AsyncFetchEndpointAndSetStateWithRetry, FetchPost, PostRequestBase, BuildUrl }
