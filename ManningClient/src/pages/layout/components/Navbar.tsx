@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import ClockOut from "../../../services/authentication/components/ClockOut";
 
-export default function NavBar() {
+type TNavBarProps = {
+  setEnableLogin: React.Dispatch<React.SetStateAction<boolean>>
+}
 
+export default function NavBar(props: TNavBarProps) {
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light-10">
       <div className="container-fluid">
@@ -17,7 +20,7 @@ export default function NavBar() {
           <NavLink className="nav-link" to="/operator-management">
             Operator Management
           </NavLink>
-          <ClockOut />
+          <ClockOut setEnableLogin={props.setEnableLogin} />
         </div>
       </div>
     </nav>

@@ -38,8 +38,8 @@ const ClockIn = () => {
     <Form className="col-12 d-flex flex-row" onSubmit={handleLogin}>
      <Form.Group className="col-6 d-flex flex-row">
       <Form.Label className="col-2">Clock Card Number</Form.Label>
-      <FormControl type="text" className="col-2" placeholder="123456" required minLength={6} maxLength={6} onChange={handleChange} />
-      <Button className="col-1" variant="primary" type="submit">Clock In</Button>
+      <input type="text" className="col-2" placeholder="123456" required minLength={6} maxLength={6} onChange={handleChange} />
+      <button className="col-1" type="submit">Clock In</button>
      </Form.Group>
     </Form>
   );
