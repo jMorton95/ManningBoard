@@ -15,5 +15,5 @@ export type TCurrentUserState = {
 
 export interface RootState {
   auth: TAuthState;
-  user: TCurrentUser
+  user: TCurrentUserState
 }
