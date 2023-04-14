@@ -14,10 +14,5 @@ type TOperatorGrouped = {
   color: EStatusColor
 }
 
-type TCurrentUser = {
-  currentOperator: TOperator,
-  jsonWebToken: string
-}
-
-export type { TOperatorGrouped, TOperator, TCurrentUser }
+export type { TOperatorGrouped, TOperator }
 export { EStatusColor }

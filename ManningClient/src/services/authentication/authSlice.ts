@@ -1,12 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { TAuthState } from '../../types/ReduxTypes';
+
+const initialState: TAuthState = {
+  token: null
+}
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    token: null,
-  },
+  initialState,
   reducers: {
-    setToken: (state, action) => {
+    setToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
     },
     clearToken: (state) => {
@@ -14,8 +17,6 @@ const authSlice = createSlice({
     },
   },
 });
-
-
 
 export const { setToken, clearToken } = authSlice.actions;
 

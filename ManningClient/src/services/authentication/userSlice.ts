@@ -1,12 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { TCurrentUserState } from '../../types/ReduxTypes';
+import { TOperator } from '../../types/OperatorTypes';
 
+const initialState: TCurrentUserState = {
+  currentUser: null 
+}
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    currentUser: null,
-  },
+  initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state, action: PayloadAction<TOperator | null>) => {
       state.currentUser = action.payload;
     },
     clearUser: (state) => {

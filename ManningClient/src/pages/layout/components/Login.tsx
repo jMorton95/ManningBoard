@@ -4,7 +4,7 @@ import { setToken } from '../../../services/authentication/authSlice';
 import { BuildUrl } from '../../../services/APIService';
 import { setUser } from '../../../services/authentication/userSlice';
 import {Form, Button, FormControl } from 'react-bootstrap';
-import { TCurrentUser } from '../../../types/OperatorTypes';
+import { TCurrentUser } from '../../../types/ReduxTypes';
 import { RootState } from '../../../services/authentication/store';
 
 const Login = () => {

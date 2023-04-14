@@ -5,6 +5,7 @@ import { RootState } from "../../services/authentication/store";
 export default function OperatorManagement()  {
     const token = useSelector((state: RootState) => state.auth.token);
     const user = useSelector((state: RootState) => state.user.currentUser)
+    
     return(
         <section>
             {(token && user) ? (
