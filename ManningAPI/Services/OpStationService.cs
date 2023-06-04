@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.Repositories.Interfaces;
-using ReactManningPoCAPI.Services.Interfaces;
-using ReactManningPoCAPI.ViewModels;
-using static ReactManningPoCAPI.ViewModels.OperatorGrouped;
+using ManningApi.Models;
+using ManningApi.Repositories.Interfaces;
+using ManningApi.Services.Interfaces;
+using ManningApi.ViewModels;
+using static ManningApi.ViewModels.OperatorGrouped;
 
-namespace ReactManningPoCAPI.Services
+namespace ManningApi.Services
 {
     public class OpStationService : IOpStationService
     {

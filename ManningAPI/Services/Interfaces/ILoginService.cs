@@ -1,6 +1,6 @@
-﻿using ReactManningPoCAPI.Models;
+﻿using ManningApi.Models;
 
-namespace ReactManningPoCAPI.Services.Interfaces
+namespace ManningApi.Services.Interfaces
 {
     public interface ILoginService
     {

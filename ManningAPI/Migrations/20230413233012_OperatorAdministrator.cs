@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ReactManningPoCAPI.Migrations
+namespace ManningApi.Migrations
 {
     public partial class OperatorAdministrator : Migration
     {

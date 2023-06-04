@@ -1,8 +1,8 @@
-﻿using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.Repositories.Interfaces;
-using ReactManningPoCAPI.Services.Interfaces;
+﻿using ManningApi.Models;
+using ManningApi.Repositories.Interfaces;
+using ManningApi.Services.Interfaces;
 
-namespace ReactManningPoCAPI.Services
+namespace ManningApi.Services
 {
     public class TrainingRequirementService : ITrainingRequirementService
     {

@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using ReactManningPoCAPI.Repositories;
-using ReactManningPoCAPI.Repositories.Interfaces;
-using ReactManningPoCAPI.Services;
-using ReactManningPoCAPI.Services.Interfaces;
+using ManningApi.Repositories;
+using ManningApi.Repositories.Interfaces;
+using ManningApi.Services;
+using ManningApi.Services.Interfaces;
 using System.Text;
 
-namespace ReactManningPoCAPI
+namespace ManningAPI
 {
     public class Program
     {

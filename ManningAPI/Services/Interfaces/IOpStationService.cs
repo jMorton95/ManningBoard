@@ -1,7 +1,7 @@
-﻿using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.ViewModels;
+﻿using ManningApi.Models;
+using ManningApi.ViewModels;
 
-namespace ReactManningPoCAPI.Services.Interfaces
+namespace ManningApi.Services.Interfaces
 {
     public interface IOpStationService
     {

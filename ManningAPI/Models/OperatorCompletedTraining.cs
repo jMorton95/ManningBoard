@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReactManningPoCAPI.Models
+namespace ManningApi.Models
 {
     public class OperatorCompletedTraining : BaseModel
     {

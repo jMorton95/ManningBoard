@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.Repositories.Interfaces;
-using ReactManningPoCAPI.Services.Interfaces;
+using ManningApi.Models;
+using ManningApi.Repositories.Interfaces;
+using ManningApi.Services.Interfaces;
 using System.Data;
 
-namespace ReactManningPoCAPI.Controllers
+namespace ManningApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

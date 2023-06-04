@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
-using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.Services.Interfaces;
-using ReactManningPoCAPI.ViewModels;
+using ManningApi.Models;
+using ManningApi.Services.Interfaces;
+using ManningApi.ViewModels;
 
-namespace ReactManningPoCAPI.Controllers
+namespace ManningApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

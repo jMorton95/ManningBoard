@@ -1,12 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.Repositories.Interfaces;
-using ReactManningPoCAPI.Services.Interfaces;
+using ManningApi.Models;
+using ManningApi.Repositories.Interfaces;
+using ManningApi.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ReactManningPoCAPI.Services
+namespace ManningApi.Services
 {
     public class LoginService : ILoginService
     {

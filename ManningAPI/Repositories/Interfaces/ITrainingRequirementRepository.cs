@@ -1,6 +1,6 @@
-﻿using ReactManningPoCAPI.Models;
+﻿using ManningApi.Models;
 
-namespace ReactManningPoCAPI.Repositories.Interfaces
+namespace ManningApi.Repositories.Interfaces
 {
     public interface ITrainingRequirementRepository
     {

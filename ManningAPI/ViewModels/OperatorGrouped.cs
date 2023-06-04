@@ -1,6 +1,6 @@
-﻿using ReactManningPoCAPI.Models;
+﻿using ManningApi.Models;
 
-namespace ReactManningPoCAPI.ViewModels
+namespace ManningApi.ViewModels
 {
     public class OperatorGrouped
     {

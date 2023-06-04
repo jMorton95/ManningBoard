@@ -1,7 +1,7 @@
-﻿using ReactManningPoCAPI.Models;
-using ReactManningPoCAPI.ViewModels;
+﻿using ManningApi.Models;
+using ManningApi.ViewModels;
 
-namespace ReactManningPoCAPI.Repositories.Interfaces
+namespace ManningApi.Repositories.Interfaces
 {
     public interface IOperatorCompletedTrainingRepository
     {

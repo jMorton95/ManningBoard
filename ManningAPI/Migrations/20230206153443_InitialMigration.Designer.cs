@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ReactManningPoCAPI.Repositories;
+using ManningApi.Repositories;
 
 #nullable disable
 
-namespace ReactManningPoCAPI.Migrations
+namespace ManningApi.Migrations
 {
     [DbContext(typeof(ManningDbContext))]
     [Migration("20230206153443_InitialMigration")]
@@ -25,7 +25,7 @@ namespace ReactManningPoCAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
+            modelBuilder.Entity("ManningApi.Models.OpStation", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("OpStation");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.Operator", b =>
+            modelBuilder.Entity("ManningApi.Models.Operator", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("Operator");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OperatorCompletedTraining", b =>
+            modelBuilder.Entity("ManningApi.Models.OperatorCompletedTraining", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("OperatorCompletedTraining");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.ShiftType", b =>
+            modelBuilder.Entity("ManningApi.Models.ShiftType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -113,7 +113,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("ShiftType");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.TrainingRequirement", b =>
+            modelBuilder.Entity("ManningApi.Models.TrainingRequirement", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("TrainingRequirement");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.TrainingRequirementType", b =>
+            modelBuilder.Entity("ManningApi.Models.TrainingRequirementType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("TrainingRequirementsType");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.WorkingDayHistory", b =>
+            modelBuilder.Entity("ManningApi.Models.WorkingDayHistory", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -190,7 +190,7 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("WorkdayHistory");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.Zone", b =>
+            modelBuilder.Entity("ManningApi.Models.Zone", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -208,20 +208,20 @@ namespace ReactManningPoCAPI.Migrations
                     b.ToTable("Zone");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
+            modelBuilder.Entity("ManningApi.Models.OpStation", b =>
                 {
-                    b.HasOne("ReactManningPoCAPI.Models.Zone", null)
+                    b.HasOne("ManningApi.Models.Zone", null)
                         .WithMany("OpStations")
                         .HasForeignKey("ZoneID");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OperatorCompletedTraining", b =>
+            modelBuilder.Entity("ManningApi.Models.OperatorCompletedTraining", b =>
                 {
-                    b.HasOne("ReactManningPoCAPI.Models.Operator", "Operator")
+                    b.HasOne("ManningApi.Models.Operator", "Operator")
                         .WithMany()
                         .HasForeignKey("OperatorID");
 
-                    b.HasOne("ReactManningPoCAPI.Models.TrainingRequirement", "TrainingRequirement")
+                    b.HasOne("ManningApi.Models.TrainingRequirement", "TrainingRequirement")
                         .WithMany()
                         .HasForeignKey("TrainingRequirementID");
 
@@ -230,15 +230,15 @@ namespace ReactManningPoCAPI.Migrations
                     b.Navigation("TrainingRequirement");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.TrainingRequirement", b =>
+            modelBuilder.Entity("ManningApi.Models.TrainingRequirement", b =>
                 {
-                    b.HasOne("ReactManningPoCAPI.Models.OpStation", "OpStation")
+                    b.HasOne("ManningApi.Models.OpStation", "OpStation")
                         .WithMany("TrainingRequirements")
                         .HasForeignKey("OpStationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReactManningPoCAPI.Models.TrainingRequirementType", "Type")
+                    b.HasOne("ManningApi.Models.TrainingRequirementType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeID");
 
@@ -247,17 +247,17 @@ namespace ReactManningPoCAPI.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.WorkingDayHistory", b =>
+            modelBuilder.Entity("ManningApi.Models.WorkingDayHistory", b =>
                 {
-                    b.HasOne("ReactManningPoCAPI.Models.OpStation", "OpStation")
+                    b.HasOne("ManningApi.Models.OpStation", "OpStation")
                         .WithMany()
                         .HasForeignKey("OpStationID");
 
-                    b.HasOne("ReactManningPoCAPI.Models.Operator", "Operator")
+                    b.HasOne("ManningApi.Models.Operator", "Operator")
                         .WithMany()
                         .HasForeignKey("OperatorID");
 
-                    b.HasOne("ReactManningPoCAPI.Models.ShiftType", "Shift")
+                    b.HasOne("ManningApi.Models.ShiftType", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftID");
 
@@ -268,12 +268,12 @@ namespace ReactManningPoCAPI.Migrations
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.OpStation", b =>
+            modelBuilder.Entity("ManningApi.Models.OpStation", b =>
                 {
                     b.Navigation("TrainingRequirements");
                 });
 
-            modelBuilder.Entity("ReactManningPoCAPI.Models.Zone", b =>
+            modelBuilder.Entity("ManningApi.Models.Zone", b =>
                 {
                     b.Navigation("OpStations");
                 });

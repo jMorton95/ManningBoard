@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReactManningPoCAPI.Models;
+using ManningApi.Models;
 
-namespace ReactManningPoCAPI.Repositories
+namespace ManningApi.Repositories
 {
     public class ManningDbContext : DbContext
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ReactManningPoCAPI.Models
+namespace ManningApi.Models
 {
     public abstract class BaseModel
     {

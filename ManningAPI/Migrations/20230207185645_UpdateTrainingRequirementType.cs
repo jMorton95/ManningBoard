@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ReactManningPoCAPI.Migrations
+namespace ManningApi.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateTrainingRequirementType : Migration

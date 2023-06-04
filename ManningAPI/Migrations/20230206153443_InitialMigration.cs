@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ReactManningPoCAPI.Migrations
+namespace ManningApi.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
