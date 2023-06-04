@@ -6,7 +6,7 @@ import { setUser } from '../userSlice';
 import { Form, Button, FormControl } from 'react-bootstrap';
 import { TCurrentUser } from '../../../types/ReduxTypes';
 
-const ClockIn = () => {
+export default function ClockIn() {
   const dispatch = useDispatch();
   const [inputText, setInputText] = useState<string>('');
 
@@ -26,7 +26,7 @@ const ClockIn = () => {
       dispatch(setUser(data.currentOperator));
       
     } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
+      console.error(error);
     }
   };
 
@@ -44,5 +44,3 @@ const ClockIn = () => {
     </Form>
   );
 };
-
-export default ClockIn;

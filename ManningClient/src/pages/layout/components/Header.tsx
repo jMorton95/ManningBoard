@@ -11,7 +11,7 @@ export default function Header() {
 
   const toggleLogin = () => setEnableLogin(!enableLogin);
 
-  return (
+return (
     <section className="d-flex header-component">
       {!token && !user && (
         <button className="btn btn-primary fw-light fs-6" onClick={toggleLogin}>

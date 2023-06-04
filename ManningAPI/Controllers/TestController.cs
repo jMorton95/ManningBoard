@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactManningPoCAPI.Models;
 using ReactManningPoCAPI.Repositories.Interfaces;
 using ReactManningPoCAPI.Services.Interfaces;
 using ReactManningPoCAPI.ViewModels;
+
 
 namespace ReactManningPoCAPI.Controllers
 {

@@ -4,17 +4,17 @@ import { TTrainingRequirement } from "../../../types/LineTypes";
 import { TRequirementPostData } from "../../../types/TrainingTypes";
 
 type TAddRequirementProps = {
-  closeModal: React.Dispatch<React.SetStateAction<boolean>>;
-  opstationID: number
-  , trainingRequirements: TTrainingRequirement[],
-  setRequirements: React.Dispatch<React.SetStateAction<TTrainingRequirement[]>>;
+  closeModal: React.Dispatch<React.SetStateAction<boolean>>,
+  opstationID: number,
+  trainingRequirements: TTrainingRequirement[],
+  setRequirements: React.Dispatch<React.SetStateAction<TTrainingRequirement[]>>,
+  token: string,
 };
 
-export default function AddRequirement(props:TAddRequirementProps) {
-
+export default function AddRequirement(props: TAddRequirementProps) {
   const [requirementDescription, setRequirementDescription] = useState<string>('');
 
-  const PostRequirement = async (e: React.FormEvent) => {
+  const PostRequirement = async (e: React.FormEvent, token: string) => {
     e.preventDefault();
     await FetchPost<TTrainingRequirement, TRequirementPostData>({
       endpoint: "TrainingRequirement",
@@ -22,7 +22,7 @@ export default function AddRequirement(props:TAddRequirementProps) {
         requirementDescription: requirementDescription,
         opstationID: props.opstationID,
       },
-      request: PostRequestBase(),
+      request: PostRequestBase(token),
     }).then((res) => {
       props.setRequirements([...props.trainingRequirements, res]);
       setRequirementDescription('');
@@ -34,7 +34,7 @@ export default function AddRequirement(props:TAddRequirementProps) {
   return (
     <div className={"addRequirementModal"}>
       <button type="button" onClick={(e) => props.closeModal(false)}>Close</button>
-      <form onSubmit={(e: React.FormEvent) => PostRequirement(e) }>
+      <form onSubmit={(e: React.FormEvent) => PostRequirement(e, props.token) }>
         <label title="requirementDescription" htmlFor="requirementDescription">
           Requirement:
           <input type="text"

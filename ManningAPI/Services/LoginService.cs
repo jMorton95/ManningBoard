@@ -43,7 +43,7 @@ namespace ReactManningPoCAPI.Services
 
             if (op.IsAdministrator)
             {
-                claims.Add(new Claim("isAdministrator", "admin"));
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -57,6 +57,11 @@ namespace ReactManningPoCAPI.Services
                 expires: expires,
                 signingCredentials: creds
             );
+
+            Console.WriteLine($"Issuer: {_configuration["Jwt:Issuer"]}");
+            Console.WriteLine($"Audience: {_configuration["Jwt:Audience"]}");
+            Console.WriteLine($"Key: {_configuration["Jwt:Key"]}");
+            Console.WriteLine($"ExpireDays: {_configuration["Jwt:ExpireDays"]}");
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

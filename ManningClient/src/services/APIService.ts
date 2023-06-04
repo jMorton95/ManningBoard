@@ -1,4 +1,6 @@
 import { NonNegativeInteger, PostParams } from "../types/GenericTypes";
+import { TAuthState } from "../types/ReduxTypes";
+
 /**
  * Gets your base API Url Stored in your Environment Variables & appends the Endpoint you pass in.
  * @param endpoint example: "Zones"
@@ -14,9 +16,14 @@ const BuildUrl = (endpoint: string) =>
  */
 const AsyncFetchEndpointAndSetState = async <T>(
   setState: React.Dispatch<React.SetStateAction<T | undefined>>,
-  endpoint: string
+  endpoint: string,
+  token?: string
 ) => {
-  await fetch(BuildUrl(endpoint))
+  await fetch(BuildUrl(endpoint), {
+    headers: {
+        "Authorization": `Bearer ${token}`,
+    }
+  })
     .then(async (res) => {
       const data: T = await res.json();
       setState(data);
@@ -35,11 +42,16 @@ const AsyncFetchEndpointAndSetState = async <T>(
 const AsyncFetchEndpointAndSetStateWithRetry = async <T, N extends number>(
 	setState: React.Dispatch<React.SetStateAction<T | undefined>>,
 	endpoint: string,
-	retryAttempts: NonNegativeInteger<N>
+	retryAttempts: NonNegativeInteger<N>,
+    token?: string,
 ) => {
 	let retry: NonNegativeInteger<N> = retryAttempts;
 	while (retry && retry > 0) {
-		await fetch(BuildUrl(endpoint))
+		await fetch(BuildUrl(endpoint), {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+          })
 			.then(async res => {
 				const data: T = await res.json();
 				setState(data);
@@ -56,21 +68,22 @@ const AsyncFetchEndpointAndSetStateWithRetry = async <T, N extends number>(
  * @returns A string built from destructuring an Objects Keys & Values
  */
 const BuildQueryStringFromObject = <T extends object>(data: T) => {
-  let string: string = "?";
-  Object.entries(data).forEach((entry) => {
-    string += `${entry[0]}=${entry[1]}&`;
-  });
-  return string;
+    let string: string = "?";
+    Object.entries(data).forEach((entry) => {
+        string += `${entry[0]}=${entry[1]}&`;
+    });
+    return string;
 };
 /**
  *  @returns An Object Literal with a method 'POST' and JSON Headers.
  */
-function PostRequestBase(): RequestInit {
+function PostRequestBase(token: string): RequestInit {
   return {
-		method: "POST",
+    method: "POST",
     headers: {
 			"Content-type": "application/json",
-			"Access-Control-Allow-Origin": "*"
+			"Access-Control-Allow-Origin": "*",
+            "Authorization": `Bearer ${token}`
 		},
   };
 }

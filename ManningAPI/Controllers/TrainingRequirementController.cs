@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReactManningPoCAPI.Models;
 using ReactManningPoCAPI.Repositories.Interfaces;
 using ReactManningPoCAPI.Services.Interfaces;
+using System.Data;
 
 namespace ReactManningPoCAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class TrainingRequirementController : ControllerBase
     {
         private readonly ITrainingRequirementService _trainingRequirementService;
