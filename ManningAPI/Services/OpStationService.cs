@@ -19,10 +19,10 @@ namespace ManningApi.Services
             _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
         }
 
-        public List<OperatorAndTraining> GetAllOperatorsAndTraining()
+        public async Task<List<OperatorAndTraining>> GetAllOperatorsAndTraining()
         {
             //TODO: Refactor for efficiency/oversights
-            List<Operator> allOperators = _operatorRepository.GetAllOperators();
+            List<Operator> allOperators = await _operatorRepository.GetAllOperators();
             List<OperatorAndTraining> opsByTraining = new();
 
             //Conscious of calling a Repo in a foreach loop
@@ -40,11 +40,11 @@ namespace ManningApi.Services
             return opsByTraining;
         }
 
-        public List<OperatorGrouped> GetOperatorsGroupedByTraining(int opstationID)
+        public async Task<List<OperatorGrouped>> GetOperatorsGroupedByTraining(int opstationID)
         {
-            List<int> stationTrainingIDs = _opStationRepository.GetOpStationTrainingIDs(opstationID);
+            List<int> stationTrainingIDs = await _opStationRepository.GetOpStationTrainingIDs(opstationID);
 
-            List<OperatorAndTraining> operators = GetAllOperatorsAndTraining();
+            List<OperatorAndTraining> operators = await GetAllOperatorsAndTraining();
 
             List<OperatorGrouped> groupedOperators = new();
 

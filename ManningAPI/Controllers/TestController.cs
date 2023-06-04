@@ -25,7 +25,7 @@ namespace ManningApi.Controllers
             return operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
         }
         [HttpGet]
-        public List<OperatorAndTraining> GetOperatorsAndTraining()
+        public Task<List<OperatorAndTraining>> GetOperatorsAndTraining()
         {
             return opStationService.GetAllOperatorsAndTraining();
         }

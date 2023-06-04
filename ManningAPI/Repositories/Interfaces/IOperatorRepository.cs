@@ -5,6 +5,6 @@ namespace ManningApi.Repositories.Interfaces
     public interface IOperatorRepository
     {
         Task<List<Operator>> GetAllOperatorsAsync();
-        List<Operator> GetAllOperators();
+        Task<List<Operator>> GetAllOperators();
     }
 }

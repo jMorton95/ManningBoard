@@ -7,7 +7,7 @@ namespace ManningApi.Repositories.Interfaces
         Task<List<OpStation>> GetAllOpStationsAsync(); 
         List<OpStation> GetAllOpStations();
         Task<List<OpStation>> GetOpStationsByZoneID(int zoneID);
-        OpStation GetOpStationByID(int ID);
-        List<int> GetOpStationTrainingIDs(int opstationID);
+        Task<OpStation> GetOpStationByID(int ID);
+        Task<List<int>> GetOpStationTrainingIDs(int opstationID);
     }
 }

@@ -22,14 +22,14 @@ namespace ManningApi.Repositories
             return await query.ToListAsync();
         }
 
-        public OpStation GetOpStationByID(int ID)
+        public Task<OpStation> GetOpStationByID(int ID)
         {
-            return _DbContext.OpStation.Include(o => o.TrainingRequirements!).ThenInclude(t => t.TrainingRequirementType).First(x => x.ID == ID);
+            return Task.FromResult(_DbContext.OpStation.Include(o => o.TrainingRequirements!).ThenInclude(t => t.TrainingRequirementType).First(x => x.ID == ID));
         }
 
-        public List<int> GetOpStationTrainingIDs(int opstationID)
+        public async Task<List<int>> GetOpStationTrainingIDs(int opstationID)
         {
-            OpStation station = GetOpStationByID(opstationID);
+            OpStation station = await GetOpStationByID(opstationID);
             List<int> trainingIDS = new List<int>();
 
             if (station.TrainingRequirements == null) return trainingIDS;
