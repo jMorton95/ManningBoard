@@ -8,7 +8,6 @@ export default function Header() {
   const [enableLogin, setEnableLogin] = useState(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const user = useSelector((state: RootState) => state.user.currentUser);
-
   const toggleLogin = () => setEnableLogin(!enableLogin);
 
 return (

@@ -30,7 +30,7 @@ namespace ManningApi.Controllers
 
             if (op == null)
             {
-                return Unauthorized("Invalid Clock Card Number.");
+                return BadRequest("Invalid Clock Card Number.");
             }
 
             ClockedInOperator validatedOperator = new(op, _loginService.GenerateJwtToken(op));

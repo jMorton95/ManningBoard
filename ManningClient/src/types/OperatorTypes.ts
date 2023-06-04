@@ -6,7 +6,8 @@ enum EStatusColor {
 
 type TOperator = {
   clockCardNumber: number,
-  operatorName: string
+  operatorName: string,
+  isAdministrator: boolean,
 }
 
 type TOperatorGrouped = {
