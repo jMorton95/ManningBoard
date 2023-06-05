@@ -7,5 +7,7 @@ namespace ManningApi.Services.Interfaces
         string GenerateJwtToken(Operator op);
         bool ClockCardIsInvalid(int clockCardNumber);
         Task<Operator?> CheckClockCardAsync(int clockCardNumber);
+        Task<int> ClockOperatorIn(Operator op);
+        void ClockOperatorOut(int sessionID);
     }
 }

@@ -3,7 +3,8 @@ import { TCurrentUserState } from '../../types/ReduxTypes';
 import { TOperator } from '../../types/OperatorTypes';
 
 const initialState: TCurrentUserState = {
-  currentUser: null 
+  currentUser: null,
+  sessionID: null,
 }
 const userSlice = createSlice({
   name: 'user',
@@ -12,12 +13,18 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<TOperator | null>) => {
       state.currentUser = action.payload;
     },
+    setSessionID: (state, action: PayloadAction<number | null>) => {
+      state.sessionID = action.payload;
+    },
     clearUser: (state) => {
       state.currentUser = null;
+    },
+    clearSessionID: (state) => {
+      state.sessionID = null;
     }
   }
 })
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, setSessionID, clearUser, clearSessionID } = userSlice.actions;
 
 export default userSlice.reducer;

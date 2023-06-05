@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../authSlice';
 import { BuildUrl } from '../../APIService';
-import { setUser } from '../userSlice';
+import { setUser, setSessionID } from '../userSlice';
 import { Form, Button, FormControl } from 'react-bootstrap';
 import { TCurrentUser } from '../../../types/ReduxTypes';
 
@@ -13,7 +13,7 @@ export default function ClockIn() {
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(BuildUrl(`Login/${inputText}`));
+      const response = await fetch(BuildUrl(`Clock/${inputText}`));
 
       if (!response.ok) {
         console.error('error');
@@ -24,6 +24,7 @@ export default function ClockIn() {
 
       dispatch(setToken(data.jsonWebToken));
       dispatch(setUser(data.currentOperator));
+      dispatch(setSessionID(data.sessionID))
       
     } catch (error) {
       console.error(error);

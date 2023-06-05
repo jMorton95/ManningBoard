@@ -10,10 +10,10 @@ namespace ManningApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class ClockController : ControllerBase
     {
         private readonly ILoginService _loginService;
-        public LoginController(ILoginService loginService)
+        public ClockController(ILoginService loginService)
         {
             _loginService = loginService;
         }
@@ -33,9 +33,18 @@ namespace ManningApi.Controllers
                 return BadRequest("Invalid Clock Card Number.");
             }
 
-            ClockedInOperator validatedOperator = new(op, _loginService.GenerateJwtToken(op));
+            int sessionID = await _loginService.ClockOperatorIn(op);
+
+            ClockedInOperator validatedOperator = new(op, _loginService.GenerateJwtToken(op), sessionID);
 
             return Ok(validatedOperator);
+        }
+
+        [HttpPost]
+        public ActionResult ClockOutOperator(int sessionID)
+        {
+            _loginService.ClockOperatorOut(sessionID);
+            return Ok();
         }
 
     }

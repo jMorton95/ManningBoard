@@ -17,5 +17,6 @@ namespace ManningApi.Repositories
         public DbSet<OperatorCompletedTraining> OperatorCompletedTraining {  get; set; }
         public DbSet<ShiftType> ShiftType { get; set; }
         public DbSet<WorkingDayHistory> WorkdayHistory { get; set; }
+        public DbSet<ClockModel> ClockModel { get; set; }
     }
 }

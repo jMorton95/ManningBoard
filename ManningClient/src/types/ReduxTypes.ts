@@ -2,7 +2,8 @@ import { TOperator } from "./OperatorTypes"
 
 export type TCurrentUser = {
   currentOperator: TOperator,
-  jsonWebToken: string
+  jsonWebToken: string,
+  sessionID: number
 }
 
 export type TAuthState = {
@@ -11,6 +12,7 @@ export type TAuthState = {
 
 export type TCurrentUserState = {
   currentUser: TOperator | null
+  sessionID: number | null,
 }
 
 export interface RootState {

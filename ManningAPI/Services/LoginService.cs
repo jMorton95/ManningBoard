@@ -33,6 +33,9 @@ namespace ManningApi.Services
             return await _clockInRepository.CheckClockCardAsync(clockCardNumber);
         }
 
+        public async Task<int> ClockOperatorIn(Operator op) => await _clockInRepository.ClockOperatorIn(op);
+        public void ClockOperatorOut(int sessionID) => _clockInRepository.ClockOperatorOut(sessionID);
+
         public string GenerateJwtToken(Operator op)
         {
             var claims = new List<Claim>
