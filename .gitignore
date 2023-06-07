@@ -447,3 +447,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 ManningBoardApp/src/assets/css/bootstrap.css
+ManningClient/package-lock.json
