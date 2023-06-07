@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.JsonWebTokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using ManningApi.Models;
 using ManningApi.Services.Interfaces;
 using ManningApi.ViewModels;
@@ -33,17 +30,17 @@ namespace ManningApi.Controllers
                 return BadRequest("Invalid Clock Card Number.");
             }
 
-            int sessionID = await _loginService.ClockOperatorIn(op);
+            int sessionId = await _loginService.ClockOperatorIn(op);
 
-            ClockedInOperator validatedOperator = new(op, _loginService.GenerateJwtToken(op), sessionID);
+            ClockedInOperator validatedOperator = new(op, _loginService.GenerateJwtToken(op), sessionId);
 
             return Ok(validatedOperator);
         }
 
         [HttpPost]
-        public ActionResult ClockOutOperator(int sessionID)
+        public ActionResult ClockOutOperator(int sessionId)
         {
-            _loginService.ClockOperatorOut(sessionID);
+            _loginService.ClockOperatorOut(sessionId);
             return Ok();
         }
 
