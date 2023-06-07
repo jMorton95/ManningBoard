@@ -22,7 +22,8 @@ namespace ManningApi.Repositories
             {
                 ClockCardNumber = _operator.ClockCardNumber,
                 OperatorName = _operator.OperatorName,
-                ClockInTime = DateTime.Now
+                ClockInTime = DateTime.Now,
+                ClockOutTime = DateTime.Now.AddHours(6)
             };
 
             _context.ClockModel.Add(clockIn);

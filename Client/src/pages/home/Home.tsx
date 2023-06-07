@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react"
-import { AsyncFetchEndpointAndSetState } from "../../services/APIService"
-import Zone from "./components/Zone";
-import { TZone } from "../../types/LineTypes";
+import { useEffect, useState } from 'react'
+import { AsyncFetchEndpointAndSetState } from '../../services/APIService'
+import Zone from './components/Zone'
+import { type TZone } from '../../types/LineTypes'
 
+export default function Home(): JSX.Element {
+  const [lineZones, setLineZones] = useState<TZone[]>()
 
-export default function Home() {
-	const [lineZones, setLineZones] = useState<TZone[]>();
+  useEffect(() => {
+    if (lineZones == null) {
+      void AsyncFetchEndpointAndSetState<TZone[]>(setLineZones, 'Line')
+    }
+  }, [lineZones])
 
-	useEffect(() => {
-		if (!lineZones) {
-			AsyncFetchEndpointAndSetState<TZone[]>(setLineZones, "Line");
-		}
-	}, [lineZones]);
-	
-	return (
-		<section className={"row"}>
-			{lineZones && lineZones.map((zone) => <Zone {...zone} key={zone.id} />)}
-		</section>
-	);
+  return (
+    <section className={'row'}>
+      {lineZones?.map((zone) => <Zone {...zone} key={zone.id} />)}
+    </section>
+  )
 }

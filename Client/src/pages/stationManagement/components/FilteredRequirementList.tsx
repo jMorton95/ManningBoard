@@ -1,17 +1,17 @@
-import { TTrainingRequirement } from "../../../types/LineTypes"
+import { type TTrainingRequirement } from '../../../types/LineTypes'
 
-type TFilteredRequirementProps = {
-  filter: TTrainingRequirement[],
+interface TFilteredRequirementProps {
+  filter: TTrainingRequirement[]
   title: string
 }
 
-export default function FilteredRequirementList(props: TFilteredRequirementProps) {
+export default function FilteredRequirementList(props: TFilteredRequirementProps): JSX.Element {
   return (
     <div className="col">
       {props.title}
       <ul className="list-group width-max-content">
         {props.filter.map((pre) => (
-          <li className={"requirement list-group-item"} key={pre.id}>{pre.requirementDescription}</li>
+          <li className={'requirement list-group-item'} key={pre.id}>{pre.requirementDescription}</li>
         ))}
       </ul>
     </div>

@@ -1,14 +1,13 @@
-import { NavLink } from "react-router-dom";
-import ClockOut from "../../../services/authentication/components/ClockOut";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../types/ReduxTypes";
+import { NavLink } from 'react-router-dom'
+import ClockOut from '../../../services/authentication/components/ClockOut'
+import { useSelector } from 'react-redux'
+import { type RootState } from '../../../types/ReduxTypes'
 
-type TNavBarProps = {
+interface TNavBarProps {
   setEnableLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function NavBar(props: TNavBarProps) {
-
+export default function NavBar(props: TNavBarProps): JSX.Element {
   const user = useSelector((state: RootState) => state.user.currentUser)
   const isAdmin = user?.isAdministrator
 
@@ -21,7 +20,7 @@ export default function NavBar(props: TNavBarProps) {
             Home
           </NavLink>
           {
-            isAdmin && (
+            isAdmin === true && (
               <>
                 <NavLink className="nav-link" to="/station-management">
                 Station Management
@@ -35,14 +34,12 @@ export default function NavBar(props: TNavBarProps) {
           <ClockOut setEnableLogin={props.setEnableLogin} />
         </div>
         {
-          user && 
+          (user != null) &&
             <div>
               {user.operatorName}
             </div>
         }
       </div>
     </nav>
-  );
+  )
 }
-
-

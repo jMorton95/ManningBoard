@@ -1,47 +1,51 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useDispatch } from 'react-redux';
-import { setToken } from '../authSlice';
-import { BuildUrl } from '../../APIService';
-import { setUser, setSessionID } from '../userSlice';
-import { Form, Button, FormControl } from 'react-bootstrap';
-import { TCurrentUser } from '../../../types/ReduxTypes';
+import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useDispatch } from 'react-redux'
+import { setToken } from '../authSlice'
+import { BuildUrl } from '../../APIService'
+import { setUser, setSessionID } from '../userSlice'
+import { Form } from 'react-bootstrap'
+import { type TCurrentUser } from '../../../types/ReduxTypes'
 
-export default function ClockIn() {
-  const dispatch = useDispatch();
-  const [inputText, setInputText] = useState<string>('');
+export default function ClockIn (): JSX.Element {
+  const dispatch = useDispatch()
+  const [inputText, setInputText] = useState<string>('')
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleLogin = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
+    void submitForm(event)
+  }
+
+  const submitForm = async (event: FormEvent<HTMLFormElement>): Promise<'error' | undefined> => {
+    event.preventDefault()
     try {
-      const response = await fetch(BuildUrl(`Clock/${inputText}`));
+      const response = await fetch(BuildUrl(`Clock/${inputText}`))
 
       if (!response.ok) {
-        console.error('error');
-        return 'error';
+        console.error('error')
+        return 'error'
       }
 
-      const data: TCurrentUser = await response.json();
+      const data: TCurrentUser = await response.json()
 
-      dispatch(setToken(data.jsonWebToken));
-      dispatch(setUser(data.currentOperator));
+      dispatch(setToken(data.jsonWebToken))
+      dispatch(setUser(data.currentOperator))
       dispatch(setSessionID(data.sessionID))
-      
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setInputText(e.target.value)
   }
 
   return (
     <Form className="col-12 d-flex flex-row" onSubmit={handleLogin}>
-     <Form.Group className="col-6 d-flex flex-row">
-      <Form.Label className="col-2">Clock Card Number</Form.Label>
-      <input type="text" className="col-2" placeholder="123456" required minLength={6} maxLength={6} onChange={handleChange} />
-      <button className="col-1" type="submit">Clock In</button>
-     </Form.Group>
+      <Form.Group className="col-6 d-flex flex-row">
+        <Form.Label className="col-2">Clock Card Number</Form.Label>
+        <input type="text" className="col-2" placeholder="123456" required minLength={6} maxLength={6} onChange={handleChange} />
+        <button className="col-1" type="submit">Clock In</button>
+      </Form.Group>
     </Form>
-  );
+  )
 };

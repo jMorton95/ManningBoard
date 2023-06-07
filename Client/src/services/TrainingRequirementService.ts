@@ -1,5 +1,5 @@
-import { TrainingTypes, TTrainingRequirement } from "../types/LineTypes";
-import { TFilteredRequirements } from "../types/TrainingTypes";
+import { TrainingTypes, type TTrainingRequirement } from '../types/LineTypes'
+import { type TFilteredRequirements } from '../types/TrainingTypes'
 
 /**
  * @param trainingRequirements Expects an Array of Type TTrainingRequirement
@@ -7,12 +7,12 @@ import { TFilteredRequirements } from "../types/TrainingTypes";
  * @returns An Array of type TTrainingRequirement matching only the filtered TrainingType.
  */
 function GetRequirementsOfType(
-	trainingRequirements: TTrainingRequirement[],
-	filterType: TrainingTypes
+  trainingRequirements: TTrainingRequirement[],
+  filterType: TrainingTypes
 ): TTrainingRequirement[] {
-	return trainingRequirements.filter(
-		(x) => x.trainingRequirementType.trainingType === filterType
-	);
+  return trainingRequirements.filter(
+    (x) => x.trainingRequirementType.trainingType === filterType
+  )
 }
 
 /**
@@ -20,18 +20,18 @@ function GetRequirementsOfType(
  * @returns An Object containing filtered Prerequisites & StandardOperatingProcedures
  */
 function SplitPrerequisitesAndSOPS(
-	trainingRequirements: TTrainingRequirement[]
+  trainingRequirements: TTrainingRequirement[]
 ): TFilteredRequirements {
-	return {
-		prerequisites: GetRequirementsOfType(
-			trainingRequirements,
-			TrainingTypes.Prerequisite
-		),
-		standardOperatingProcedures: GetRequirementsOfType(
-			trainingRequirements,
-			TrainingTypes.StandardOperatingProcedure
-		),
-	};
+  return {
+    prerequisites: GetRequirementsOfType(
+      trainingRequirements,
+      TrainingTypes.Prerequisite
+    ),
+    standardOperatingProcedures: GetRequirementsOfType(
+      trainingRequirements,
+      TrainingTypes.StandardOperatingProcedure
+    )
+  }
 }
 
 export { SplitPrerequisitesAndSOPS }

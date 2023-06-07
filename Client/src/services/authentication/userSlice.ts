@@ -1,30 +1,30 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TCurrentUserState } from '../../types/ReduxTypes';
-import { TOperator } from '../../types/OperatorTypes';
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { type TCurrentUserState } from '../../types/ReduxTypes'
+import { type TOperator } from '../../types/OperatorTypes'
 
 const initialState: TCurrentUserState = {
   currentUser: null,
-  sessionID: null,
+  sessionID: null
 }
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<TOperator | null>) => {
-      state.currentUser = action.payload;
+      state.currentUser = action.payload
     },
     setSessionID: (state, action: PayloadAction<number | null>) => {
-      state.sessionID = action.payload;
+      state.sessionID = action.payload
     },
     clearUser: (state) => {
-      state.currentUser = null;
+      state.currentUser = null
     },
     clearSessionID: (state) => {
-      state.sessionID = null;
+      state.sessionID = null
     }
   }
 })
 
-export const { setUser, setSessionID, clearUser, clearSessionID } = userSlice.actions;
+export const { setUser, setSessionID, clearUser, clearSessionID } = userSlice.actions
 
-export default userSlice.reducer;
+export default userSlice.reducer
