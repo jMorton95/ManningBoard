@@ -9,14 +9,14 @@ namespace ManningApi.Repositories
         {
         }
 
-        public DbSet<Operator>? Operator { get; set; }
-        public DbSet<Zone>? Zone { get; set; }
-        public DbSet<OpStation>? OpStation { get; set; }
-        public DbSet<TrainingRequirement>? TrainingRequirement { get; set; }
-        public DbSet<TrainingRequirementType>? TrainingRequirementsType { get; set; }
-        public DbSet<OperatorCompletedTraining>? OperatorCompletedTraining {  get; set; }
-        public DbSet<ShiftType>? ShiftType { get; set; }
-        public DbSet<WorkingDayHistory>? WorkdayHistory { get; set; }
-        public DbSet<ClockModel>? ClockModel { get; set; }
+        public DbSet<Operator> Operator => Set<Operator>();
+        public DbSet<Zone> Zone => Set<Zone>();
+        public DbSet<OpStation> OpStation =>  Set<OpStation>();
+        public DbSet<TrainingRequirement> TrainingRequirement =>  Set<TrainingRequirement>();
+        public DbSet<TrainingRequirementType> TrainingRequirementsType => Set<TrainingRequirementType>();
+        public DbSet<OperatorCompletedTraining> OperatorCompletedTraining => Set<OperatorCompletedTraining>();
+        public DbSet<ShiftType> ShiftType => Set<ShiftType>();
+        public DbSet<WorkingDayHistory> WorkdayHistory => Set<WorkingDayHistory>();
+        public DbSet<ClockModel> ClockModel => Set<ClockModel>();
     }
 }
