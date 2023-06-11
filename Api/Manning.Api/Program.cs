@@ -14,6 +14,7 @@ namespace Manning.Api
         public static void Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            string CorsPolicy = "Frontend";
 
             if (builder.Environment.IsDevelopment())
             {
@@ -30,11 +31,12 @@ namespace Manning.Api
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "FrontendUrl", policy =>
+                options.AddPolicy(name: "Frontend", policy =>
                 {
                     policy.WithOrigins(FrontendUrl)
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .AllowCredentials();
                 });
             });
 
@@ -91,7 +93,9 @@ namespace Manning.Api
 
             app.UseHttpsRedirection();
 
-            app.UseCors();
+            app.UseAuthentication();
+
+            app.UseCors(CorsPolicy);
 
             app.UseAuthorization();
 

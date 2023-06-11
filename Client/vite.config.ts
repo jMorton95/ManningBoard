@@ -6,7 +6,8 @@ import mkcert from 'vite-plugin-mkcert'
 export default defineConfig({
   plugins: [react(), mkcert()],
   server: {
-    https: true
+    https: true,
+    port: 7002,
   },
   envDir : "./environments/"
 })

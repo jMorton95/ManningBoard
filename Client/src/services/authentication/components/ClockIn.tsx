@@ -6,7 +6,7 @@ import { setUser, setSessionID } from '../userSlice'
 import { Form } from 'react-bootstrap'
 import { type TCurrentUser } from '../../../types/ReduxTypes'
 
-export default function ClockIn (): JSX.Element {
+export default function ClockIn(): JSX.Element {
   const dispatch = useDispatch()
   const [inputText, setInputText] = useState<string>('')
 
@@ -15,7 +15,7 @@ export default function ClockIn (): JSX.Element {
     void submitForm(event)
   }
 
-  const submitForm = async (event: FormEvent<HTMLFormElement>): Promise<'error' | undefined> => {
+  const submitForm = async(event: FormEvent<HTMLFormElement>): Promise<'error' | undefined> => {
     event.preventDefault()
     try {
       const response = await fetch(BuildUrl(`Clock/${inputText}`))

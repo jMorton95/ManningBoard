@@ -20,7 +20,8 @@ const AsyncFetchEndpointAndSetState = async <T>(
 ): Promise<void> => {
   await fetch(BuildUrl(endpoint), {
     headers: {
-      Authorization: `Bearer ${token ?? ''}`
+      Authorization: `Bearer ${token ?? ''}`,
+      'Content-Type': 'application/json'
     }
   })
     .then(async(res) => {
