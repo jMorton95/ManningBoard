@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ManningApi.Models;
+using Manning.Api.Models;
 
-namespace ManningApi.Repositories
+namespace Manning.Api.Repositories
 {
     public class ManningDbContext : DbContext
     {

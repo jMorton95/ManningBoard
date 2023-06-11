@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace ManningApi.Migrations
+namespace Manning.Api.Migrations
 {
     /// <inheritdoc />
     public partial class PostgresSetup : Migration

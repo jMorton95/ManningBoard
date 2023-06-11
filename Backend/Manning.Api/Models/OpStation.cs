@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ManningApi.Models
+namespace Manning.Api.Models
 {
     public class OpStation : BaseModel
     {

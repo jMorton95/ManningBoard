@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using ManningApi.Repositories;
-using ManningApi.Repositories.Interfaces;
-using ManningApi.Services;
-using ManningApi.Services.Interfaces;
+using Manning.Api.Repositories;
+using Manning.Api.Repositories.Interfaces;
+using Manning.Api.Services;
+using Manning.Api.Services.Interfaces;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using ManningAPI.SeedFactory;
 
-namespace ManningAPI
+namespace Manning.Api
 {
     public class Program
     {

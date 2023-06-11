@@ -1,6 +1,6 @@
-﻿using ManningApi.Models;
+﻿using Manning.Api.Models;
 
-namespace ManningApi.Services.Interfaces
+namespace Manning.Api.Services.Interfaces
 {
     public interface ITrainingRequirementService
     {

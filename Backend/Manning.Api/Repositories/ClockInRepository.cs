@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ManningApi.Models;
-using ManningApi.Repositories.Interfaces;
+using Manning.Api.Models;
+using Manning.Api.Repositories.Interfaces;
 
-namespace ManningApi.Repositories
+namespace Manning.Api.Repositories
 {
     public class ClockInRepository : IClockInRepository
     {

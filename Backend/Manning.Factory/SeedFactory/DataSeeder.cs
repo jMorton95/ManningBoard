@@ -1,8 +1,6 @@
-using System.Reflection.Metadata.Ecma335;
-using ManningApi.Models;
-using ManningApi.Repositories;
-
-namespace ManningAPI.SeedFactory;
+namespace Manning.Factory.SeedFactory;
+using Manning.Api.Models;
+using Manning.Api.Repositories;
 
 public class DataSeeder : IDataSeeder
 {
@@ -11,6 +9,18 @@ public class DataSeeder : IDataSeeder
     public DataSeeder(ManningDbContext dbContext)
     {
         _dbContext = dbContext;
+    }
+
+    public void RunDataSeed()
+    {
+      if (_dbContext.Zone.ToList().Count() < 1)
+      {
+        Console.WriteLine("Seeding Line");
+        SeedLine();
+      }
+      else {
+        Console.WriteLine("Aborting - Data already found");
+      }
     }
     public void SeedLine()
     {
@@ -22,8 +32,15 @@ public class DataSeeder : IDataSeeder
             ZonesData.Add(_zone);
         }
 
-        _dbContext.Add(ZonesData);
-        _dbContext.SaveChanges();
+        try
+        {
+            _dbContext.Zone.AddRange(ZonesData);
+            _dbContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred when saving changes: {ex.Message}");
+        }
     }
 
     public void SeedOperators()
@@ -36,9 +53,9 @@ public class DataSeeder : IDataSeeder
         throw new NotImplementedException();
     }
 
-    #region Data
-    
-    private Dictionary<string, string[]> ZoneOpStationsSeedData = new()
+  #region Data
+
+  private Dictionary<string, string[]> ZoneOpStationsSeedData = new()
     {
         {
             "Manufacturing",

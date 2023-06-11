@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ManningApi.Models;
-using ManningApi.Repositories.Interfaces;
-using ManningApi.ViewModels;
+using Manning.Api.Models;
+using Manning.Api.Repositories.Interfaces;
+using Manning.Api.ViewModels;
 
-namespace ManningApi.Repositories
+namespace Manning.Api.Repositories
 {
     public class OperatorCompletedTrainingRepository : IOperatorCompletedTrainingRepository
     {

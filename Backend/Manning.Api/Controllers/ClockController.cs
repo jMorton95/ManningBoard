@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ManningApi.Models;
-using ManningApi.Services.Interfaces;
-using ManningApi.ViewModels;
+using Manning.Api.Models;
+using Manning.Api.Services.Interfaces;
+using Manning.Api.ViewModels;
 
-namespace ManningApi.Controllers
+namespace Manning.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

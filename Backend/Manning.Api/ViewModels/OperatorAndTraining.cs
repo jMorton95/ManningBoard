@@ -1,6 +1,6 @@
-﻿using ManningApi.Models;
+﻿using Manning.Api.Models;
 
-namespace ManningApi.ViewModels
+namespace Manning.Api.ViewModels
 {
     public class OperatorAndTraining
     {

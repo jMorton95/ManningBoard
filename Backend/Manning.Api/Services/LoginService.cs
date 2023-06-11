@@ -1,12 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using ManningApi.Models;
-using ManningApi.Repositories.Interfaces;
-using ManningApi.Services.Interfaces;
+using Manning.Api.Models;
+using Manning.Api.Repositories.Interfaces;
+using Manning.Api.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ManningApi.Services
+namespace Manning.Api.Services
 {
     public class LoginService : ILoginService
     {

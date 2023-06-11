@@ -1,7 +1,7 @@
-﻿using ManningApi.Models;
-using ManningApi.ViewModels;
+﻿using Manning.Api.Models;
+using Manning.Api.ViewModels;
 
-namespace ManningApi.Services.Interfaces
+namespace Manning.Api.Services.Interfaces
 {
     public interface IOpStationService
     {

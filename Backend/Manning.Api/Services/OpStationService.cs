@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ManningApi.Models;
-using ManningApi.Repositories.Interfaces;
-using ManningApi.Services.Interfaces;
-using ManningApi.ViewModels;
-using static ManningApi.ViewModels.OperatorGrouped;
+using Manning.Api.Models;
+using Manning.Api.Repositories.Interfaces;
+using Manning.Api.Services.Interfaces;
+using Manning.Api.ViewModels;
+using static Manning.Api.ViewModels.OperatorGrouped;
 
-namespace ManningApi.Services
+namespace Manning.Api.Services
 {
     public class OpStationService : IOpStationService
     {

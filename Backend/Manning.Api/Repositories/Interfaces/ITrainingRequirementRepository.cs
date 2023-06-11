@@ -1,6 +1,6 @@
-﻿using ManningApi.Models;
+﻿using Manning.Api.Models;
 
-namespace ManningApi.Repositories.Interfaces
+namespace Manning.Api.Repositories.Interfaces
 {
     public interface ITrainingRequirementRepository
     {

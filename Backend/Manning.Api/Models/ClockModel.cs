@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ManningApi.Models
+namespace Manning.Api.Models
 {
     public class ClockModel : BaseModel
     {
