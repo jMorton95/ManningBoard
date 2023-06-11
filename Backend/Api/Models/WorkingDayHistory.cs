@@ -5,7 +5,7 @@ namespace ManningApi.Models
 {
     public class WorkingDayHistory : BaseModel
     {
-        [Required, Column(TypeName = "DateTime2")]
+        [Required]
         public DateTime ShiftDate { get; set; }
         [ForeignKey("OperatorID")]
         public int OperatorID {  get; set; }

@@ -7,6 +7,7 @@ using ManningApi.Services.Interfaces;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using ManningAPI.SeedFactory;
 
 namespace ManningAPI
 {
@@ -40,8 +41,8 @@ namespace ManningAPI
             });
 
             // Add services to the container.
-            string connString = builder.Configuration.GetConnectionString("UserConnectionString") ?? "";
-            builder.Services.AddDbContext<ManningDbContext>(options => options.UseSqlServer(connString));
+            string connString = builder.Configuration.GetConnectionString("PostgresConnection") ?? "";
+            builder.Services.AddDbContext<ManningDbContext>(options => options.UseNpgsql(connString));
 
             builder.Services.AddScoped<IZonesRepository, ZonesRepository>();
             builder.Services.AddScoped<IOpStationRepository, OpStationRepository>();
@@ -79,19 +80,7 @@ namespace ManningAPI
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(config => {
-                config.SwaggerDoc("0.1", new OpenApiInfo {
-                    Title = "Manning Board API",
-                    Version = "0.1"
-                });
-
-                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
-                    Description = @"JWT Bearer authentication. Enter 'bearer' followed by your token to authenticate.",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Scheme = "Bearer"
-                });
-            });
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 

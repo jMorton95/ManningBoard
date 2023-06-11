@@ -22,8 +22,8 @@ namespace ManningApi.Repositories
             {
                 ClockCardNumber = _operator.ClockCardNumber,
                 OperatorName = _operator.OperatorName,
-                ClockInTime = DateTime.Now,
-                ClockOutTime = DateTime.Now.AddHours(6)
+                ClockInTime = DateTime.UtcNow,
+                ClockOutTime = DateTime.UtcNow.AddHours(6)
             };
 
             _context.ClockModel.Add(clockIn);
@@ -37,7 +37,7 @@ namespace ManningApi.Repositories
 
             if (clock != null)
             {
-                clock.ClockOutTime = DateTime.Now;
+                clock.ClockOutTime = DateTime.UtcNow;
                 _context.ClockModel.Update(clock);
                 _context.SaveChanges();
             };
