@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
 
   },
-  "include": ["src", "environments/env.d.ts"],
+  "include": ["src", "environments/env.d.ts", "./vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
