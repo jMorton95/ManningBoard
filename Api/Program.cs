@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ManningApi.Repositories;
 using ManningApi.Repositories.Interfaces;
 using ManningApi.Services;
 using ManningApi.Services.Interfaces;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace ManningAPI
 {
@@ -13,28 +14,33 @@ namespace ManningAPI
     {
         public static void Main(string[] args)
         {
-            var environmentName = Environment.GetEnvironmentVariable("ENVIRONMENT_NAME");
-            var AllowedLocalOrigins = "_AllowedLocalOrigins";
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            var builder = WebApplication.CreateBuilder(args);
-
-            builder.Configuration.AddJsonFile("appsettings.json", false, true);
-            if (!string.IsNullOrEmpty(environmentName))
+            if (builder.Environment.IsDevelopment())
             {
-                builder.Configuration.AddJsonFile($"appsettings.{environmentName}.json");
+                builder.Configuration.AddJsonFile($"appsettings.Development.json");
             }
+            else if (builder.Environment.IsProduction())
+            {
+                builder.Configuration.AddJsonFile($"appsettings.Production.json");
+            }
+
             builder.Configuration.AddJsonFile($"appsettings.{Environment.MachineName}.json", true, true);
+
+            string FrontendUrl = builder.Configuration["Frontend:FrontendUrl"]!;
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: AllowedLocalOrigins, policy =>
+                options.AddPolicy(name: "FrontendUrl", policy =>
                 {
-                    policy.AllowAnyOrigin().AllowAnyHeader();
+                    policy.WithOrigins(FrontendUrl)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 });
             });
 
             // Add services to the container.
-            string connString = builder.Configuration.GetConnectionString("userConnectionString") ?? "";
+            string connString = builder.Configuration.GetConnectionString("UserConnectionString") ?? "";
             builder.Services.AddDbContext<ManningDbContext>(options => options.UseSqlServer(connString));
 
             builder.Services.AddScoped<IZonesRepository, ZonesRepository>();
@@ -73,7 +79,19 @@ namespace ManningAPI
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(config => {
+                config.SwaggerDoc("0.1", new OpenApiInfo {
+                    Title = "Manning Board API",
+                    Version = "0.1"
+                });
+
+                config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
+                    Description = @"JWT Bearer authentication. Enter 'bearer' followed by your token to authenticate.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Scheme = "Bearer"
+                });
+            });
 
             var app = builder.Build();
 
@@ -86,7 +104,7 @@ namespace ManningAPI
 
             app.UseHttpsRedirection();
 
-            app.UseCors(AllowedLocalOrigins);
+            app.UseCors();
 
             app.UseAuthorization();
 
