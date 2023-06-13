@@ -11,6 +11,6 @@ namespace Manning.Api.ViewModels
         }
 
         public Operator Operator { get; set; }
-        public List<int> TrainingIDs{ get; set; }
+        public List<int> TrainingIDs { get; set; }
     }
 }

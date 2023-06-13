@@ -32,7 +32,7 @@ namespace Manning.Api.Repositories
         }
 
         public void ClockOperatorOut(int clockInId)
-        {   
+        {
             ClockModel clock = _context.ClockModel.First(c => c.ID == clockInId);
 
             if (clock != null)
@@ -44,6 +44,6 @@ namespace Manning.Api.Repositories
         }
 
         public async Task<ClockModel> GetClockById(int clockInId) => await _context.ClockModel.SingleAsync(c => c.ID == clockInId);
-        
+
     }
 }

@@ -8,7 +8,7 @@ namespace Manning.Api.Models
         [Required, StringLength(20)]
         public string? StationName { get; set; }
         [ForeignKey("ZoneID")]
-        public int? ZoneID {  get; set; }
+        public int? ZoneID { get; set; }
         public List<TrainingRequirement>? TrainingRequirements { get; set; }
     }
 }

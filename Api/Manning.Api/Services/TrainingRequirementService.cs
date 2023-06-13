@@ -12,11 +12,11 @@ namespace Manning.Api.Services
             _trainingRequirementRepository = trainingRequirementRepository;
         }
 
-        public async Task<TrainingRequirement> AddNewPrerequisite(string requirementDescription, int opstationID) 
+        public async Task<TrainingRequirement> AddNewPrerequisite(string requirementDescription, int opstationID)
         {
             TrainingRequirement newRequirement = new TrainingRequirement { RequirementDescription = requirementDescription, OpStationID = opstationID, TrainingRequirementTypeId = 1 };
             return await _trainingRequirementRepository.AddNewPrerequisite(newRequirement);
-        } 
-        
+        }
+
     }
 }

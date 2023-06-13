@@ -4,7 +4,7 @@ using Manning.Api.Repositories.Interfaces;
 
 namespace Manning.Api.Repositories
 {
-    public class ZonesRepository  : BaseRepository<Zone>, IZonesRepository
+    public class ZonesRepository : BaseRepository<Zone>, IZonesRepository
     {
         public ZonesRepository(ManningDbContext dbContext) : base(dbContext)
         {

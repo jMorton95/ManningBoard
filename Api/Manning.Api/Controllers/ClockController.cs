@@ -39,7 +39,7 @@ namespace Manning.Api.Controllers
 
         [HttpPost]
         public ActionResult ClockOutOperator(int sessionId)
-        {   
+        {
             var msg = new { message = $"Clocked Out Session - {sessionId}" };
             _loginService.ClockOperatorOut(sessionId);
             return Ok(msg);

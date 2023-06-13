@@ -50,14 +50,14 @@ namespace Manning.Api.Services
 
             foreach (var _operator in operators)
             {
-                if(stationTrainingIDs.All(s => _operator.TrainingIDs.Contains(s)))
+                if (stationTrainingIDs.All(s => _operator.TrainingIDs.Contains(s)))
                 {
                     groupedOperators.Add(new OperatorGrouped(_operator.Operator, StatusColor.Green));
-                } 
+                }
                 else if (stationTrainingIDs.Any(s => _operator.TrainingIDs.Contains(s)))
                 {
                     groupedOperators.Add(new OperatorGrouped(_operator.Operator, StatusColor.Yellow));
-                } 
+                }
                 else
                 {
                     groupedOperators.Add(new OperatorGrouped(_operator.Operator, StatusColor.Red));

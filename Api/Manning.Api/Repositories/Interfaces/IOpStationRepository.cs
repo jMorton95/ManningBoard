@@ -4,7 +4,7 @@ namespace Manning.Api.Repositories.Interfaces
 {
     public interface IOpStationRepository
     {
-        Task<List<OpStation>> GetAllOpStationsAsync(); 
+        Task<List<OpStation>> GetAllOpStationsAsync();
         List<OpStation> GetAllOpStations();
         Task<List<OpStation>> GetOpStationsByZoneID(int zoneID);
         Task<OpStation> GetOpStationByID(int ID);

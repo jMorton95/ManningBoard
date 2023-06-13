@@ -15,6 +15,6 @@ namespace Manning.Api.Controllers
             _lineService = lineService;
         }
         [HttpGet]
-      public async Task<ActionResult<OpStation>> GetOpStationById(int id) => await _lineService.GetOpStationById(id);
+        public async Task<ActionResult<OpStation>> GetOpStationById(int id) => await _lineService.GetOpStationById(id);
     }
 }
