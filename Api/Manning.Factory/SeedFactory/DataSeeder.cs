@@ -1,6 +1,9 @@
 namespace Manning.Factory.SeedFactory;
+
+using System.Security.Cryptography.X509Certificates;
 using Manning.Api.Models;
 using Manning.Api.Repositories;
+using static Manning.Factory.SeedFactory.Data;
 
 public class DataSeeder : IDataSeeder
 {
@@ -31,6 +34,24 @@ public class DataSeeder : IDataSeeder
         else
         {
             Console.WriteLine("Skipped Operators - Data Already Found");
+        }
+
+        if (_dbContext.TrainingRequirement.ToList().Count() <  1) {
+          Console.WriteLine("Adding Training Requirements");
+          SeedTraining();
+        }
+        else
+        {
+          Console.WriteLine("Skipped Training Requirements - Data Already Found");
+        }
+
+        if (_dbContext.OperatorCompletedTraining.ToList().Count() <  1) {
+          Console.WriteLine("Adding Training Requirements");
+          SeedCompletedTraining(5);
+        }
+        else
+        {
+          Console.WriteLine("Skipped Completed Training - Data Already Found");
         }
     }
     public void SeedLine()
@@ -81,69 +102,61 @@ public class DataSeeder : IDataSeeder
 
     public void SeedTraining()
     {
-        throw new NotImplementedException();
+      List<OpStation> OpStations = _dbContext.OpStation.ToList(); 
+
+      List<TrainingRequirement> TrainingRequirementData = new();
+
+      Random random = new();
+
+      foreach (var requirement in TrainingRequirementSeedData)
+      {
+        int randId = random.Next(0, OpStations.Count);
+
+        TrainingRequirementData.Add(new()
+        {
+          RequirementDescription = requirement,
+          OpStationID = OpStations[randId].ID
+        });
+
+        OpStations.RemoveAt(randId);
+      }
+
+      try 
+      {
+        _dbContext.TrainingRequirement.AddRange(TrainingRequirementData);
+        _dbContext.SaveChanges();
+      }
+      catch (Exception ex) {
+        Console.WriteLine($"An error occurred when saving Training Requirements: {ex.Message}" );
+      }       
     }
 
-    #region Data
-
-    private readonly Dictionary<string, string[]> ZoneOpStationsSeedData = new()
+    public void SeedCompletedTraining(int recordsToSeed)
     {
-        {
-            "Manufacturing",
-            new string[]
-            {
-                "Engine",
-                "Transmission",
-                "Brakes",
-                "Fuel Pump",
-                "Gearbox",
-                "Exhaust"
-            }
-        },
-        {
-            "Fabrication",
-            new string[]
-            {
-                "Chassis",
-                "Interior",
-                "Airbags",
-                "Entertainment"
-            }
-        },
-         {
-            "Assembly",
-            new string[]
-            {
-                "Quality Pass",
-                "External",
-                "Internal",
-                "Paint & Trimming"
-            }
-        }
-    };
+      List<Operator> operators = _dbContext.Operator.Take(recordsToSeed).ToList();
+      List<TrainingRequirement> trainingRequirements = _dbContext.TrainingRequirement.Take(recordsToSeed).ToList();
 
+      List<OperatorCompletedTraining> completedTrainingToSeed = new();
 
-    private readonly (int ClockCardNumber, string OperatorName, bool IsAdministrator)[] OperatorSeedData = new (int ClockCardNumber, string OperatorName, bool IsAdministrator)[]
-    {
-        (123456, "Josh Morton", true),
-        (333222, "Jade Woodward", true),
-        (789123, "Emily Rodriguez", false),
-        (456789, "Michael Jenkins", false),
-        (987654, "Sophia Thompson", true),
-        (654321, "Oliver Lee", false),
-        (741852, "Ava Turner", true),
-        (852963, "Liam Adams", false),
-        (159357, "Emma Collins", true),
-        (258369, "Noah Butler", false),
-        (369258, "Isabella Hall", true),
-        (753951, "Mason Jackson", false),
-        (951753, "Charlotte Patterson", true),
-        (147852, "Ethan Anderson", false),
-        (246813, "Mia Morris", true),
-        (864209, "Alexander Nelson", false),
-        (135790, "Avery Wright", true),
-        (579314, "Harper Ramirez", false),
-        (816703, "James Bennett", true)
-    };
-    #endregion
+      for (int i = 0; i < recordsToSeed; i++)
+      {
+        completedTrainingToSeed.Add(new()
+        {
+          OperatorID = operators[i].ID,
+          TrainerClockCardNumber = operators[i].ClockCardNumber,
+          TrainingRequirementID = trainingRequirements[i].ID,
+        });
+      }
+
+      try 
+      {
+        _dbContext.OperatorCompletedTraining.AddRange(completedTrainingToSeed);
+        _dbContext.SaveChanges();
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine($"An error occurred when saving Operator Completed Training: {ex.Message}");
+      }
+    }
+
 }

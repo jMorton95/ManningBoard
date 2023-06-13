@@ -13,7 +13,7 @@ namespace Manning.Api.Repositories
         }
         public async Task<List<OpStation>> GetAllOpStationsAsync()
         {
-            return await _DbContext.OpStation.Include(o => o.TrainingRequirements!).ThenInclude(t => t.TrainingRequirementType).ToListAsync();
+            return await _DbContext.OpStation.Include(o => o.TrainingRequirements!).ToListAsync();
         }
 
         public async Task<List<OpStation>> GetOpStationsByZoneID(int zoneID)
@@ -24,26 +24,19 @@ namespace Manning.Api.Repositories
 
         public Task<OpStation> GetOpStationByID(int ID)
         {
-            return Task.FromResult(_DbContext.OpStation.Include(o => o.TrainingRequirements!).ThenInclude(t => t.TrainingRequirementType).First(x => x.ID == ID));
+            return Task.FromResult(_DbContext.OpStation.Include(o => o.TrainingRequirements!).First(x => x.ID == ID));
         }
 
         public async Task<List<int>> GetOpStationTrainingIDs(int opstationID)
         {
             OpStation station = await GetOpStationByID(opstationID);
-            List<int> trainingIDS = new List<int>();
+            List<int> trainingIdS = new List<int>();
 
-            if (station.TrainingRequirements == null) return trainingIDS;
+            if (station.TrainingRequirements == null) return trainingIdS;
 
-            foreach (var req in station.TrainingRequirements)
-            {
-                if (req.TrainingRequirementTypeId == 1)
-                {
-                    trainingIDS.Add(req.ID);
-                }
-            }
-            return trainingIDS;
+            return trainingIdS;
         }
 
-        public List<OpStation> GetAllOpStations() => _DbContext.OpStation.Include(o => o.TrainingRequirements!).ThenInclude(t => t.TrainingRequirementType).ToList();
+        public async Task<List<OpStation>> GetAllOpStations() => await _DbContext.OpStation.Include(o => o.TrainingRequirements!).ToListAsync();
     }
 }

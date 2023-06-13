@@ -8,4 +8,6 @@ public interface IDataSeeder
     void SeedOperators();
 
     void SeedTraining();
+
+    void SeedCompletedTraining(int recordsToSeed);
 }

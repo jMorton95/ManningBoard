@@ -18,7 +18,7 @@ namespace Manning.Api.Repositories
 
         public Task<T> GetById(int id)
         {
-            return Task.FromResult(_dbContext.Set<T>().Single(x => x.ID == id));
+            return Task.FromResult(_dbContext.Set<T>().First(x => x.ID == id));
         }
     }
 }

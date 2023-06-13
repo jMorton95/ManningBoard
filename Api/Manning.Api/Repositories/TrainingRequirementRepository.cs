@@ -13,7 +13,7 @@ namespace Manning.Api.Repositories
         }
         public async Task<TrainingRequirement?> GetTrainingRequirementByIDAsync(int ID)
         {
-            return await _context.TrainingRequirement.Include(x => x.TrainingRequirementType).FirstOrDefaultAsync(x => x.ID == ID);
+            return await _context.TrainingRequirement.FirstOrDefaultAsync(x => x.ID == ID);
         }
         public async Task<TrainingRequirement> AddNewPrerequisite(TrainingRequirement newRequirement)
         {
