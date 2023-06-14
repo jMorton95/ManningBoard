@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Manning.Api.Models
 {
-    public class OpStation : BaseModel
+    public class Station : BaseModel
     {
         [Required, StringLength(20)]
         public string? StationName { get; set; }

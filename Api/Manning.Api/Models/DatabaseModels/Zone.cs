@@ -6,6 +6,6 @@ namespace Manning.Api.Models
     {
         [Required, StringLength(50)]
         public string? ZoneName { get; set; }
-        public List<OpStation>? OpStations { get; set; }
+        public List<Station>? OpStations { get; set; }
     }
 }

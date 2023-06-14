@@ -132,7 +132,7 @@
 //                 name: "FK_WorkdayHistory_OpStation_OpStationID",
 //                 table: "WorkdayHistory",
 //                 column: "OpStationID",
-//                 principalTable: "OpStation",
+//                 principalTable: "Station",
 //                 principalColumn: "ID",
 //                 onDelete: ReferentialAction.Cascade);
 
@@ -264,7 +264,7 @@
 //                 name: "FK_WorkdayHistory_OpStation_OpStationID",
 //                 table: "WorkdayHistory",
 //                 column: "OpStationID",
-//                 principalTable: "OpStation",
+//                 principalTable: "Station",
 //                 principalColumn: "ID");
 
 //             migrationBuilder.AddForeignKey(

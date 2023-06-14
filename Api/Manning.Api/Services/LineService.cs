@@ -19,10 +19,10 @@ namespace Manning.Api.Services
 
         public async Task<List<Zone>> GetAllZonesAndOpStations() => await _zonesRepository.GetAllZonesAndOpStations();
 
-        public async Task<List<OpStation>> GetAllOpStations() => await _opStationRepository.GetAllOpStations();
+        public async Task<List<Station>> GetAllOpStations() => await _opStationRepository.GetAllOpStations();
 
         public async Task<Zone> GetZoneById(int id) => await _zonesRepository.GetById(id);
-        public async Task<OpStation> GetOpStationById(int id) => await _opStationRepository.GetOpStationByID(id);
+        public async Task<Station> GetOpStationById(int id) => await _opStationRepository.GetOpStationByID(id);
         
     }
 }

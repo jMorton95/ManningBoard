@@ -60,7 +60,7 @@ public class DataSeeder : IDataSeeder
 
         foreach (var kvp in ZoneOpStationsSeedData)
         {
-            List<OpStation> _opStations = kvp.Value.Select(x => new OpStation() { StationName = x }).ToList();
+            List<Station> _opStations = kvp.Value.Select(x => new Station() { StationName = x }).ToList();
             Zone _zone = new() { ZoneName = kvp.Key, OpStations = _opStations };
             ZonesData.Add(_zone);
         }
@@ -102,7 +102,7 @@ public class DataSeeder : IDataSeeder
 
     public void SeedTraining()
     {
-      List<OpStation> OpStations = _dbContext.OpStation.ToList(); 
+      List<Station> OpStations = _dbContext.Station.ToList(); 
 
       List<TrainingRequirement> TrainingRequirementData = new();
 

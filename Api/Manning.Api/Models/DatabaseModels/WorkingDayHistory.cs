@@ -14,7 +14,7 @@ namespace Manning.Api.Models
         [ForeignKey("ShiftID")]
         public int ShiftID { get; set; }
         public Operator? Operator { get; set; }
-        public OpStation? OpStation { get; set; }
+        public Station? Station { get; set; }
         public ShiftType? Shift { get; set; }
 
     }

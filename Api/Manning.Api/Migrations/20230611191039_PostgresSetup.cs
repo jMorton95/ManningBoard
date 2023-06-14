@@ -98,7 +98,7 @@ namespace Manning.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OpStation",
+                name: "Station",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "integer", nullable: false)
@@ -132,7 +132,7 @@ namespace Manning.Api.Migrations
                     table.ForeignKey(
                         name: "FK_TrainingRequirement_OpStation_OpStationID",
                         column: x => x.OpStationID,
-                        principalTable: "OpStation",
+                        principalTable: "Station",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -160,7 +160,7 @@ namespace Manning.Api.Migrations
                     table.ForeignKey(
                         name: "FK_WorkdayHistory_OpStation_OpStationID",
                         column: x => x.OpStationID,
-                        principalTable: "OpStation",
+                        principalTable: "Station",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -179,7 +179,7 @@ namespace Manning.Api.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_OpStation_ZoneID",
-                table: "OpStation",
+                table: "Station",
                 column: "ZoneID");
 
             migrationBuilder.CreateIndex(
@@ -227,7 +227,7 @@ namespace Manning.Api.Migrations
                 name: "TrainingRequirementsType");
 
             migrationBuilder.DropTable(
-                name: "OpStation");
+                name: "Station");
 
             migrationBuilder.DropTable(
                 name: "Operator");

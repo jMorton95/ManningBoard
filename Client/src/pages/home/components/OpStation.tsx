@@ -1,4 +1,4 @@
-export default function OpStation(): JSX.Element {
+export default function Station(): JSX.Element {
   //const [opstationOperators, setOpstationOperators] = useState<TOperatorGrouped[]>()
 
   /*useEffect(() => {

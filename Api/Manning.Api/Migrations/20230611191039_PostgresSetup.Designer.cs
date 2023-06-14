@@ -53,7 +53,7 @@ namespace Manning.Api.Migrations
                     b.ToTable("ClockModel");
                 });
 
-            modelBuilder.Entity("Manning.Api.Models.OpStation", b =>
+            modelBuilder.Entity("Manning.Api.Models.Station", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace Manning.Api.Migrations
 
                     b.HasIndex("ZoneID");
 
-                    b.ToTable("OpStation");
+                    b.ToTable("Station");
                 });
 
             modelBuilder.Entity("Manning.Api.Models.Operator", b =>
@@ -235,7 +235,7 @@ namespace Manning.Api.Migrations
                     b.ToTable("Zone");
                 });
 
-            modelBuilder.Entity("Manning.Api.Models.OpStation", b =>
+            modelBuilder.Entity("Manning.Api.Models.Station", b =>
                 {
                     b.HasOne("Manning.Api.Models.Zone", null)
                         .WithMany("OpStations")
@@ -244,7 +244,7 @@ namespace Manning.Api.Migrations
 
             modelBuilder.Entity("Manning.Api.Models.TrainingRequirement", b =>
                 {
-                    b.HasOne("Manning.Api.Models.OpStation", null)
+                    b.HasOne("Manning.Api.Models.Station", null)
                         .WithMany("TrainingRequirements")
                         .HasForeignKey("OpStationID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,7 +261,7 @@ namespace Manning.Api.Migrations
 
             modelBuilder.Entity("Manning.Api.Models.WorkingDayHistory", b =>
                 {
-                    b.HasOne("Manning.Api.Models.OpStation", "OpStation")
+                    b.HasOne("Manning.Api.Models.Station", "Station")
                         .WithMany()
                         .HasForeignKey("OpStationID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,14 +279,14 @@ namespace Manning.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OpStation");
+                    b.Navigation("Station");
 
                     b.Navigation("Operator");
 
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("Manning.Api.Models.OpStation", b =>
+            modelBuilder.Entity("Manning.Api.Models.Station", b =>
                 {
                     b.Navigation("TrainingRequirements");
                 });

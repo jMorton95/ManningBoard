@@ -65,7 +65,7 @@
 //                 });
 
 //             migrationBuilder.CreateTable(
-//                 name: "OpStation",
+//                 name: "Station",
 //                 columns: table => new
 //                 {
 //                     ID = table.Column<int>(type: "int", nullable: false)
@@ -99,7 +99,7 @@
 //                     table.ForeignKey(
 //                         name: "FK_TrainingRequirement_OpStation_OpStationID",
 //                         column: x => x.OpStationID,
-//                         principalTable: "OpStation",
+//                         principalTable: "Station",
 //                         principalColumn: "ID",
 //                         onDelete: ReferentialAction.Cascade);
 //                     table.ForeignKey(
@@ -126,7 +126,7 @@
 //                     table.ForeignKey(
 //                         name: "FK_WorkdayHistory_OpStation_OpStationID",
 //                         column: x => x.OpStationID,
-//                         principalTable: "OpStation",
+//                         principalTable: "Station",
 //                         principalColumn: "ID");
 //                     table.ForeignKey(
 //                         name: "FK_WorkdayHistory_Operator_OperatorID",
@@ -177,7 +177,7 @@
 
 //             migrationBuilder.CreateIndex(
 //                 name: "IX_OpStation_ZoneID",
-//                 table: "OpStation",
+//                 table: "Station",
 //                 column: "ZoneID");
 
 //             migrationBuilder.CreateIndex(
@@ -225,7 +225,7 @@
 //                 name: "ShiftType");
 
 //             migrationBuilder.DropTable(
-//                 name: "OpStation");
+//                 name: "Station");
 
 //             migrationBuilder.DropTable(
 //                 name: "TrainingRequirementsType");

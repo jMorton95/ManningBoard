@@ -25,7 +25,7 @@
 
 //             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-//             modelBuilder.Entity("ManningApi.Models.OpStation", b =>
+//             modelBuilder.Entity("ManningApi.Models.Station", b =>
 //                 {
 //                     b.Property<int>("ID")
 //                         .ValueGeneratedOnAdd()
@@ -45,7 +45,7 @@
 
 //                     b.HasIndex("ZoneID");
 
-//                     b.ToTable("OpStation");
+//                     b.ToTable("Station");
 //                 });
 
 //             modelBuilder.Entity("ManningApi.Models.Operator", b =>
@@ -208,7 +208,7 @@
 //                     b.ToTable("Zone");
 //                 });
 
-//             modelBuilder.Entity("ManningApi.Models.OpStation", b =>
+//             modelBuilder.Entity("ManningApi.Models.Station", b =>
 //                 {
 //                     b.HasOne("ManningApi.Models.Zone", null)
 //                         .WithMany("OpStations")
@@ -232,7 +232,7 @@
 
 //             modelBuilder.Entity("ManningApi.Models.TrainingRequirement", b =>
 //                 {
-//                     b.HasOne("ManningApi.Models.OpStation", "OpStation")
+//                     b.HasOne("ManningApi.Models.Station", "Station")
 //                         .WithMany("TrainingRequirements")
 //                         .HasForeignKey("OpStationID")
 //                         .OnDelete(DeleteBehavior.Cascade)
@@ -242,14 +242,14 @@
 //                         .WithMany()
 //                         .HasForeignKey("TypeID");
 
-//                     b.Navigation("OpStation");
+//                     b.Navigation("Station");
 
 //                     b.Navigation("Type");
 //                 });
 
 //             modelBuilder.Entity("ManningApi.Models.WorkingDayHistory", b =>
 //                 {
-//                     b.HasOne("ManningApi.Models.OpStation", "OpStation")
+//                     b.HasOne("ManningApi.Models.Station", "Station")
 //                         .WithMany()
 //                         .HasForeignKey("OpStationID");
 
@@ -261,14 +261,14 @@
 //                         .WithMany()
 //                         .HasForeignKey("ShiftID");
 
-//                     b.Navigation("OpStation");
+//                     b.Navigation("Station");
 
 //                     b.Navigation("Operator");
 
 //                     b.Navigation("Shift");
 //                 });
 
-//             modelBuilder.Entity("ManningApi.Models.OpStation", b =>
+//             modelBuilder.Entity("ManningApi.Models.Station", b =>
 //                 {
 //                     b.Navigation("TrainingRequirements");
 //                 });

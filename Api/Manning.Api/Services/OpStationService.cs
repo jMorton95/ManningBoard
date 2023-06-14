@@ -19,7 +19,7 @@ namespace Manning.Api.Services
             _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
         }
 
-        public async Task<OpStation?> AddOperatorToOpStation(OperatorAndStationIdDTO dto)
+        public async Task<Station?> AddOperatorToOpStation(OperatorAndStationIdDTO dto)
         {
           return await _opStationRepository.AddOperatorToOpStation(dto);
         }
@@ -27,18 +27,18 @@ namespace Manning.Api.Services
         //TODO: Unit Test
         // public async Task<bool> CheckOperatorIsTrainedOnOpStation(OperatorAndStationIdDTO dto)
         // {
-        //   OpStation opStation = await _opStationRepository.GetOpStationByID(dto.OpStationId);
+        //   Station station = await _opStationRepository.GetOpStationByID(dto.OpStationId);
 
         //   //Early return if there are no requirements.
-        //   if (opStation.TrainingRequirements == null || opStation.TrainingRequirements.Count < 1)
+        //   if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1)
         //   {
         //     return true;
         //   } 
             
         //   List<OperatorCompletedTraining> operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(dto.OperatorId);
           
-        //   //Operator must have all training required for OpStation
-        //   return operatorTraining.All(x => opStation.TrainingRequirements.Any(o => o.ID == x.TrainingRequirementID));
+        //   //Operator must have all training required for Station
+        //   return operatorTraining.All(x => station.TrainingRequirements.Any(o => o.ID == x.TrainingRequirementID));
         // }
 
         //TODO: This is the better implementation, make sure its all good

@@ -18,7 +18,7 @@ namespace Manning.Api.Controllers
             _opStationService = opStationService;
         }
         [HttpGet]
-        public async Task<ActionResult<OpStation>> GetOpStationById(int id) => await _lineService.GetOpStationById(id);
+        public async Task<ActionResult<Station>> GetOpStationById(int id) => await _lineService.GetOpStationById(id);
         [HttpPost]
         public ActionResult AssignOperatorToOpstation([FromBody] OperatorAndStationIdDTO dto)
         {

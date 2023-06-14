@@ -3,13 +3,13 @@ using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Repositories.Interfaces
 {
-    public interface IOpStationRepository : IBaseRepository<OpStation>
+    public interface IOpStationRepository : IBaseRepository<Station>
     {
-        Task<List<OpStation>> GetAllOpStations();
-        Task<List<OpStation>> GetOpStationsByZoneID(int zoneID);
-        Task<OpStation> GetOpStationByID(int ID);
+        Task<List<Station>> GetAllOpStations();
+        Task<List<Station>> GetOpStationsByZoneID(int zoneID);
+        Task<Station> GetOpStationByID(int ID);
         Task<List<int>> GetOpStationTrainingIDs(int opstationID);
-        Task<OpStation> AddOperatorToOpStation(OperatorAndStationIdDTO dto);
+        Task<Station> AddOperatorToOpStation(OperatorAndStationIdDTO dto);
         void RemoveOperatorFromOpStation(OperatorAndStationIdDTO dto);
         
     }

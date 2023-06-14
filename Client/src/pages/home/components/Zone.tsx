@@ -1,5 +1,5 @@
 import { type TZone } from '../../../types/LineTypes'
-import OpStation from './OpStation'
+import Station from './Station'
 
 export default function Zone(props: TZone): JSX.Element {
   return (
@@ -7,7 +7,7 @@ export default function Zone(props: TZone): JSX.Element {
       <h2>{props.zoneName}</h2>
       <div className="zone row">
         {props.opStations.map((station) => (
-          <OpStation key={station.id} {...station} />
+          <Station key={station.id} {...station} />
         ))}
       </div>
     </div>

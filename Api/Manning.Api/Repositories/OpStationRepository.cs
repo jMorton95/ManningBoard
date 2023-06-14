@@ -5,26 +5,26 @@ using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Repositories
 {
-    public class OpStationRepository : BaseRepository<OpStation>, IOpStationRepository
+    public class OpStationRepository : BaseRepository<Station>, IOpStationRepository
     {
         public OpStationRepository(ManningDbContext dbContext) :base(dbContext)
         {
         }
 
-        public async Task<List<OpStation>> GetOpStationsByZoneID(int zoneID)
+        public async Task<List<Station>> GetOpStationsByZoneID(int zoneID)
         {
-            var query = _dbContext.OpStation.Where(x => x.ZoneID == zoneID);
+            var query = _dbContext.Station.Where(x => x.ZoneID == zoneID);
             return await query.ToListAsync();
         }
 
-        public Task<OpStation> GetOpStationByID(int ID)
+        public Task<Station> GetOpStationByID(int ID)
         {
-            return Task.FromResult(_dbContext.OpStation.Include(o => o.TrainingRequirements!).First(x => x.ID == ID));
+            return Task.FromResult(_dbContext.Station.Include(o => o.TrainingRequirements!).First(x => x.ID == ID));
         }
 
         public async Task<List<int>> GetOpStationTrainingIDs(int opstationID)
         {
-            OpStation station = await GetOpStationByID(opstationID);
+            Station station = await GetOpStationByID(opstationID);
             List<int> trainingIdS = new();
 
             if (station.TrainingRequirements == null) return trainingIdS;
@@ -34,9 +34,9 @@ namespace Manning.Api.Repositories
             return trainingIdS;
         }
 
-        public async Task<List<OpStation>> GetAllOpStations() => await _dbContext.OpStation.Include(o => o.TrainingRequirements!).ToListAsync();
+        public async Task<List<Station>> GetAllOpStations() => await _dbContext.Station.Include(o => o.TrainingRequirements!).ToListAsync();
 
-        public Task<OpStation> AddOperatorToOpStation(OperatorAndStationIdDTO dto)
+        public Task<Station> AddOperatorToOpStation(OperatorAndStationIdDTO dto)
         {
           throw new NotImplementedException();
         }

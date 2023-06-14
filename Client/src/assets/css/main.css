@@ -81,18 +81,18 @@ section h2 {
     grid-template-columns: repeat(auto-fit, 10%);
 }
 
-/*Home OpStation Styles*/
-.opStation {
+/*Home Station Styles*/
+.station {
     width: 100%;
     border: 1px solid blue;
     border-top: none;
 }
 
-.opStation:hover {
+.station:hover {
     background-color: rgba(128, 128, 128, 0.15);
 }
 
-.opStation p {
+.station p {
     text-align: center;
     width: 100%;
 }
