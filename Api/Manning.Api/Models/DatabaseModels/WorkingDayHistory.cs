@@ -9,8 +9,8 @@ namespace Manning.Api.Models
         public DateTime ShiftDate { get; set; }
         [ForeignKey("OperatorID")]
         public int OperatorID { get; set; }
-        [ForeignKey("OpStationID")]
-        public int OpStationID { get; set; }
+        [ForeignKey("StationID")]
+        public int StationID { get; set; }
         [ForeignKey("ShiftID")]
         public int ShiftID { get; set; }
         public Operator? Operator { get; set; }

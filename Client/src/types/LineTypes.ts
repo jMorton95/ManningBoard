@@ -1,10 +1,10 @@
 interface TZone {
   id: number
   zoneName: string
-  opStations: TOpStation[]
+  stations: TStation[]
 }
 
-interface TOpStation {
+interface TStation {
   id: number
   stationName: string
   zoneID: number
@@ -14,7 +14,7 @@ interface TOpStation {
 interface TTrainingRequirement {
   id: number
   requirementDescription: string
-  opStationID: number
+  stationID: number
 }
 
-export type { TZone, TOpStation, TTrainingRequirement }
+export type { TZone, TStation, TTrainingRequirement }

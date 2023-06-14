@@ -119,7 +119,7 @@
 
 //                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-//                     b.Property<int>("OpStationID")
+//                     b.Property<int>("StationID")
 //                         .HasColumnType("int");
 
 //                     b.Property<string>("RequirementDescription")
@@ -132,7 +132,7 @@
 
 //                     b.HasKey("ID");
 
-//                     b.HasIndex("OpStationID");
+//                     b.HasIndex("StationID");
 
 //                     b.HasIndex("TrainingRequirementTypeId");
 
@@ -165,7 +165,7 @@
 
 //                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-//                     b.Property<int>("OpStationID")
+//                     b.Property<int>("StationID")
 //                         .HasColumnType("int");
 
 //                     b.Property<int>("OperatorID")
@@ -179,7 +179,7 @@
 
 //                     b.HasKey("ID");
 
-//                     b.HasIndex("OpStationID");
+//                     b.HasIndex("StationID");
 
 //                     b.HasIndex("OperatorID");
 
@@ -209,7 +209,7 @@
 //             modelBuilder.Entity("ManningApi.Models.Station", b =>
 //                 {
 //                     b.HasOne("ManningApi.Models.Zone", null)
-//                         .WithMany("OpStations")
+//                         .WithMany("Stations")
 //                         .HasForeignKey("ZoneID");
 //                 });
 
@@ -217,7 +217,7 @@
 //                 {
 //                     b.HasOne("ManningApi.Models.Station", null)
 //                         .WithMany("TrainingRequirements")
-//                         .HasForeignKey("OpStationID")
+//                         .HasForeignKey("StationID")
 //                         .OnDelete(DeleteBehavior.Cascade)
 //                         .IsRequired();
 
@@ -234,7 +234,7 @@
 //                 {
 //                     b.HasOne("ManningApi.Models.Station", "Station")
 //                         .WithMany()
-//                         .HasForeignKey("OpStationID")
+//                         .HasForeignKey("StationID")
 //                         .OnDelete(DeleteBehavior.Cascade)
 //                         .IsRequired();
 
@@ -264,7 +264,7 @@
 
 //             modelBuilder.Entity("ManningApi.Models.Zone", b =>
 //                 {
-//                     b.Navigation("OpStations");
+//                     b.Navigation("Stations");
 //                 });
 // #pragma warning restore 612, 618
 //         }

@@ -5,29 +5,29 @@ using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Services
 {
-    public class OpStationService : IOpStationService
+    public class StationService : IStationService
     {
-        private readonly IOpStationRepository _opStationRepository;
+        private readonly IStationRepository _stationRepository;
         private readonly IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository;
-        public OpStationService
+        public StationService
         (
-          IOpStationRepository opStationRepository,
+          IStationRepository stationRepository,
           IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository
         )
         {
-            _opStationRepository = opStationRepository;
+            _stationRepository = stationRepository;
             _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
         }
 
-        public async Task<Station?> AddOperatorToOpStation(OperatorAndStationIdDTO dto)
+        public async Task<Station?> AddOperatorToStation(OperatorAndStationIdDTO dto)
         {
-          return await _opStationRepository.AddOperatorToOpStation(dto);
+          return await _stationRepository.AddOperatorToStation(dto);
         }
 
         //TODO: Unit Test
-        // public async Task<bool> CheckOperatorIsTrainedOnOpStation(OperatorAndStationIdDTO dto)
+        // public async Task<bool> CheckOperatorIsTrainedOnStation(OperatorAndStationIdDTO dto)
         // {
-        //   Station station = await _opStationRepository.GetOpStationByID(dto.OpStationId);
+        //   Station station = await _stationRepository.GetStationByID(dto.StationId);
 
         //   //Early return if there are no requirements.
         //   if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1)
@@ -42,14 +42,14 @@ namespace Manning.Api.Services
         // }
 
         //TODO: This is the better implementation, make sure its all good
-        public async Task<bool> CheckOperatorIsTrainedOnOpStation(OperatorAndStationIdDTO dto)
+        public async Task<bool> CheckOperatorIsTrainedOnStation(OperatorAndStationIdDTO dto)
         {
-          List<int> opStationTrainingIds = await _opStationRepository.GetOpStationTrainingIDs(dto.OpStationId);
+          List<int> stationTrainingIds = await _stationRepository.GetStationTrainingIDs(dto.StationId);
 
-          if (opStationTrainingIds.Count < 1) return false;
+          if (stationTrainingIds.Count < 1) return false;
 
           List<OperatorCompletedTraining> operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(dto.OperatorId);
-          return operatorTraining.All(x => opStationTrainingIds.Contains(x.TrainingRequirementID));
+          return operatorTraining.All(x => stationTrainingIds.Contains(x.TrainingRequirementID));
         }
   }
 }

@@ -18,12 +18,12 @@ public class DataSeeder : IDataSeeder
     {
         if (_dbContext.Zone.ToList().Count() < 1)
         {
-            Console.WriteLine("Adding Zones & OpStations");
+            Console.WriteLine("Adding Zones & Stations");
             SeedLine();
         }
         else
         {
-            Console.WriteLine("Skipped Zones & OpStations - Data Already Found");
+            Console.WriteLine("Skipped Zones & Stations - Data Already Found");
         }
 
         if (_dbContext.Operator.ToList().Count() < 1)
@@ -58,10 +58,10 @@ public class DataSeeder : IDataSeeder
     {
         List<Zone> ZonesData = new();
 
-        foreach (var kvp in ZoneOpStationsSeedData)
+        foreach (var kvp in ZoneStationsSeedData)
         {
-            List<Station> _opStations = kvp.Value.Select(x => new Station() { StationName = x }).ToList();
-            Zone _zone = new() { ZoneName = kvp.Key, OpStations = _opStations };
+            List<Station> _stations = kvp.Value.Select(x => new Station() { StationName = x }).ToList();
+            Zone _zone = new() { ZoneName = kvp.Key, Stations = _stations };
             ZonesData.Add(_zone);
         }
 
@@ -102,7 +102,7 @@ public class DataSeeder : IDataSeeder
 
     public void SeedTraining()
     {
-      List<Station> OpStations = _dbContext.Station.ToList(); 
+      List<Station> Stations = _dbContext.Station.ToList(); 
 
       List<TrainingRequirement> TrainingRequirementData = new();
 
@@ -110,15 +110,15 @@ public class DataSeeder : IDataSeeder
 
       foreach (var requirement in TrainingRequirementSeedData)
       {
-        int randId = random.Next(0, OpStations.Count);
+        int randId = random.Next(0, Stations.Count);
 
         TrainingRequirementData.Add(new()
         {
           RequirementDescription = requirement,
-          OpStationID = OpStations[randId].ID
+          StationID = Stations[randId].ID
         });
 
-        OpStations.RemoveAt(randId);
+        Stations.RemoveAt(randId);
       }
 
       try 

@@ -75,9 +75,9 @@
 //                 },
 //                 constraints: table =>
 //                 {
-//                     table.PrimaryKey("PK_OpStation", x => x.ID);
+//                     table.PrimaryKey("PK_Station", x => x.ID);
 //                     table.ForeignKey(
-//                         name: "FK_OpStation_Zone_ZoneID",
+//                         name: "FK_Station_Zone_ZoneID",
 //                         column: x => x.ZoneID,
 //                         principalTable: "Zone",
 //                         principalColumn: "ID");
@@ -91,14 +91,14 @@
 //                         .Annotation("SqlServer:Identity", "1, 1"),
 //                     RequirementDescription = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
 //                     TypeID = table.Column<int>(type: "int", nullable: true),
-//                     OpStationID = table.Column<int>(type: "int", nullable: false)
+//                     StationID = table.Column<int>(type: "int", nullable: false)
 //                 },
 //                 constraints: table =>
 //                 {
 //                     table.PrimaryKey("PK_TrainingRequirement", x => x.ID);
 //                     table.ForeignKey(
-//                         name: "FK_TrainingRequirement_OpStation_OpStationID",
-//                         column: x => x.OpStationID,
+//                         name: "FK_TrainingRequirement_Station_StationID",
+//                         column: x => x.StationID,
 //                         principalTable: "Station",
 //                         principalColumn: "ID",
 //                         onDelete: ReferentialAction.Cascade);
@@ -117,15 +117,15 @@
 //                         .Annotation("SqlServer:Identity", "1, 1"),
 //                     ShiftDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
 //                     OperatorID = table.Column<int>(type: "int", nullable: true),
-//                     OpStationID = table.Column<int>(type: "int", nullable: true),
+//                     StationID = table.Column<int>(type: "int", nullable: true),
 //                     ShiftID = table.Column<int>(type: "int", nullable: true)
 //                 },
 //                 constraints: table =>
 //                 {
 //                     table.PrimaryKey("PK_WorkdayHistory", x => x.ID);
 //                     table.ForeignKey(
-//                         name: "FK_WorkdayHistory_OpStation_OpStationID",
-//                         column: x => x.OpStationID,
+//                         name: "FK_WorkdayHistory_Station_StationID",
+//                         column: x => x.StationID,
 //                         principalTable: "Station",
 //                         principalColumn: "ID");
 //                     table.ForeignKey(
@@ -176,14 +176,14 @@
 //                 column: "TrainingRequirementID");
 
 //             migrationBuilder.CreateIndex(
-//                 name: "IX_OpStation_ZoneID",
+//                 name: "IX_Station_ZoneID",
 //                 table: "Station",
 //                 column: "ZoneID");
 
 //             migrationBuilder.CreateIndex(
-//                 name: "IX_TrainingRequirement_OpStationID",
+//                 name: "IX_TrainingRequirement_StationID",
 //                 table: "TrainingRequirement",
-//                 column: "OpStationID");
+//                 column: "StationID");
 
 //             migrationBuilder.CreateIndex(
 //                 name: "IX_TrainingRequirement_TypeID",
@@ -196,9 +196,9 @@
 //                 column: "OperatorID");
 
 //             migrationBuilder.CreateIndex(
-//                 name: "IX_WorkdayHistory_OpStationID",
+//                 name: "IX_WorkdayHistory_StationID",
 //                 table: "WorkdayHistory",
-//                 column: "OpStationID");
+//                 column: "StationID");
 
 //             migrationBuilder.CreateIndex(
 //                 name: "IX_WorkdayHistory_ShiftID",

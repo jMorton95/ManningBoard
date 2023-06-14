@@ -23,7 +23,7 @@
 //                 table: "TrainingRequirement");
 
 //             migrationBuilder.DropForeignKey(
-//                 name: "FK_WorkdayHistory_OpStation_OpStationID",
+//                 name: "FK_WorkdayHistory_Station_StationID",
 //                 table: "WorkdayHistory");
 
 //             migrationBuilder.DropForeignKey(
@@ -63,7 +63,7 @@
 //                 oldNullable: true);
 
 //             migrationBuilder.AlterColumn<int>(
-//                 name: "OpStationID",
+//                 name: "StationID",
 //                 table: "WorkdayHistory",
 //                 type: "int",
 //                 nullable: false,
@@ -129,9 +129,9 @@
 //                 onDelete: ReferentialAction.Cascade);
 
 //             migrationBuilder.AddForeignKey(
-//                 name: "FK_WorkdayHistory_OpStation_OpStationID",
+//                 name: "FK_WorkdayHistory_Station_StationID",
 //                 table: "WorkdayHistory",
-//                 column: "OpStationID",
+//                 column: "StationID",
 //                 principalTable: "Station",
 //                 principalColumn: "ID",
 //                 onDelete: ReferentialAction.Cascade);
@@ -169,7 +169,7 @@
 //                 table: "TrainingRequirement");
 
 //             migrationBuilder.DropForeignKey(
-//                 name: "FK_WorkdayHistory_OpStation_OpStationID",
+//                 name: "FK_WorkdayHistory_Station_StationID",
 //                 table: "WorkdayHistory");
 
 //             migrationBuilder.DropForeignKey(
@@ -205,7 +205,7 @@
 //                 oldType: "int");
 
 //             migrationBuilder.AlterColumn<int>(
-//                 name: "OpStationID",
+//                 name: "StationID",
 //                 table: "WorkdayHistory",
 //                 type: "int",
 //                 nullable: true,
@@ -261,9 +261,9 @@
 //                 principalColumn: "ID");
 
 //             migrationBuilder.AddForeignKey(
-//                 name: "FK_WorkdayHistory_OpStation_OpStationID",
+//                 name: "FK_WorkdayHistory_Station_StationID",
 //                 table: "WorkdayHistory",
-//                 column: "OpStationID",
+//                 column: "StationID",
 //                 principalTable: "Station",
 //                 principalColumn: "ID");
 

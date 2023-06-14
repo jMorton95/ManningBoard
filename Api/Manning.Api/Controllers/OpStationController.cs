@@ -8,17 +8,17 @@ namespace Manning.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OpStationController : ControllerBase
+    public class StationController : ControllerBase
     {
         private readonly ILineService _lineService;
-        private readonly IOpStationService _opStationService;
-        public OpStationController(ILineService lineService, IOpStationService opStationService)
+        private readonly IStationService _stationService;
+        public StationController(ILineService lineService, IStationService stationService)
         {
             _lineService = lineService;
-            _opStationService = opStationService;
+            _stationService = stationService;
         }
         [HttpGet]
-        public async Task<ActionResult<Station>> GetOpStationById(int id) => await _lineService.GetOpStationById(id);
+        public async Task<ActionResult<Station>> GetStationById(int id) => await _lineService.GetStationById(id);
         [HttpPost]
         public ActionResult AssignOperatorToOpstation([FromBody] OperatorAndStationIdDTO dto)
         {

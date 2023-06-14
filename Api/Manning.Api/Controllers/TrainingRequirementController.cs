@@ -22,9 +22,9 @@ namespace Manning.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<TrainingRequirement> CreateNewPrerequisite(string requirementDescription, int opstationID)
+        public async Task<TrainingRequirement> CreateNewPrerequisite(string requirementDescription, int stationID)
         {
-            return await _trainingRequirementService.AddNewPrerequisite(requirementDescription, opstationID);
+            return await _trainingRequirementService.AddNewPrerequisite(requirementDescription, stationID);
         }
         [HttpGet("{ID}")]
         public async Task<ActionResult<TrainingRequirement>> GetByIdTask(int ID)

@@ -45,7 +45,7 @@ namespace Manning.Api
             builder.Services.AddDbContext<ManningDbContext>(options => options.UseNpgsql(connString));
 
             builder.Services.AddScoped<IZonesRepository, ZonesRepository>();
-            builder.Services.AddScoped<IOpStationRepository, OpStationRepository>();
+            builder.Services.AddScoped<IStationRepository, StationRepository>();
             builder.Services.AddScoped<ITrainingRequirementRepository, TrainingRequirementRepository>();
             builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
             builder.Services.AddScoped<IOperatorCompletedTrainingRepository, OperatorCompletedTrainingRepository>();
@@ -53,7 +53,7 @@ namespace Manning.Api
 
             builder.Services.AddScoped<ILineService, LineService>();
             builder.Services.AddScoped<ITrainingRequirementService, TrainingRequirementService>();
-            builder.Services.AddScoped<IOpStationService, OpStationService>();
+            builder.Services.AddScoped<IStationService, StationService>();
             builder.Services.AddScoped<ILoginService, LoginService>();
 
 

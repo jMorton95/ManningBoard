@@ -3,9 +3,9 @@ using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Services.Interfaces
 {
-    public interface IOpStationService
+    public interface IStationService
     {
-        Task<Station?> AddOperatorToOpStation(OperatorAndStationIdDTO dto);
-        Task<bool> CheckOperatorIsTrainedOnOpStation(OperatorAndStationIdDTO dto);
+        Task<Station?> AddOperatorToStation(OperatorAndStationIdDTO dto);
+        Task<bool> CheckOperatorIsTrainedOnStation(OperatorAndStationIdDTO dto);
     }
 }

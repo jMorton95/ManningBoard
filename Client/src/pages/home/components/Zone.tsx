@@ -6,7 +6,7 @@ export default function Zone(props: TZone): JSX.Element {
     <div>
       <h2>{props.zoneName}</h2>
       <div className="zone row">
-        {props.opStations.map((station) => (
+        {props.stations.map((station) => (
           <Station key={station.id} {...station} />
         ))}
       </div>

@@ -21,9 +21,9 @@ namespace Manning.Api.Repositories
             return newRequirement;
         }
 
-        public async Task<List<TrainingRequirement>> GetTrainingRequirementsByOpStationId(int ID)
+        public async Task<List<TrainingRequirement>> GetTrainingRequirementsByStationId(int ID)
         {
-          return await _dbContext.TrainingRequirement.Where(x => x.OpStationID == ID).ToListAsync();
+          return await _dbContext.TrainingRequirement.Where(x => x.StationID == ID).ToListAsync();
         }
   }
 }

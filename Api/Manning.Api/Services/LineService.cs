@@ -8,21 +8,21 @@ namespace Manning.Api.Services
     public class LineService : ILineService
     {
         private readonly IZonesRepository _zonesRepository;
-        private readonly IOpStationRepository _opStationRepository;
-        public LineService(IZonesRepository zonesRepository, IOpStationRepository opStationRepository)
+        private readonly IStationRepository _stationRepository;
+        public LineService(IZonesRepository zonesRepository, IStationRepository stationRepository)
         {
             _zonesRepository = zonesRepository;
-            _opStationRepository = opStationRepository;
+            _stationRepository = stationRepository;
         }
 
         public async Task<List<Zone>> GetAllZones() => await _zonesRepository.GetAll();
 
-        public async Task<List<Zone>> GetAllZonesAndOpStations() => await _zonesRepository.GetAllZonesAndOpStations();
+        public async Task<List<Zone>> GetAllZonesAndStations() => await _zonesRepository.GetAllZonesAndStations();
 
-        public async Task<List<Station>> GetAllOpStations() => await _opStationRepository.GetAllOpStations();
+        public async Task<List<Station>> GetAllStations() => await _stationRepository.GetAllStations();
 
         public async Task<Zone> GetZoneById(int id) => await _zonesRepository.GetById(id);
-        public async Task<Station> GetOpStationById(int id) => await _opStationRepository.GetOpStationByID(id);
+        public async Task<Station> GetStationById(int id) => await _stationRepository.GetStationByID(id);
         
     }
 }

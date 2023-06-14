@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Manning.Api.Migrations
 {
     [DbContext(typeof(ManningDbContext))]
-    [Migration("20230611191039_PostgresSetup")]
-    partial class PostgresSetup
+    [Migration("20230614223228_FreshStart")]
+    partial class FreshStart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,29 @@ namespace Manning.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Manning.Api.Models.AssignedOperatorsModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("OperatorID")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StationID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("OperatorID");
+
+                    b.HasIndex("StationID");
+
+                    b.ToTable("AssignedOperatorsModels");
+                });
 
             modelBuilder.Entity("Manning.Api.Models.ClockModel", b =>
                 {
@@ -51,29 +74,6 @@ namespace Manning.Api.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("ClockModel");
-                });
-
-            modelBuilder.Entity("Manning.Api.Models.Station", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("StationName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<int?>("ZoneID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ZoneID");
-
-                    b.ToTable("Station");
                 });
 
             modelBuilder.Entity("Manning.Api.Models.Operator", b =>
@@ -140,6 +140,29 @@ namespace Manning.Api.Migrations
                     b.ToTable("ShiftType");
                 });
 
+            modelBuilder.Entity("Manning.Api.Models.Station", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("StationName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int?>("ZoneID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ZoneID");
+
+                    b.ToTable("Station");
+                });
+
             modelBuilder.Entity("Manning.Api.Models.TrainingRequirement", b =>
                 {
                     b.Property<int>("ID")
@@ -148,42 +171,19 @@ namespace Manning.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("OpStationID")
-                        .HasColumnType("integer");
-
                     b.Property<string>("RequirementDescription")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("TrainingRequirementTypeId")
+                    b.Property<int>("StationID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("OpStationID");
-
-                    b.HasIndex("TrainingRequirementTypeId");
+                    b.HasIndex("StationID");
 
                     b.ToTable("TrainingRequirement");
-                });
-
-            modelBuilder.Entity("Manning.Api.Models.TrainingRequirementType", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("TrainingType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("TrainingRequirementsType");
                 });
 
             modelBuilder.Entity("Manning.Api.Models.WorkingDayHistory", b =>
@@ -194,9 +194,6 @@ namespace Manning.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("OpStationID")
-                        .HasColumnType("integer");
-
                     b.Property<int>("OperatorID")
                         .HasColumnType("integer");
 
@@ -206,13 +203,16 @@ namespace Manning.Api.Migrations
                     b.Property<int>("ShiftID")
                         .HasColumnType("integer");
 
-                    b.HasKey("ID");
+                    b.Property<int>("StationID")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("OpStationID");
+                    b.HasKey("ID");
 
                     b.HasIndex("OperatorID");
 
                     b.HasIndex("ShiftID");
+
+                    b.HasIndex("StationID");
 
                     b.ToTable("WorkdayHistory");
                 });
@@ -235,10 +235,25 @@ namespace Manning.Api.Migrations
                     b.ToTable("Zone");
                 });
 
+            modelBuilder.Entity("Manning.Api.Models.AssignedOperatorsModel", b =>
+                {
+                    b.HasOne("Manning.Api.Models.Operator", "Operator")
+                        .WithMany()
+                        .HasForeignKey("OperatorID");
+
+                    b.HasOne("Manning.Api.Models.Station", "Station")
+                        .WithMany()
+                        .HasForeignKey("StationID");
+
+                    b.Navigation("Operator");
+
+                    b.Navigation("Station");
+                });
+
             modelBuilder.Entity("Manning.Api.Models.Station", b =>
                 {
                     b.HasOne("Manning.Api.Models.Zone", null)
-                        .WithMany("OpStations")
+                        .WithMany("Stations")
                         .HasForeignKey("ZoneID");
                 });
 
@@ -246,27 +261,13 @@ namespace Manning.Api.Migrations
                 {
                     b.HasOne("Manning.Api.Models.Station", null)
                         .WithMany("TrainingRequirements")
-                        .HasForeignKey("OpStationID")
+                        .HasForeignKey("StationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Manning.Api.Models.TrainingRequirementType", "TrainingRequirementType")
-                        .WithMany()
-                        .HasForeignKey("TrainingRequirementTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TrainingRequirementType");
                 });
 
             modelBuilder.Entity("Manning.Api.Models.WorkingDayHistory", b =>
                 {
-                    b.HasOne("Manning.Api.Models.Station", "Station")
-                        .WithMany()
-                        .HasForeignKey("OpStationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Manning.Api.Models.Operator", "Operator")
                         .WithMany()
                         .HasForeignKey("OperatorID")
@@ -279,11 +280,17 @@ namespace Manning.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Station");
+                    b.HasOne("Manning.Api.Models.Station", "Station")
+                        .WithMany()
+                        .HasForeignKey("StationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Operator");
 
                     b.Navigation("Shift");
+
+                    b.Navigation("Station");
                 });
 
             modelBuilder.Entity("Manning.Api.Models.Station", b =>
@@ -293,7 +300,7 @@ namespace Manning.Api.Migrations
 
             modelBuilder.Entity("Manning.Api.Models.Zone", b =>
                 {
-                    b.Navigation("OpStations");
+                    b.Navigation("Stations");
                 });
 #pragma warning restore 612, 618
         }

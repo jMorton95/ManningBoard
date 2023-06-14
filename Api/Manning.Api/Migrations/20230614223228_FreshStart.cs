@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Manning.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class PostgresSetup : Migration
+    public partial class FreshStart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,19 +72,6 @@ namespace Manning.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TrainingRequirementsType",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TrainingType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TrainingRequirementsType", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Zone",
                 columns: table => new
                 {
@@ -108,11 +95,35 @@ namespace Manning.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OpStation", x => x.ID);
+                    table.PrimaryKey("PK_Station", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_OpStation_Zone_ZoneID",
+                        name: "FK_Station_Zone_ZoneID",
                         column: x => x.ZoneID,
                         principalTable: "Zone",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssignedOperatorsModels",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OperatorID = table.Column<int>(type: "integer", nullable: true),
+                    StationID = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssignedOperatorsModels", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_AssignedOperatorsModels_Operator_OperatorID",
+                        column: x => x.OperatorID,
+                        principalTable: "Operator",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_AssignedOperatorsModels_Station_StationID",
+                        column: x => x.StationID,
+                        principalTable: "Station",
                         principalColumn: "ID");
                 });
 
@@ -123,22 +134,15 @@ namespace Manning.Api.Migrations
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RequirementDescription = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    TrainingRequirementTypeId = table.Column<int>(type: "integer", nullable: false),
-                    OpStationID = table.Column<int>(type: "integer", nullable: false)
+                    StationID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TrainingRequirement", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TrainingRequirement_OpStation_OpStationID",
-                        column: x => x.OpStationID,
+                        name: "FK_TrainingRequirement_Station_StationID",
+                        column: x => x.StationID,
                         principalTable: "Station",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TrainingRequirement_TrainingRequirementsType_TrainingRequir~",
-                        column: x => x.TrainingRequirementTypeId,
-                        principalTable: "TrainingRequirementsType",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -151,18 +155,12 @@ namespace Manning.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ShiftDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     OperatorID = table.Column<int>(type: "integer", nullable: false),
-                    OpStationID = table.Column<int>(type: "integer", nullable: false),
+                    StationID = table.Column<int>(type: "integer", nullable: false),
                     ShiftID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkdayHistory", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_WorkdayHistory_OpStation_OpStationID",
-                        column: x => x.OpStationID,
-                        principalTable: "Station",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WorkdayHistory_Operator_OperatorID",
                         column: x => x.OperatorID,
@@ -175,22 +173,33 @@ namespace Manning.Api.Migrations
                         principalTable: "ShiftType",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WorkdayHistory_Station_StationID",
+                        column: x => x.StationID,
+                        principalTable: "Station",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OpStation_ZoneID",
+                name: "IX_AssignedOperatorsModels_OperatorID",
+                table: "AssignedOperatorsModels",
+                column: "OperatorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AssignedOperatorsModels_StationID",
+                table: "AssignedOperatorsModels",
+                column: "StationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Station_ZoneID",
                 table: "Station",
                 column: "ZoneID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TrainingRequirement_OpStationID",
+                name: "IX_TrainingRequirement_StationID",
                 table: "TrainingRequirement",
-                column: "OpStationID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TrainingRequirement_TrainingRequirementTypeId",
-                table: "TrainingRequirement",
-                column: "TrainingRequirementTypeId");
+                column: "StationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkdayHistory_OperatorID",
@@ -198,19 +207,22 @@ namespace Manning.Api.Migrations
                 column: "OperatorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkdayHistory_OpStationID",
-                table: "WorkdayHistory",
-                column: "OpStationID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_WorkdayHistory_ShiftID",
                 table: "WorkdayHistory",
                 column: "ShiftID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkdayHistory_StationID",
+                table: "WorkdayHistory",
+                column: "StationID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AssignedOperatorsModels");
+
             migrationBuilder.DropTable(
                 name: "ClockModel");
 
@@ -224,16 +236,13 @@ namespace Manning.Api.Migrations
                 name: "WorkdayHistory");
 
             migrationBuilder.DropTable(
-                name: "TrainingRequirementsType");
-
-            migrationBuilder.DropTable(
-                name: "Station");
-
-            migrationBuilder.DropTable(
                 name: "Operator");
 
             migrationBuilder.DropTable(
                 name: "ShiftType");
+
+            migrationBuilder.DropTable(
+                name: "Station");
 
             migrationBuilder.DropTable(
                 name: "Zone");

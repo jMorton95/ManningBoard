@@ -5,7 +5,7 @@ import { type TRequirementPostData } from '../../../types/TrainingTypes'
 
 interface TAddRequirementProps {
   closeModal: React.Dispatch<React.SetStateAction<boolean>>
-  opstationID: number
+  stationID: number
   trainingRequirements: TTrainingRequirement[]
   setRequirements: React.Dispatch<React.SetStateAction<TTrainingRequirement[]>>
   token: string
@@ -16,7 +16,7 @@ export default function AddRequirement(props: TAddRequirementProps): JSX.Element
   const [requirementDescription, setRequirementDescription] = useState<string>('')
 
   const resolvePostData = async(): Promise<void> => {
-    const requirement = await PostRequirement(props.token, requirementDescription, props.opstationID)
+    const requirement = await PostRequirement(props.token, requirementDescription, props.stationID)
 
     if (requirement !== null) {
       props.setRequirements((requirements) => [...requirements, requirement])
@@ -51,12 +51,12 @@ export default function AddRequirement(props: TAddRequirementProps): JSX.Element
   )
 }
 
-const PostRequirement = async(token: string, requirementDescription: string, opstationID: number): Promise<TTrainingRequirement | null> => {
+const PostRequirement = async(token: string, requirementDescription: string, stationID: number): Promise<TTrainingRequirement | null> => {
   const fetchedData = await FetchPost<TTrainingRequirement, TRequirementPostData>({
     endpoint: 'TrainingRequirement',
     data: {
       requirementDescription,
-      opstationID
+      stationID
     },
     request: PostRequestBase(token)
   }).then((res) => {

@@ -10,9 +10,9 @@ namespace Manning.Api.Repositories
         {
         }
 
-        public async Task<List<Zone>> GetAllZonesAndOpStations()
+        public async Task<List<Zone>> GetAllZonesAndStations()
         {
-            return await _dbContext.Zone.Include(x => x.OpStations!).ThenInclude(x => x.TrainingRequirements!).ToListAsync();
+            return await _dbContext.Zone.Include(x => x.Stations!).ThenInclude(x => x.TrainingRequirements!).ToListAsync();
         }
     }
 }

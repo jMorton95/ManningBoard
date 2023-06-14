@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
-import { type TOpStation, type TZone } from '../../types/LineTypes'
+import { type TStation, type TZone } from '../../types/LineTypes'
 import { AsyncFetchEndpointAndSetStateWithRetry } from '../../services/APIService'
-import OpStationMan from './components/OpStationMan'
+import StationMan from './components/StationMan'
 import ZoneDropdown from './components/ZoneDropdown'
 import { type NonNegativeInteger } from '../../types/GenericTypes'
 import { useSelector } from 'react-redux'
 import { type RootState } from '../../types/ReduxTypes'
 
-const getSelectedZone = (zones: TZone[], opstation: TOpStation): string => zones.find(x => x.id === opstation.zoneID)?.zoneName ?? 'No Zone Found'
+const getSelectedZone = (zones: TZone[], station: TStation): string => zones.find(x => x.id === station.zoneID)?.zoneName ?? 'No Zone Found'
 
 export default function StationManagement(): JSX.Element {
   const [zones, setZones] = useState<TZone[]>()
-  const [selectedOpStation, setSelectedOpStation] = useState<TOpStation>()
+  const [selectedStation, setSelectedStation] = useState<TStation>()
   const token = useSelector((state: RootState) => state.auth.token)
 
   useEffect(() => {
@@ -21,12 +21,12 @@ export default function StationManagement(): JSX.Element {
   return (
     <section>
       <div className="stations-list d-flex gap-2 flex-row mb-5">
-        {zones?.map((zone) => <ZoneDropdown key={zone.id} {...{ zone, setSelectedOpStation }} />)}
+        {zones?.map((zone) => <ZoneDropdown key={zone.id} {...{ zone, setSelectedStation }} />)}
       </div>
-      {(selectedOpStation != null) && token !== null &&
+      {(selectedStation != null) && token !== null &&
         <div className="station-editor">
-          {(zones != null) && selectedOpStation !== null && <h2>{getSelectedZone(zones, selectedOpStation)}</h2>}
-          {<OpStationMan selectedStation={selectedOpStation} token={token} />}
+          {(zones != null) && selectedStation !== null && <h2>{getSelectedZone(zones, selectedStation)}</h2>}
+          {<StationMan selectedStation={selectedStation} token={token} />}
         </div>
       }
     </section>

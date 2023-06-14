@@ -7,7 +7,7 @@ namespace Manning.Api.Models
     {
         [Required, StringLength(255)]
         public string? RequirementDescription { get; set; }
-        [ForeignKey("OpStationID")]
-        public int OpStationID { get; set; }
+        [ForeignKey("StationID")]
+        public int StationID { get; set; }
     }
 }

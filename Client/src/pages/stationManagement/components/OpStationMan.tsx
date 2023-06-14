@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { type TOpStation } from '../../../types/LineTypes'
+import { type TStation } from '../../../types/LineTypes'
 import AddRequirement from './AddRequirement'
 import FilteredRequirementList from './FilteredRequirementList'
 
-interface TOpStationManProps {
-  selectedStation: TOpStation
+interface TStationManProps {
+  selectedStation: TStation
   token: string
 }
 
-export default function OpStationMan(props: TOpStationManProps): JSX.Element {
+export default function StationMan(props: TStationManProps): JSX.Element {
   const [addRequirement, setAddRequirement] = useState<boolean>(false)
   const [requirements, setRequirements] = useState(props.selectedStation.trainingRequirements)
 
@@ -18,7 +18,7 @@ export default function OpStationMan(props: TOpStationManProps): JSX.Element {
   }, [props.selectedStation.trainingRequirements])
 
   return (
-    <div className="opstationman container row border-light-30 p-3">
+    <div className="stationman container row border-light-30 p-3">
       <div className="col-2">
         <h3 className="width-100-percent">{`Station: ${props.selectedStation.stationName}`}</h3>
         <h4>StationID: {props.selectedStation.id}</h4>
@@ -33,7 +33,7 @@ export default function OpStationMan(props: TOpStationManProps): JSX.Element {
       {addRequirement && (
         <AddRequirement
           closeModal={() => { setAddRequirement(false) }}
-          opstationID={props.selectedStation.id}
+          stationID={props.selectedStation.id}
           trainingRequirements={requirements}
           setRequirements={setRequirements}
           token={props.token}

@@ -4,6 +4,6 @@ namespace Manning.Api.Repositories.Interfaces
 {
     public interface IZonesRepository : IBaseRepository<Zone>
     {
-        Task<List<Zone>> GetAllZonesAndOpStations();
+        Task<List<Zone>> GetAllZonesAndStations();
     }
 }

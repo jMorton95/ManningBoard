@@ -2,7 +2,7 @@ namespace Manning.Factory.SeedFactory;
 
 public static class Data 
 {
-  public readonly static Dictionary<string, string[]> ZoneOpStationsSeedData = new()
+  public readonly static Dictionary<string, string[]> ZoneStationsSeedData = new()
     {
         {
             "Manufacturing",

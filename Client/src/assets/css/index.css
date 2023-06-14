@@ -58,7 +58,7 @@ h4 {
   padding: 4px;
 }
 
-.opstation {
+.station {
   outline: 1px solid hsla(0, 0%, 70%, 0.75);
   border-radius: 8px;
   margin-right: 5px;
@@ -76,6 +76,6 @@ h4 {
   max-height: 50px;
 }
 
-/* .opstationman, .opstationman * {
+/* .stationman, .stationman * {
   border: 1px solid black;
 } */
