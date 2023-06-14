@@ -47,7 +47,7 @@ namespace Manning.Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ClockModel");
+                    b.ToTable("ClockModel", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.OpStation", b =>
@@ -70,7 +70,7 @@ namespace Manning.Api.Migrations
 
                     b.HasIndex("ZoneID");
 
-                    b.ToTable("OpStation");
+                    b.ToTable("OpStation", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.Operator", b =>
@@ -94,7 +94,7 @@ namespace Manning.Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Operator");
+                    b.ToTable("Operator", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.OperatorCompletedTraining", b =>
@@ -116,7 +116,7 @@ namespace Manning.Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("OperatorCompletedTraining");
+                    b.ToTable("OperatorCompletedTraining", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.ShiftType", b =>
@@ -134,7 +134,7 @@ namespace Manning.Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShiftType");
+                    b.ToTable("ShiftType", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.TrainingRequirement", b =>
@@ -157,7 +157,7 @@ namespace Manning.Api.Migrations
 
                     b.HasIndex("OpStationID");
 
-                    b.ToTable("TrainingRequirement");
+                    b.ToTable("TrainingRequirement", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.WorkingDayHistory", b =>
@@ -188,7 +188,7 @@ namespace Manning.Api.Migrations
 
                     b.HasIndex("ShiftID");
 
-                    b.ToTable("WorkdayHistory");
+                    b.ToTable("WorkdayHistory", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.Zone", b =>
@@ -206,7 +206,7 @@ namespace Manning.Api.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Zone");
+                    b.ToTable("Zone", (string)null);
                 });
 
             modelBuilder.Entity("Manning.Api.Models.OpStation", b =>

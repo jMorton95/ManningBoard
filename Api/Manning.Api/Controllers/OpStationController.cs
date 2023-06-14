@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Manning.Api.Models;
+using Manning.Api.Models.DataTransferObjects;
 using Manning.Api.Services.Interfaces;
 using Manning.Api.Services;
+using Manning.Api.Models;
 
 namespace Manning.Api.Controllers
 {
@@ -10,11 +11,18 @@ namespace Manning.Api.Controllers
     public class OpStationController : ControllerBase
     {
         private readonly ILineService _lineService;
-        public OpStationController(ILineService lineService)
+        private readonly IOpStationService _opStationService;
+        public OpStationController(ILineService lineService, IOpStationService opStationService)
         {
             _lineService = lineService;
+            _opStationService = opStationService;
         }
         [HttpGet]
         public async Task<ActionResult<OpStation>> GetOpStationById(int id) => await _lineService.GetOpStationById(id);
+        [HttpPost]
+        public ActionResult AssignOperatorToOpstation([FromBody] OperatorAndStationIdDTO dto)
+        {
+          return Ok();
+        }
     }
 }

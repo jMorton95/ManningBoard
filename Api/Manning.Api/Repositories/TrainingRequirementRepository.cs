@@ -4,22 +4,26 @@ using Manning.Api.Repositories.Interfaces;
 
 namespace Manning.Api.Repositories
 {
-    public class TrainingRequirementRepository : ITrainingRequirementRepository
+    public class TrainingRequirementRepository : BaseRepository<TrainingRequirement>, ITrainingRequirementRepository
     {
-        private readonly ManningDbContext _context;
-        public TrainingRequirementRepository(ManningDbContext context)
+        public TrainingRequirementRepository(ManningDbContext dbContext) : base(dbContext)
         {
-            _context = context;
+           
         }
         public async Task<TrainingRequirement?> GetTrainingRequirementByIDAsync(int ID)
         {
-            return await _context.TrainingRequirement.FirstOrDefaultAsync(x => x.ID == ID);
+            return await _dbContext.TrainingRequirement.FirstOrDefaultAsync(x => x.ID == ID);
         }
         public async Task<TrainingRequirement> AddNewPrerequisite(TrainingRequirement newRequirement)
         {
-            _context.TrainingRequirement.Add(newRequirement);
-            await _context.SaveChangesAsync();
+            _dbContext.TrainingRequirement.Add(newRequirement);
+            await _dbContext.SaveChangesAsync();
             return newRequirement;
         }
-    }
+
+        public async Task<List<TrainingRequirement>> GetTrainingRequirementsByOpStationId(int ID)
+        {
+          return await _dbContext.TrainingRequirement.Where(x => x.OpStationID == ID).ToListAsync();
+        }
+  }
 }

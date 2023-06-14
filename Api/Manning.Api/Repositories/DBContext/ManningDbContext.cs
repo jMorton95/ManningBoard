@@ -17,5 +17,6 @@ namespace Manning.Api.Repositories
         public DbSet<ShiftType> ShiftType => Set<ShiftType>();
         public DbSet<WorkingDayHistory> WorkdayHistory => Set<WorkingDayHistory>();
         public DbSet<ClockModel> ClockModel => Set<ClockModel>();
+        public DbSet<AssignedOperatorsModel> AssignedOperatorsModels => Set<AssignedOperatorsModel>();
     }
 }

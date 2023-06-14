@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Manning.Api.Models;
 using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services.Interfaces;
-using Manning.Api.ViewModels;
-
+using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Controllers
 {
@@ -13,21 +12,14 @@ namespace Manning.Api.Controllers
     public class TestController : ControllerBase
     {
         private readonly IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository;
-        private readonly IOpStationService opStationService;
-        public TestController(IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository, IOpStationService _opStationService)
+        public TestController(IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository)
         {
             operatorCompletedTrainingRepository = _operatorCompletedTrainingRepository;
-            opStationService = _opStationService;
         }
         [HttpGet("{operatorID}")]
-        public List<OperatorCompletedTraining> GetTraining(int operatorID)
+        public async Task<List<OperatorCompletedTraining>> GetTraining(int operatorID)
         {
-            return operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
-        }
-        [HttpGet]
-        public Task<List<OperatorAndTraining>> GetOperatorsAndTraining()
-        {
-            return opStationService.GetAllOperatorsAndTraining();
+            return await operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
         }
     }
 }

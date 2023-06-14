@@ -1,11 +1,10 @@
 ﻿using Manning.Api.Models;
-using Manning.Api.ViewModels;
 
 namespace Manning.Api.Repositories.Interfaces
 {
-    public interface IOperatorCompletedTrainingRepository
+    public interface IOperatorCompletedTrainingRepository : IBaseRepository<OperatorCompletedTraining>
     {
-        List<OperatorCompletedTraining> GetAllCompletedTraining();
-        List<OperatorCompletedTraining> GetOperatorCompletedTraining(int operatorID);
+        Task<List<OperatorCompletedTraining>> GetAllCompletedTraining();
+        Task<List<OperatorCompletedTraining>> GetOperatorCompletedTraining(int operatorID);
     }
 }

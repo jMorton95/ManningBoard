@@ -1,6 +1,6 @@
 ﻿using Manning.Api.Models;
 
-namespace Manning.Api.ViewModels
+namespace Manning.Api.Models.DataTransferObjects
 {
     public class OperatorGrouped
     {

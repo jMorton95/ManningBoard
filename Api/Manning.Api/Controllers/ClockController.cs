@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Manning.Api.Models;
 using Manning.Api.Services.Interfaces;
-using Manning.Api.ViewModels;
+using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Controllers
 {

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { SplitPrerequisitesAndSOPS } from '../../../services/TrainingRequirementService'
 import { type TOpStation } from '../../../types/LineTypes'
 import AddRequirement from './AddRequirement'
 import FilteredRequirementList from './FilteredRequirementList'
@@ -12,7 +11,7 @@ interface TOpStationManProps {
 
 export default function OpStationMan(props: TOpStationManProps): JSX.Element {
   const [addRequirement, setAddRequirement] = useState<boolean>(false)
-  const [requirements, setRequirements] = useState(SplitPrerequisitesAndSOPS(props.selectedStation.trainingRequirements).prerequisites)
+  const [requirements, setRequirements] = useState(props.selectedStation.trainingRequirements)
 
   useEffect(() => {
     setRequirements(props.selectedStation.trainingRequirements)

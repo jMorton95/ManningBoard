@@ -1,4 +1,5 @@
 ﻿using Manning.Api.Models;
+using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Manning.Api.Services.Interfaces
         Task<List<Zone>> GetAllZones();
         Task<List<Zone>> GetAllZonesAndOpStations();
         Task<List<OpStation>> GetAllOpStations();
+        
     }
 }

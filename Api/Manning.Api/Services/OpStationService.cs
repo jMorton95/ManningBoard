@@ -1,70 +1,55 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Manning.Api.Models;
+﻿using Manning.Api.Models;
 using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services.Interfaces;
-using Manning.Api.ViewModels;
-using static Manning.Api.ViewModels.OperatorGrouped;
+using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Services
 {
     public class OpStationService : IOpStationService
     {
         private readonly IOpStationRepository _opStationRepository;
-        private readonly IOperatorRepository _operatorRepository;
         private readonly IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository;
-        public OpStationService(IOpStationRepository opStationRepository, IOperatorRepository operatorRepository, IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository)
+        public OpStationService
+        (
+          IOpStationRepository opStationRepository,
+          IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository
+        )
         {
             _opStationRepository = opStationRepository;
-            _operatorRepository = operatorRepository;
             _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
         }
 
-        public async Task<List<OperatorAndTraining>> GetAllOperatorsAndTraining()
+        public async Task<OpStation?> AddOperatorToOpStation(OperatorAndStationIdDTO dto)
         {
-            //TODO: Refactor for efficiency/oversights
-            List<Operator> allOperators = await _operatorRepository.GetAllOperators();
-            List<OperatorAndTraining> opsByTraining = new();
-
-            //Conscious of calling a Repo in a foreach loop
-            foreach (Operator op in allOperators)
-            {
-                List<int> opTrainingIDs = new();
-                var operatorCompletedTraining = _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(op.ID);
-                foreach (var requirement in operatorCompletedTraining)
-                {
-                    opTrainingIDs.Add(requirement.TrainingRequirementID);
-                }
-                opsByTraining.Add(new OperatorAndTraining(op, opTrainingIDs));
-            }
-
-            return opsByTraining;
+          return await _opStationRepository.AddOperatorToOpStation(dto);
         }
 
-        public async Task<List<OperatorGrouped>> GetOperatorsGroupedByTraining(int opstationID)
+        //TODO: Unit Test
+        // public async Task<bool> CheckOperatorIsTrainedOnOpStation(OperatorAndStationIdDTO dto)
+        // {
+        //   OpStation opStation = await _opStationRepository.GetOpStationByID(dto.OpStationId);
+
+        //   //Early return if there are no requirements.
+        //   if (opStation.TrainingRequirements == null || opStation.TrainingRequirements.Count < 1)
+        //   {
+        //     return true;
+        //   } 
+            
+        //   List<OperatorCompletedTraining> operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(dto.OperatorId);
+          
+        //   //Operator must have all training required for OpStation
+        //   return operatorTraining.All(x => opStation.TrainingRequirements.Any(o => o.ID == x.TrainingRequirementID));
+        // }
+
+        //TODO: This is the better implementation, make sure its all good
+        public async Task<bool> CheckOperatorIsTrainedOnOpStation(OperatorAndStationIdDTO dto)
         {
-            List<int> stationTrainingIDs = await _opStationRepository.GetOpStationTrainingIDs(opstationID);
+          List<int> opStationTrainingIds = await _opStationRepository.GetOpStationTrainingIDs(dto.OpStationId);
 
-            List<OperatorAndTraining> operators = await GetAllOperatorsAndTraining();
+          if (opStationTrainingIds.Count < 1) return false;
 
-            List<OperatorGrouped> groupedOperators = new();
-
-            foreach (var _operator in operators)
-            {
-                if (stationTrainingIDs.All(s => _operator.TrainingIDs.Contains(s)))
-                {
-                    groupedOperators.Add(new OperatorGrouped(_operator.Operator, StatusColor.Green));
-                }
-                else if (stationTrainingIDs.Any(s => _operator.TrainingIDs.Contains(s)))
-                {
-                    groupedOperators.Add(new OperatorGrouped(_operator.Operator, StatusColor.Yellow));
-                }
-                else
-                {
-                    groupedOperators.Add(new OperatorGrouped(_operator.Operator, StatusColor.Red));
-                }
-            }
-
-            return groupedOperators;
+          List<OperatorCompletedTraining> operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(dto.OperatorId);
+          return operatorTraining.All(x => opStationTrainingIds.Contains(x.TrainingRequirementID));
         }
-    }
+  }
 }

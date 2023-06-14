@@ -4,22 +4,20 @@ using Manning.Api.Repositories.Interfaces;
 
 namespace Manning.Api.Repositories
 {
-    public class OperatorRepository : IOperatorRepository
+    public class OperatorRepository : BaseRepository<Operator>, IOperatorRepository
     {
-        private readonly ManningDbContext _DbContext;
-        public OperatorRepository(ManningDbContext dbContext)
+         public OperatorRepository(ManningDbContext dbContext) : base(dbContext)
         {
-            _DbContext = dbContext;
         }
 
         public async Task<List<Operator>> GetAllOperatorsAsync()
         {
-            return await _DbContext.Operator.ToListAsync();
+            return await _dbContext.Operator.ToListAsync();
         }
 
         public Task<List<Operator>> GetAllOperators()
         {
-            return _DbContext.Operator.ToListAsync();
+            return _dbContext.Operator.ToListAsync();
         }
-    }
+  }
 }
