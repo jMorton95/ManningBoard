@@ -5,9 +5,9 @@ namespace Manning.Api.Services.Interfaces
 {
     public interface IStationService
     {
-        Task<Station> AddOperatorToStation(StationStateModel dto);
-        Task<Station> RemoveOperatorFromStation(StationStateModel dto);
-        Task<bool> CheckOperatorIsTrainedOnStation(StationStateModel dto);
+        Task<Station> AddOperatorToStation(OperatorAndStationIdDTO dto);
+        Task<Station> RemoveOperatorFromStation(OperatorAndStationIdDTO dto);
+        Task<bool> CheckOperatorIsTrainedOnStation(OperatorAndStationIdDTO dto);
         
     }
 }

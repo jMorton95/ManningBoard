@@ -1,4 +1,5 @@
 ﻿using Manning.Api.Models;
+using Manning.Api.Models.DataTransferObjects;
 using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services.Interfaces;
 
@@ -21,7 +22,7 @@ namespace Manning.Api.Services
             _stationStateRepository = stationStateRepository;
         }
 
-        public async Task<Station> AddOperatorToStation(StationStateModel dto)
+        public async Task<Station> AddOperatorToStation(OperatorAndStationIdDTO dto)
         {
           return await _stationRepository.AddOperatorToStation(dto);
         }
@@ -44,7 +45,7 @@ namespace Manning.Api.Services
         // }
 
         //TODO: This is the better implementation, make sure its all good
-        public async Task<bool> CheckOperatorIsTrainedOnStation(StationStateModel dto)
+        public async Task<bool> CheckOperatorIsTrainedOnStation(OperatorAndStationIdDTO dto)
         {
           List<int> stationTrainingIds = await _stationRepository.GetStationTrainingIDs(dto.StationID);
 
@@ -54,9 +55,10 @@ namespace Manning.Api.Services
           return operatorTraining.All(x => stationTrainingIds.Contains(x.TrainingRequirementID));
         }
 
-        public Task<Station> RemoveOperatorFromStation(StationStateModel dto)
+        public Task<Station> RemoveOperatorFromStation(OperatorAndStationIdDTO dto)
         {
-          _stationStateRepository.Delete(dto);
+
+          _stationStateRepository.Delete(new StationStateModel() {OperatorID = dto.OperatorID, StationID = dto.StationID });
           return _stationRepository.GetById(dto.StationID);
         }
   }
