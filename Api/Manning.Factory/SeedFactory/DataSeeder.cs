@@ -42,6 +42,7 @@ public class DataSeeder
         {
             _dbContext.Zone.AddRange(ZonesData);
             _dbContext.SaveChanges();
+            Console.WriteLine($"Succesfully added {ZoneStationsSeedData.Count} zones and {ZoneStationsSeedData.Values.SelectMany(x => x).Count()} stations");
         }
         catch (Exception ex)
         {
