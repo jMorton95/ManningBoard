@@ -1,8 +1,8 @@
 namespace Manning.Factory.SeedFactory;
 
-public static class Data 
+public static class Data
 {
-  public readonly static Dictionary<string, string[]> ZoneStationsSeedData = new()
+    public readonly static Dictionary<string, string[]> ZoneStationsSeedData = new()
     {
         {
             "Manufacturing",
@@ -65,5 +65,11 @@ public static class Data
         "Workplace Ergonomics",
         "Root Cause Analysis",
         "Statistical Process Control"
+    };
+
+    public readonly static string[] ShiftTypeSeedData = new string[]
+    {
+      "Day Shift",
+      "Night Shift",
     };
 }

@@ -1,11 +1,11 @@
 namespace Manning.Factory.SeedFactory;
-
-using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 using Manning.Api.Models;
 using Manning.Api.Repositories;
 using static Manning.Factory.SeedFactory.Data;
+using static Manning.Factory.SeedFactory.SeedDataStrategy;
 
-public class DataSeeder : IDataSeeder
+public class DataSeeder
 {
     private readonly ManningDbContext _dbContext;
 
@@ -16,43 +16,16 @@ public class DataSeeder : IDataSeeder
 
     public void RunDataSeed()
     {
-        if (_dbContext.Zone.ToList().Count() < 1)
-        {
-            Console.WriteLine("Adding Zones & Stations");
-            SeedLine();
-        }
-        else
-        {
-            Console.WriteLine("Skipped Zones & Stations - Data Already Found");
-        }
+        List<SeedDataRegistry> seedDataRegistries = new()
+      {
+        new SeedDataRegistry<Zone>(() => _dbContext.Zone, SeedLine, "Zone"),
+        new SeedDataRegistry<Operator>(() => _dbContext.Operator, SeedOperators, "Operators"),
+        new SeedDataRegistry<TrainingRequirement>(() => _dbContext.TrainingRequirement, SeedTraining, "Training Requirements"),
+        new SeedDataRegistry<OperatorCompletedTraining>(() => _dbContext.OperatorCompletedTraining, () => SeedCompletedTraining(5), "Operator Completed Training"),
+        new SeedDataRegistry<ShiftType>(() => _dbContext.ShiftType, SeedShiftType, "Shift Type"),
+      };
 
-        if (_dbContext.Operator.ToList().Count() < 1)
-        {
-            Console.WriteLine("Adding Operators");
-            SeedOperators();
-        }
-        else
-        {
-            Console.WriteLine("Skipped Operators - Data Already Found");
-        }
-
-        if (_dbContext.TrainingRequirement.ToList().Count() <  1) {
-          Console.WriteLine("Adding Training Requirements");
-          SeedTraining();
-        }
-        else
-        {
-          Console.WriteLine("Skipped Training Requirements - Data Already Found");
-        }
-
-        if (_dbContext.OperatorCompletedTraining.ToList().Count() <  1) {
-          Console.WriteLine("Adding Training Requirements");
-          SeedCompletedTraining(5);
-        }
-        else
-        {
-          Console.WriteLine("Skipped Completed Training - Data Already Found");
-        }
+        SeedStrategy(seedDataRegistries);
     }
     public void SeedLine()
     {
@@ -78,21 +51,13 @@ public class DataSeeder : IDataSeeder
 
     public void SeedOperators()
     {
-        List<Operator> OperatorData = new();
-        foreach (var (ClockCardNumber, OperatorName, IsAdministrator) in OperatorSeedData)
-        {
-            OperatorData.Add(new()
-            {
-                ClockCardNumber = ClockCardNumber,
-                OperatorName = OperatorName,
-                IsAdministrator = IsAdministrator
-            });
-        }
+        List<Operator> OperatorData = OperatorSeedData.Select(x => new Operator() { ClockCardNumber = x.ClockCardNumber, OperatorName = x.OperatorName, IsAdministrator = x.IsAdministrator }).ToList();
 
         try
         {
             _dbContext.Operator.AddRange(OperatorData);
             _dbContext.SaveChanges();
+            Console.WriteLine($"Succesfully added {OperatorData.Count} operators");
         }
         catch (Exception ex)
         {
@@ -102,60 +67,79 @@ public class DataSeeder : IDataSeeder
 
     public void SeedTraining()
     {
-      List<Station> Stations = _dbContext.Station.ToList(); 
+        List<Station> Stations = _dbContext.Station.ToList();
 
-      List<TrainingRequirement> TrainingRequirementData = new();
+        List<TrainingRequirement> TrainingRequirementData = new();
 
-      Random random = new();
+        Random random = new();
 
-      foreach (var requirement in TrainingRequirementSeedData)
-      {
-        int randId = random.Next(0, Stations.Count);
-
-        TrainingRequirementData.Add(new()
+        foreach (var requirement in TrainingRequirementSeedData)
         {
-          RequirementDescription = requirement,
-          StationID = Stations[randId].ID
-        });
+            int randId = random.Next(0, Stations.Count);
 
-        Stations.RemoveAt(randId);
-      }
+            TrainingRequirementData.Add(new()
+            {
+                RequirementDescription = requirement,
+                StationID = Stations[randId].ID
+            });
 
-      try 
-      {
-        _dbContext.TrainingRequirement.AddRange(TrainingRequirementData);
-        _dbContext.SaveChanges();
-      }
-      catch (Exception ex) {
-        Console.WriteLine($"An error occurred when saving Training Requirements: {ex.Message}" );
-      }       
+            Stations.RemoveAt(randId);
+        }
+
+        try
+        {
+            _dbContext.TrainingRequirement.AddRange(TrainingRequirementData);
+            _dbContext.SaveChanges();
+            Console.WriteLine($"Succesfully added {TrainingRequirementData.Count} training requirements");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred when saving Training Requirements: {ex.Message}");
+        }
     }
 
     public void SeedCompletedTraining(int recordsToSeed)
     {
-      List<Operator> operators = _dbContext.Operator.Take(recordsToSeed).ToList();
-      List<TrainingRequirement> trainingRequirements = _dbContext.TrainingRequirement.Take(recordsToSeed).ToList();
+        List<Operator> operators = _dbContext.Operator.Take(recordsToSeed).ToList();
+        List<TrainingRequirement> trainingRequirements = _dbContext.TrainingRequirement.Take(recordsToSeed).ToList();
 
-      List<OperatorCompletedTraining> completedTrainingToSeed = new();
+        List<OperatorCompletedTraining> completedTrainingToSeed = new();
 
-      for (int i = 0; i < recordsToSeed; i++)
-      {
-        completedTrainingToSeed.Add(new()
+        for (int i = 0; i < recordsToSeed; i++)
         {
-          OperatorID = operators[i].ID,
-          TrainerClockCardNumber = operators[i].ClockCardNumber,
-          TrainingRequirementID = trainingRequirements[i].ID,
-        });
-      }
+            completedTrainingToSeed.Add(new()
+            {
+                OperatorID = operators[i].ID,
+                TrainerClockCardNumber = operators[i].ClockCardNumber,
+                TrainingRequirementID = trainingRequirements[i].ID,
+            });
+        }
 
-      try 
+        try
+        {
+            _dbContext.OperatorCompletedTraining.AddRange(completedTrainingToSeed);
+            _dbContext.SaveChanges();
+            Console.WriteLine($"Succesfully added {completedTrainingToSeed.Count} completed training");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred when saving Operator Completed Training: {ex.Message}");
+        }
+    }
+
+    public void SeedShiftType()
+    {
+        List<ShiftType> shiftsToSeed = ShiftTypeSeedData.Select(x => new ShiftType() { ShiftName = x }).ToList();
+
+      try
       {
-        _dbContext.OperatorCompletedTraining.AddRange(completedTrainingToSeed);
+        _dbContext.ShiftType.AddRange(shiftsToSeed);
         _dbContext.SaveChanges();
+        Console.WriteLine($"Succesfully added {shiftsToSeed.Count} shift types");
       }
       catch (Exception ex)
       {
-        Console.WriteLine($"An error occurred when saving Operator Completed Training: {ex.Message}");
+        Console.WriteLine($"An error occured when saving Shift Type Data: {ex.Message}");
       }
     }
 
