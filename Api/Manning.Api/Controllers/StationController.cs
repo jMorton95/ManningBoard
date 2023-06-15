@@ -19,10 +19,18 @@ namespace Manning.Api.Controllers
         }
         [HttpGet]
         public async Task<ActionResult<Station>> GetStationById(int id) => await _lineService.GetStationById(id);
-        [HttpPost]
-        public ActionResult AssignOperatorToOpstation([FromBody] OperatorAndStationIdDTO dto)
+        [HttpPost("AddOperatorToStation")]
+        public ActionResult AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          return Ok();
+          var station = _stationService.AddOperatorToStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
+          return Ok(station);
+        }
+
+        [HttpPost("RemoveOperatorFromStation")]
+        public ActionResult RemoveOperatorFromStation([FromBody] OperatorAndStationIdDTO dto)
+        {
+          var station = _stationService.RemoveOperatorFromStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
+          return Ok(station);
         }
     }
 }

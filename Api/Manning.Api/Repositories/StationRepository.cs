@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Manning.Api.Models;
 using Manning.Api.Repositories.Interfaces;
-using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Repositories
 {
@@ -36,14 +35,29 @@ namespace Manning.Api.Repositories
 
         public async Task<List<Station>> GetAllStations() => await _dbContext.Station.Include(o => o.TrainingRequirements!).ToListAsync();
 
-        public Task<Station> AddOperatorToStation(OperatorAndStationIdDTO dto)
+        public async Task<Station> AddOperatorToStation(StationStateModel dto)
         {
-          throw new NotImplementedException();
-        }
+          var findStationAssignment = await _dbContext.StationStateModel.FirstOrDefaultAsync(x => x.StationID == dto.StationID);
 
-        public void RemoveOperatorFromStation(OperatorAndStationIdDTO dto)
-        {
-          throw new NotImplementedException();
+          if (findStationAssignment == null)
+          {
+            _dbContext.StationStateModel.Add(dto);
+          }
+          else
+          {
+            findStationAssignment.OperatorID = dto.OperatorID;  
+          }
+
+          try
+          {
+            await _dbContext.SaveChangesAsync();
+          }
+          catch (Exception ex)
+          {
+            Console.WriteLine($"Failed to add Operator to Station: {ex.Message}");
+          }
+
+          return await GetById(dto.StationID);
         }
   }
 }

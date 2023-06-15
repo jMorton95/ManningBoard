@@ -2,8 +2,8 @@ namespace Manning.Api.Models.DataTransferObjects
 {
   public class OperatorAndStationIdDTO
   {
-    public int OperatorId { get; set; }
-    public int StationId { get; set; }
+    public int OperatorID { get; set; }
+    public int StationID { get; set; }
     
   }
 }
