@@ -19,7 +19,7 @@ namespace Manning.Api.Controllers
         [HttpGet("{operatorID}")]
         public async Task<List<OperatorCompletedTraining>> GetTraining(int operatorID)
         {
-            return await operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
+          return await operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
         }
     }
 }

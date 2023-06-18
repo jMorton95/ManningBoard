@@ -58,14 +58,20 @@ namespace Manning.Api.Services
           await _stationRepository.GetById(dto.StationID);
         }
 
-        public async Task<List<OperatorGrouped>> GetAssignableOperatorsGrouped(int stationID)
+        public async Task<StationAssignableOperatorsDTO> GetAssignableOperatorsGrouped(int stationID)
         {
           Station station = await _stationRepository.GetById(stationID);
           List<OperatorAndTrainingDTO> opsAndTraining = await GroupOperatorsWithTraining();
 
-          List<Operator> validOperators = opsAndTraining.Where(op =>
-              station.TrainingRequirements!.All(req => op.TrainingIDs.Contains(req.ID))
+          List<Operator?> validOperators = opsAndTraining.Where(op =>
+              station.TrainingRequirements!.All(req => op.TrainingIDs!.Contains(req.ID))
             ).Select(x => x.Operator).ToList();
+
+          List<Operator?> trainingOperators = opsAndTraining.Where(op => !validOperators.Contains(op.Operator) && 
+          station.TrainingRequirements!.Any(req => op.TrainingIDs!.Contains(req.ID))
+          ).Select(x => x.Operator).ToList();
+
+          return new StationAssignableOperatorsDTO() {ValidOperators = validOperators, TrainingOperators = trainingOperators};
         }
 
         public async Task<List<OperatorAndTrainingDTO>> GroupOperatorsWithTraining()
