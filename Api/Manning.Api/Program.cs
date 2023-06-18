@@ -56,6 +56,7 @@ namespace Manning.Api
             builder.Services.AddScoped<ITrainingRequirementService, TrainingRequirementService>();
             builder.Services.AddScoped<IStationService, StationService>();
             builder.Services.AddScoped<ILoginService, LoginService>();
+            builder.Services.AddScoped<IOperatorService, OperatorService>();
 
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

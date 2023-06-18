@@ -32,6 +32,11 @@ namespace Manning.Api.Repositories
                 await _dbContext.SaveChangesAsync();
             }
         }
+
+        public async Task<List<T>> GetManyById(int[] ids)
+        {
+        return await _dbContext.Set<T>().Where(x => ids.Contains(x.ID)).ToListAsync();
+        }
   }
 
     
