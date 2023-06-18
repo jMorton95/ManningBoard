@@ -12,14 +12,23 @@ namespace Manning.Api.Controllers
     public class TestController : ControllerBase
     {
         private readonly IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository;
-        public TestController(IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository)
+        private readonly IStationService stationService;
+        public TestController(IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository, IStationService _stationService)
         {
             operatorCompletedTrainingRepository = _operatorCompletedTrainingRepository;
+            stationService = _stationService;
+
         }
-        [HttpGet("{operatorID}")]
-        public async Task<List<OperatorCompletedTraining>> GetTraining(int operatorID)
+        [HttpGet("{stationID}")]
+        public async Task<StationAssignableOperatorsDTO> GetTraining(int stationID)
         {
-          return await operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
+          return await stationService.GetAssignableOperatorsGrouped(stationID);
         }
+        [HttpGet()]
+        public async Task<List<OperatorAndTrainingDTO>> GetStuff()
+        {
+            return await stationService.GroupOperatorsWithTraining();
+        }
+
     }
 }

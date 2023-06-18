@@ -63,27 +63,47 @@ namespace Manning.Api.Services
           Station station = await _stationRepository.GetById(stationID);
           List<OperatorAndTrainingDTO> opsAndTraining = await GroupOperatorsWithTraining();
 
-          List<Operator?> validOperators = opsAndTraining.Where(op =>
-              station.TrainingRequirements!.All(req => op.TrainingIDs!.Contains(req.ID))
-            ).Select(x => x.Operator).ToList();
+            List<Operator?> validOperators = opsAndTraining
+            .Where(op => op != null &&
+                          op.TrainingIDs != null &&
+                          station.TrainingRequirements != null &&
+                          station.TrainingRequirements.All(req => op.TrainingIDs.Contains(req.ID))
+            )
+            .Select(x => x.Operator)
+            .ToList();
 
-          List<Operator?> trainingOperators = opsAndTraining.Where(op => !validOperators.Contains(op.Operator) && 
-          station.TrainingRequirements!.Any(req => op.TrainingIDs!.Contains(req.ID))
-          ).Select(x => x.Operator).ToList();
+            //validOperators = validOperators ?? new List<Operator?>();
 
-          return new StationAssignableOperatorsDTO() {ValidOperators = validOperators, TrainingOperators = trainingOperators};
+            List<Operator?> trainingOperators = opsAndTraining
+                .Where(op => op != null &&
+                             op.TrainingIDs != null &&
+                             station.TrainingRequirements != null &&
+                             !validOperators.Contains(op.Operator) &&
+                             station.TrainingRequirements.Any(req => req != null && op.TrainingIDs.Contains(req.ID))
+                )
+                .Select(x => x.Operator)
+                .ToList();
+
+            //trainingOperators = trainingOperators ?? new List<Operator?>();
+
+            return new StationAssignableOperatorsDTO()
+            {
+                ValidOperators = validOperators,
+                TrainingOperators = trainingOperators
+            };
         }
 
         public async Task<List<OperatorAndTrainingDTO>> GroupOperatorsWithTraining()
         {
           var allOperators = await _operatorRepository.GetAll();
           var allTraining = await _operatorCompletedTrainingRepository.GetAll();
-
-          return allOperators.Select(op => new OperatorAndTrainingDTO()
+          var operatorsAndTraining = allOperators.Select(op => new OperatorAndTrainingDTO()
           {
             Operator = op,
             TrainingIDs = allTraining.Where(x => x.OperatorID == op.ID).Select(x => x.TrainingRequirementID).ToArray()
           }).ToList();
+
+            return operatorsAndTraining;
         }
   }
 }
