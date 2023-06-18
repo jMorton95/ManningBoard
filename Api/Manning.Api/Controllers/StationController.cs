@@ -22,10 +22,11 @@ namespace Manning.Api.Controllers
         [HttpPost("AddOperatorToStation")]
         public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
         {
+          //SignalR Entry Point.
           StationStateModel stationFromDTO = new(){StationID = dto.StationID, OperatorID = dto.OperatorID};
           if (!await _stationService.CheckOperatorIsTrainedOnStation(stationFromDTO))
           {
-            return Ok("Not trained");
+            return Ok(null);
           }
           await _stationService.AddOperatorToStation(stationFromDTO);
           return Ok("Added");
@@ -34,8 +35,9 @@ namespace Manning.Api.Controllers
         [HttpPost("RemoveOperatorFromStation")]
         public async Task<ActionResult> RemoveOperatorFromStation([FromBody] OperatorAndStationIdDTO dto)
         {
+          //SignalR Entry Point.
           await _stationService.RemoveOperatorFromStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
-          return Ok("Removed");
+          return Ok();
         }
     }
 }

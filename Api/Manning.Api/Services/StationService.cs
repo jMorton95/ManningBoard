@@ -31,7 +31,7 @@ namespace Manning.Api.Services
         {
           StationStateModel? assignedOperator = await _stationStateRepository.GetStationStateByOperatorID(dto.OperatorID);
 
-          if (assignedOperator != null)
+          if (assignedOperator != null && assignedOperator.StationID != dto.StationID)
           {
             await _stationStateRepository.Delete(assignedOperator);
           }
