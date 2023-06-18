@@ -8,5 +8,10 @@ namespace Manning.Api.Repositories
     public StationStateRepository(ManningDbContext dbContext) : base(dbContext)
     {
     }
+
+    public async Task<StationStateModel?> GetStationStateByOperatorID(int operatorID)
+    {
+      return await Task.FromResult(_dbContext.StationStateModel.FirstOrDefault(x => x.OperatorID == operatorID));
+    }
   }
 }

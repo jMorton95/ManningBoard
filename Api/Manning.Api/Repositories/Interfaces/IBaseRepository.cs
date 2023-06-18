@@ -7,6 +7,6 @@ namespace Manning.Api.Repositories.Interfaces
         Task<T> GetById(int id);
         Task<List<T>> GetAll();
 
-        void Delete(T item);
+        Task Delete(T item);
     }
 }

@@ -21,9 +21,20 @@ namespace Manning.Api.Services
             _stationStateRepository = stationStateRepository;
         }
 
-        public async Task<Station> AddOperatorToStation(StationStateModel dto)
+        public async Task AddOperatorToStation(StationStateModel dto)
         {
-          return await _stationRepository.AddOperatorToStation(dto);
+          await RemoveAssignedOperatorFromOtherStation(dto);
+          await _stationRepository.AddOperatorToStation(dto);
+        }
+
+        public async Task RemoveAssignedOperatorFromOtherStation(StationStateModel dto)
+        {
+          StationStateModel? assignedOperator = await _stationStateRepository.GetStationStateByOperatorID(dto.OperatorID);
+
+          if (assignedOperator != null)
+          {
+            await _stationStateRepository.Delete(assignedOperator);
+          }
         }
 
         //TODO: Unit Test
@@ -54,10 +65,10 @@ namespace Manning.Api.Services
           return operatorTraining.All(x => stationTrainingIds.Contains(x.TrainingRequirementID));
         }
 
-        public Task<Station> RemoveOperatorFromStation(StationStateModel dto)
+        public async Task RemoveOperatorFromStation(StationStateModel dto)
         {
-          _stationStateRepository.Delete(dto);
-          return _stationRepository.GetById(dto.StationID);
+          await _stationStateRepository.Delete(dto);
+          await _stationRepository.GetById(dto.StationID);
         }
   }
 }

@@ -20,17 +20,22 @@ namespace Manning.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<Station>> GetStationById(int id) => await _lineService.GetStationById(id);
         [HttpPost("AddOperatorToStation")]
-        public ActionResult AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
+        public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          var station = _stationService.AddOperatorToStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
-          return Ok(station);
+          StationStateModel stationFromDTO = new(){StationID = dto.StationID, OperatorID = dto.OperatorID};
+          if (!await _stationService.CheckOperatorIsTrainedOnStation(stationFromDTO))
+          {
+            return Ok("Not trained");
+          }
+          await _stationService.AddOperatorToStation(stationFromDTO);
+          return Ok("Added");
         }
 
         [HttpPost("RemoveOperatorFromStation")]
-        public ActionResult RemoveOperatorFromStation([FromBody] OperatorAndStationIdDTO dto)
+        public async Task<ActionResult> RemoveOperatorFromStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          var station = _stationService.RemoveOperatorFromStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
-          return Ok(station);
+          await _stationService.RemoveOperatorFromStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
+          return Ok("Removed");
         }
     }
 }
