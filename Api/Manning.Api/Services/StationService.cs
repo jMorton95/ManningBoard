@@ -60,29 +60,29 @@ namespace Manning.Api.Services
 
         public async Task<StationAssignableOperatorsDTO> GetAssignableOperatorsGrouped(int stationID)
         {
-          Station station = await _stationRepository.GetById(stationID);
+          Station station = await _stationRepository.GetStationByID(stationID);
           List<OperatorAndTrainingDTO> opsAndTraining = await GroupOperatorsWithTraining();
 
-            List<Operator?> validOperators = opsAndTraining
-            .Where(op => op != null &&
-                          op.TrainingIDs != null &&
-                          station.TrainingRequirements != null &&
-                          station.TrainingRequirements.All(req => op.TrainingIDs.Contains(req.ID))
+          if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1)
+          {
+            return new StationAssignableOperatorsDTO();
+          }
+
+          List<Operator?> validOperators = opsAndTraining
+          .Where(op => 
+            station.TrainingRequirements.All(req => op.TrainingIDs.Contains(req.ID))
+          )
+          .Select(x => x.Operator)
+          .ToList();
+
+          //validOperators = validOperators ?? new List<Operator?>();
+
+          List<Operator?> trainingOperators = opsAndTraining
+            .Where(op => validOperators.Exists(x => x.ID != op.Operator.ID) &&
+              station.TrainingRequirements.Any(req => op.TrainingIDs.Contains(req.ID))
             )
             .Select(x => x.Operator)
             .ToList();
-
-            //validOperators = validOperators ?? new List<Operator?>();
-
-            List<Operator?> trainingOperators = opsAndTraining
-                .Where(op => op != null &&
-                             op.TrainingIDs != null &&
-                             station.TrainingRequirements != null &&
-                             !validOperators.Contains(op.Operator) &&
-                             station.TrainingRequirements.Any(req => req != null && op.TrainingIDs.Contains(req.ID))
-                )
-                .Select(x => x.Operator)
-                .ToList();
 
             //trainingOperators = trainingOperators ?? new List<Operator?>();
 
