@@ -11,7 +11,5 @@ namespace Manning.Api.Models
         public int OperatorID { get; set; }
         [ForeignKey("TrainingRequirementID")]
         public int TrainingRequirementID { get; set; }
-        /*        public Operator? Operator { get; set; }
-                public TrainingRequirement? TrainingRequirement { get; set; }*/
     }
 }

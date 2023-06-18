@@ -9,6 +9,7 @@ namespace Manning.Api.Services.Interfaces
         Task RemoveOperatorFromStation(StationStateModel dto);
         Task<bool> CheckOperatorIsTrainedOnStation(StationStateModel dto);
         Task RemoveAssignedOperatorFromOtherStation(StationStateModel dto);
+      Task<List<OperatorGrouped>> GetAssignableOperatorsGrouped(int stationID);
         
     }
 }

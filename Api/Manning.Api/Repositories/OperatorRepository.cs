@@ -10,14 +10,5 @@ namespace Manning.Api.Repositories
         {
         }
 
-        public async Task<List<Operator>> GetAllOperatorsAsync()
-        {
-            return await _dbContext.Operator.ToListAsync();
-        }
-
-        public Task<List<Operator>> GetAllOperators()
-        {
-            return _dbContext.Operator.ToListAsync();
-        }
   }
 }

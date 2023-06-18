@@ -2,20 +2,10 @@
 
 namespace Manning.Api.Models.DataTransferObjects
 {
-    public class OperatorGrouped
+    public class StationAssignableOperatorsDTO
     {
-        public enum StatusColor
-        {
-            Green, Yellow, Red
-        }
-        public OperatorGrouped(Operator _operator, StatusColor color)
-        {
-            @operator = _operator;
-            Color = color;
-        }
-
-        public Operator @operator { get; set; }
-        public StatusColor Color { get; set; }
-
+      public List<Operator> validOperators {get; set;}
+      public List<Operator> trainingOperators {get; set;}
+      
     }
 }
