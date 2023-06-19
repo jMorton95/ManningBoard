@@ -35,7 +35,12 @@ namespace Manning.Api.Repositories
 
         public async Task<List<T>> GetManyById(int[] ids)
         {
-        return await _dbContext.Set<T>().Where(x => ids.Contains(x.ID)).ToListAsync();
+          return await _dbContext.Set<T>().Where(x => ids.Contains(x.ID)).ToListAsync();
+        }
+
+        public async Task<List<T>> GetManyByExcludedID(int[] ids)
+        {
+          return await _dbContext.Set<T>().Where(x => !ids.Contains(x.ID)).ToListAsync();
         }
   }
 

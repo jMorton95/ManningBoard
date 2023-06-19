@@ -6,6 +6,7 @@ namespace Manning.Api.Repositories.Interfaces
     {
         Task<T> GetById(int id);
         Task<List<T>> GetManyById(int[] ids);
+        Task<List<T>> GetManyByExcludedID(int[] ids);
         Task<List<T>> GetAll();
         Task Delete(T item);
     }
