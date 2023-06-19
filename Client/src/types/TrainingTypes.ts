@@ -1,13 +1,13 @@
-import { type TTrainingRequirement } from './LineTypes'
+import { type TTrainingRequirement } from './models/LineTypes';
 
-interface TFilteredRequirements {
+type TFilteredRequirements = {
   prerequisites: TTrainingRequirement[]
   standardOperatingProcedures: TTrainingRequirement[]
 }
 
-interface TRequirementPostData {
+type TRequirementPostData = {
   requirementDescription: string
   stationID: number
 }
 
-export type { TFilteredRequirements, TRequirementPostData }
+export type { TFilteredRequirements, TRequirementPostData };

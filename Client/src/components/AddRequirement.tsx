@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { FetchPost, PostRequestBase } from '../../../services/APIService'
-import { type TTrainingRequirement } from '../../../types/LineTypes'
-import { type TRequirementPostData } from '../../../types/TrainingTypes'
+import { useState } from 'react';
+import { FetchPost, PostRequestBase } from '../services/APIService';
+import { type TTrainingRequirement } from '../types/models/LineTypes';
+import { type TRequirementPostData } from '../types/TrainingTypes';
 
-interface TAddRequirementProps {
+type TAddRequirementProps = {
   closeModal: React.Dispatch<React.SetStateAction<boolean>>
   stationID: number
   trainingRequirements: TTrainingRequirement[]
@@ -13,34 +13,34 @@ interface TAddRequirementProps {
 
 //TODO: Bug here where updates to requirements aren't preserved across state updates. Need to pass down latest state always.
 export default function AddRequirement(props: TAddRequirementProps): JSX.Element {
-  const [requirementDescription, setRequirementDescription] = useState<string>('')
+  const [requirementDescription, setRequirementDescription] = useState<string>('');
 
   const resolvePostData = async(): Promise<void> => {
-    const requirement = await PostRequirement(props.token, requirementDescription, props.stationID)
+    const requirement = await PostRequirement(props.token, requirementDescription, props.stationID);
 
     if (requirement !== null) {
-      props.setRequirements((requirements) => [...requirements, requirement])
+      props.setRequirements((requirements) => [...requirements, requirement]);
     }
 
-    setRequirementDescription('')
-  }
+    setRequirementDescription('');
+  };
 
   const handleSubmit = (e: React.FormEvent): void => {
-    e.preventDefault()
-    void resolvePostData()
-  }
+    e.preventDefault();
+    void resolvePostData();
+  };
 
   return (
     <div className={'addRequirementModal'}>
-      <button type="button" onClick={(_) => { props.closeModal(false) }}>Close</button>
-      <form onSubmit={(e: React.FormEvent) => { handleSubmit(e) } }>
+      <button type="button" onClick={(_) => { props.closeModal(false); }}>Close</button>
+      <form onSubmit={(e: React.FormEvent) => { handleSubmit(e); } }>
         <label title="requirementDescription" htmlFor="requirementDescription">
           Requirement:
           <input type="text"
             name="requirementDescription"
             id="requirementDescription"
             value={requirementDescription}
-            onChange={(e) => { setRequirementDescription(e.target.value) }}
+            onChange={(e) => { setRequirementDescription(e.target.value); }}
           />
         </label>
         <button type="submit">
@@ -48,7 +48,7 @@ export default function AddRequirement(props: TAddRequirementProps): JSX.Element
         </button>
       </form>
     </div>
-  )
+  );
 }
 
 const PostRequirement = async(token: string, requirementDescription: string, stationID: number): Promise<TTrainingRequirement | null> => {
@@ -60,11 +60,11 @@ const PostRequirement = async(token: string, requirementDescription: string, sta
     },
     request: PostRequestBase(token)
   }).then((res) => {
-    return res
+    return res;
   }).catch((err) => {
-    console.error(err)
-    return null
-  })
+    console.error(err);
+    return null;
+  });
 
-  return fetchedData
-}
+  return fetchedData;
+};

@@ -1,6 +1,6 @@
-import { type TTrainingRequirement } from '../../../types/LineTypes'
+import { type TTrainingRequirement } from '../types/models/LineTypes';
 
-interface TFilteredRequirementProps {
+type TFilteredRequirementProps = {
   filter: TTrainingRequirement[]
   title: string
 }
@@ -15,5 +15,5 @@ export default function FilteredRequirementList(props: TFilteredRequirementProps
         ))}
       </ul>
     </div>
-  )
+  );
 }

@@ -1,15 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/home/Home'
-import Layout from './pages/layout/Layout'
-import StationManagement from './pages/stationManagement/StationManagement'
-import OperatorManagement from './pages/operatorManagement/OperatorManagement'
-import { useSelector } from 'react-redux'
-import { type RootState } from './types/ReduxTypes'
-import NotAuthorized from './pages/NotAuthorized'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Layout from './components/Layout';
+import StationManagement from './pages/StationManagement/StationManagement';
+import OperatorManagement from './pages/OperatorManagement/OperatorManagement';
+import { useSelector } from 'react-redux';
+import { type RootState } from './redux/types/ReduxTypes';
+import NotAuthorized from './pages/Unauthorised/Unauthorised';
+import { useLineState } from './services/LineStateHook';
 
 export default function App(): JSX.Element {
-  const user = useSelector((state: RootState) => state.user.currentUser)
-  const isAdmin = user?.isAdministrator
+  const user = useSelector((state: RootState) => state.user.currentUser);
+  const isAdmin = user?.isAdministrator;
+  useLineState();
 
   return (
     <BrowserRouter>
@@ -21,5 +23,5 @@ export default function App(): JSX.Element {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

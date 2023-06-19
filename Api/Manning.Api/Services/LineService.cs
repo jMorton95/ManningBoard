@@ -34,7 +34,7 @@ namespace Manning.Api.Services
         public async Task<Zone> GetZoneById(int id) => await _zonesRepository.GetById(id);
         public async Task<Station> GetStationById(int id) => await _stationRepository.GetStationByID(id);
         
-        public async Task<LineStateDTO> GetLineState()
+        public async Task<List<ZoneStateDTO>> GetLineState()
         {
           var zones = await _zonesRepository.GetAllNoTracking();
           var stations = await _stationRepository.GetAll();
@@ -54,7 +54,7 @@ namespace Manning.Api.Services
             zoneState.Add(new ZoneStateDTO(){Zone = zone, StationStateDTOs = stationState.Where(x => x.Station!.ZoneID == zone.ID).ToList()});
           }
 
-          return new LineStateDTO(){LineState = zoneState};
+          return zoneState;
         }
     }
 }
