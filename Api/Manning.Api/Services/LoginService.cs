@@ -34,7 +34,7 @@ namespace Manning.Api.Services
         }
 
         public async Task<int> ClockOperatorIn(Operator op) => await _clockInRepository.ClockOperatorIn(op);
-        public void ClockOperatorOut(int sessionID) => _clockInRepository.ClockOperatorOut(sessionID);
+        public async Task ClockOperatorOut(int sessionID) => await _clockInRepository.ClockOperatorOut(sessionID);
 
         public string GenerateJwtToken(Operator op)
         {
@@ -60,11 +60,6 @@ namespace Manning.Api.Services
                 expires: expires,
                 signingCredentials: creds
             );
-
-            Console.WriteLine($"Issuer: {_configuration["Jwt:Issuer"]}");
-            Console.WriteLine($"Audience: {_configuration["Jwt:Audience"]}");
-            Console.WriteLine($"Key: {_configuration["Jwt:Key"]}");
-            Console.WriteLine($"ExpireDays: {_configuration["Jwt:ExpireDays"]}");
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

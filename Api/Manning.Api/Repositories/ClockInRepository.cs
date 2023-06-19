@@ -4,16 +4,14 @@ using Manning.Api.Repositories.Interfaces;
 
 namespace Manning.Api.Repositories
 {
-    public class ClockInRepository : IClockInRepository
+    public class ClockInRepository : BaseRepository<ClockModel>, IClockInRepository
     {
-        private readonly ManningDbContext _context;
-        public ClockInRepository(ManningDbContext context)
+        public ClockInRepository(ManningDbContext dbContext) :base(dbContext)
         {
-            _context = context;
         }
         public async Task<Operator?> CheckClockCardAsync(int clockCardNumber)
         {
-            return await _context.Operator.SingleOrDefaultAsync(o => o.ClockCardNumber == clockCardNumber);
+            return await _dbContext.Operator.SingleOrDefaultAsync(o => o.ClockCardNumber == clockCardNumber);
         }
 
         public async Task<int> ClockOperatorIn(Operator _operator)
@@ -26,24 +24,24 @@ namespace Manning.Api.Repositories
                 ClockOutTime = DateTime.UtcNow.AddHours(6)
             };
 
-            _context.ClockModel.Add(clockIn);
-            await _context.SaveChangesAsync();
+            _dbContext.ClockModel.Add(clockIn);
+            await _dbContext.SaveChangesAsync();
             return clockIn.ID;
         }
 
-        public void ClockOperatorOut(int clockInId)
+        public async Task ClockOperatorOut(int clockInId)
         {
-            ClockModel clock = _context.ClockModel.First(c => c.ID == clockInId);
+            ClockModel clock = await GetById(clockInId);
 
             if (clock != null)
             {
                 clock.ClockOutTime = DateTime.UtcNow;
-                _context.ClockModel.Update(clock);
-                _context.SaveChanges();
+                _dbContext.ClockModel.Update(clock);
+                _dbContext.SaveChanges();
             };
         }
 
-        public async Task<ClockModel> GetClockById(int clockInId) => await _context.ClockModel.SingleAsync(c => c.ID == clockInId);
+        public async Task<ClockModel> GetClockById(int clockInId) => await _dbContext.ClockModel.SingleAsync(c => c.ID == clockInId);
 
     }
 }

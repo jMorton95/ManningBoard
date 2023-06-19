@@ -8,6 +8,6 @@ namespace Manning.Api.Services.Interfaces
         bool ClockCardIsInvalid(int clockCardNumber);
         Task<Operator?> CheckClockCardAsync(int clockCardNumber);
         Task<int> ClockOperatorIn(Operator op);
-        void ClockOperatorOut(int sessionID);
+        Task ClockOperatorOut(int sessionID);
     }
 }

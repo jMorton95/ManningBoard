@@ -16,7 +16,7 @@ namespace Manning.Api.Controllers
         }
 
         [HttpGet("{clockCardNumber}")]
-        public async Task<ActionResult<ClockedInOperator>> ValidateClockCardNumber(int clockCardNumber)
+        public async Task<ActionResult<ClockedInOperatorDTO>> ValidateClockCardNumber(int clockCardNumber)
         {
             if (_loginService.ClockCardIsInvalid(clockCardNumber))
             {
@@ -32,16 +32,16 @@ namespace Manning.Api.Controllers
 
             int sessionId = await _loginService.ClockOperatorIn(op);
 
-            ClockedInOperator validatedOperator = new(op, _loginService.GenerateJwtToken(op), sessionId);
+            ClockedInOperatorDTO validatedOperator = new(op, _loginService.GenerateJwtToken(op), sessionId);
 
             return Ok(validatedOperator);
         }
 
         [HttpPost]
-        public ActionResult ClockOutOperator(int sessionId)
+        public async Task<ActionResult> ClockOutOperator(int sessionId)
         {
             var msg = new { message = $"Clocked Out Session - {sessionId}" };
-            _loginService.ClockOperatorOut(sessionId);
+            await _loginService.ClockOperatorOut(sessionId);
             return Ok(msg);
         }
 
