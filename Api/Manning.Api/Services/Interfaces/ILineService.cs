@@ -10,6 +10,7 @@ namespace Manning.Api.Services.Interfaces
         Task<List<Zone>> GetAllZones();
         Task<List<Zone>> GetAllZonesAndStations();
         Task<List<Station>> GetAllStations();
+        Task<LineStateDTO> GetLineState();
         
     }
 }

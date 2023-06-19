@@ -15,7 +15,12 @@ namespace Manning.Api.Repositories
     
         public Task<List<T>> GetAll()
         {
-            return _dbContext.Set<T>().ToListAsync();
+          return _dbContext.Set<T>().ToListAsync();
+        }
+
+        public Task<List<T>> GetAllNoTracking()
+        {
+          return _dbContext.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public Task<T> GetById(int id)

@@ -13,5 +13,10 @@ namespace Manning.Api.Repositories
     {
       return await Task.FromResult(_dbContext.StationStateModel.FirstOrDefault(x => x.OperatorID == operatorID));
     }
+
+    public async Task<StationStateModel?> GetStationStateByStationID(int stationID)
+    {
+      return await Task.FromResult(_dbContext.StationStateModel.FirstOrDefault(x => x.StationID == stationID));
+    }
   }
 }

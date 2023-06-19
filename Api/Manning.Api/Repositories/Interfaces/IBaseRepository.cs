@@ -8,6 +8,7 @@ namespace Manning.Api.Repositories.Interfaces
         Task<List<T>> GetManyById(int[] ids);
         Task<List<T>> GetManyByExcludedID(int[] ids);
         Task<List<T>> GetAll();
+        Task<List<T>> GetAllNoTracking();
         Task Delete(T item);
     }
 }

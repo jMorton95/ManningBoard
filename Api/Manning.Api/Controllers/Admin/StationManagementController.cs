@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Manning.Api.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class StationManagementController : ControllerBase
@@ -26,20 +26,20 @@ namespace Manning.Api.Controllers
         [HttpPost("AddOperatorToStation")]
         public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          //SignalR Entry Point.
+          //SignalR State Trigger
           StationStateModel stationFromDTO = new(){StationID = dto.StationID, OperatorID = dto.OperatorID};
           if (!await _stationService.CheckOperatorIsTrainedOnStation(stationFromDTO))
           {
-            return Ok(null);
+            return BadRequest("Operator not trained on Station");
           }
           await _stationService.AddOperatorToStation(stationFromDTO);
-          return Ok("Added");
+          return Ok($"UserID: {dto.OperatorID} assigned to StationID: {dto.StationID}");
         }
 
         [HttpPost("RemoveOperatorFromStation")]
         public async Task<ActionResult> RemoveOperatorFromStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          //SignalR Entry Point.
+          //SignalR State Trigger
           await _stationService.RemoveOperatorFromStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
           return Ok();
         }
