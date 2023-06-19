@@ -5,6 +5,7 @@ using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services;
 using Manning.Api.Services.Interfaces;
 using System.Text;
+using SignalRChat.Hubs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Manning.Api
@@ -14,8 +15,7 @@ namespace Manning.Api
         public static void Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-            string CorsPolicy = "Frontend";
-
+            
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration.AddJsonFile($"appsettings.Development.json");
@@ -25,8 +25,9 @@ namespace Manning.Api
                 builder.Configuration.AddJsonFile($"appsettings.Production.json");
             }
 
-            builder.Configuration.AddJsonFile($"appsettings.{Environment.MachineName}.json", true, true);
+            //builder.Configuration.AddJsonFile($"appsettings.{Environment.MachineName}.json", true, true);
 
+            string CorsPolicy = "Frontend";
             string FrontendUrl = builder.Configuration["Frontend:FrontendUrl"]!;
 
             builder.Services.AddCors(options =>
@@ -80,6 +81,7 @@ namespace Manning.Api
             });
 
             builder.Services.AddControllers();
+            builder.Services.AddSignalR();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -94,15 +96,11 @@ namespace Manning.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthentication();
-
             app.UseCors(CorsPolicy);
-
             app.UseAuthorization();
-
             app.MapControllers();
-
+            app.MapHub<LineHub>("/lineHub");
             app.Run();
         }
     }
