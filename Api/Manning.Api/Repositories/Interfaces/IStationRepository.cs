@@ -9,6 +9,6 @@ namespace Manning.Api.Repositories.Interfaces
         Task<List<Station>> GetStationsByZoneID(int zoneID);
         Task<Station> GetStationByID(int ID);
         Task<List<int>> GetStationTrainingIDs(int stationID);
-        Task<Station> AddOperatorToStation(OperatorAndStationIdDTO dto);
+        Task<Station> AddOperatorToStation(StationStateModel dto);
     }
 }

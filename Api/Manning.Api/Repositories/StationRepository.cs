@@ -36,13 +36,13 @@ namespace Manning.Api.Repositories
 
         public async Task<List<Station>> GetAllStations() => await _dbContext.Station.Include(o => o.TrainingRequirements!).ToListAsync();
 
-        public async Task<Station> AddOperatorToStation(OperatorAndStationIdDTO dto)
+        public async Task<Station> AddOperatorToStation(StationStateModel dto)
         {
           var findStationAssignment = await _dbContext.StationStateModel.FirstOrDefaultAsync(x => x.StationID == dto.StationID);
 
           if (findStationAssignment == null)
           {
-            _dbContext.StationStateModel.Add(new StationStateModel() { OperatorID = dto.OperatorID, StationID = dto.StationID});
+            _dbContext.StationStateModel.Add(dto);
           }
           else
           {
