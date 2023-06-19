@@ -23,7 +23,7 @@ namespace Manning.Api.Repositories
             return Task.FromResult(_dbContext.Set<T>().First(x => x.ID == id));
         }
 
-        public async void Delete(T item)
+        public async Task Delete(T item)
         {
             var entity = await _dbContext.Set<T>().FirstOrDefaultAsync(x => x == item);
             if (entity != null)
@@ -31,6 +31,11 @@ namespace Manning.Api.Repositories
                 _dbContext.Set<T>().Remove(entity);
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<T>> GetManyById(int[] ids)
+        {
+        return await _dbContext.Set<T>().Where(x => ids.Contains(x.ID)).ToListAsync();
         }
   }
 

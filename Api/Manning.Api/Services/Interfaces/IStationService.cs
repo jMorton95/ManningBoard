@@ -1,13 +1,16 @@
-﻿using Manning.Api.Models;
+using Manning.Api.Models;
 using Manning.Api.Models.DataTransferObjects;
 
 namespace Manning.Api.Services.Interfaces
 {
     public interface IStationService
     {
-        Task<Station> AddOperatorToStation(OperatorAndStationIdDTO dto);
-        Task<Station> RemoveOperatorFromStation(OperatorAndStationIdDTO dto);
-        Task<bool> CheckOperatorIsTrainedOnStation(OperatorAndStationIdDTO dto);
+        Task AddOperatorToStation(StationStateModel dto);
+        Task RemoveOperatorFromStation(StationStateModel dto);
+        Task<bool> CheckOperatorIsTrainedOnStation(StationStateModel dto);
+        Task RemoveAssignedOperatorFromOtherStation(StationStateModel dto);
+      Task<StationAssignableOperatorsDTO> GetAssignableOperatorsGrouped(int stationID);
+      Task<List<OperatorAndTrainingDTO>> GroupOperatorsWithTraining();
         
     }
 }

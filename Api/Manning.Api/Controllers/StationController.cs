@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Manning.Api.Models.DataTransferObjects;
 using Manning.Api.Services.Interfaces;
 using Manning.Api.Services;
@@ -23,14 +23,21 @@ namespace Manning.Api.Controllers
         [HttpPost("AddOperatorToStation")]
         public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          var station = await _stationService.AddOperatorToStation(dto);
-          return Ok();
+          //SignalR Entry Point.
+          StationStateModel stationFromDTO = new(){StationID = dto.StationID, OperatorID = dto.OperatorID};
+          if (!await _stationService.CheckOperatorIsTrainedOnStation(stationFromDTO))
+          {
+            return Ok(null);
+          }
+          await _stationService.AddOperatorToStation(stationFromDTO);
+          return Ok("Added");
         }
 
         [HttpPost("RemoveOperatorFromStation")]
         public async Task<ActionResult> RemoveOperatorFromStation([FromBody] OperatorAndStationIdDTO dto)
         {
-          var station = await _stationService.RemoveOperatorFromStation(dto);
+          //SignalR Entry Point.
+          await _stationService.RemoveOperatorFromStation(new StationStateModel {StationID = dto.StationID, OperatorID = dto.OperatorID});
           return Ok();
         }
     }

@@ -29,7 +29,7 @@ namespace Manning.Api.Controllers
         [HttpGet("{ID}")]
         public async Task<ActionResult<TrainingRequirement>> GetByIdTask(int ID)
         {
-            var trainingRequirement = await _trainingRequirementRepository.GetTrainingRequirementByIDAsync(ID);
+            var trainingRequirement = await _trainingRequirementRepository.GetById(ID);
             if (trainingRequirement == null)
             {
                 return NotFound();

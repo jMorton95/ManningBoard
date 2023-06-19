@@ -10,10 +10,6 @@ namespace Manning.Api.Repositories
         {
            
         }
-        public async Task<TrainingRequirement?> GetTrainingRequirementByIDAsync(int ID)
-        {
-            return await _dbContext.TrainingRequirement.FirstOrDefaultAsync(x => x.ID == ID);
-        }
         public async Task<TrainingRequirement> AddNewPrerequisite(TrainingRequirement newRequirement)
         {
             _dbContext.TrainingRequirement.Add(newRequirement);
@@ -25,5 +21,16 @@ namespace Manning.Api.Repositories
         {
           return await _dbContext.TrainingRequirement.Where(x => x.StationID == ID).ToListAsync();
         }
+
+        
+      public async Task<List<TrainingRequirement>> GetDetailedTrainingForOperator(int[] trainingIds)
+      { 
+        throw new NotImplementedException();
+      }
+
+      public async Task<List<TrainingRequirement>> GetIncompleteTrainingForOperator(int[] trainingIds)
+      {
+        throw new NotImplementedException();
+      }
   }
 }

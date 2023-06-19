@@ -10,10 +10,6 @@ namespace Manning.Api.Repositories
         public OperatorCompletedTrainingRepository(ManningDbContext dbContext) :base(dbContext)
         {
         }
-        public Task<List<OperatorCompletedTraining>> GetAllCompletedTraining()
-        {
-            return _dbContext.OperatorCompletedTraining.ToListAsync();
-        }
 
         public async Task<List<OperatorCompletedTraining>> GetOperatorCompletedTraining(int operatorID)
         {

@@ -4,6 +4,7 @@ using Manning.Api.Models;
 using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services.Interfaces;
 using Manning.Api.Models.DataTransferObjects;
+using Manning.Api.Services;
 
 namespace Manning.Api.Controllers
 {
@@ -12,14 +13,21 @@ namespace Manning.Api.Controllers
     public class TestController : ControllerBase
     {
         private readonly IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository;
-        public TestController(IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository)
+        private readonly IStationService stationService;
+        private readonly IOperatorService operatorService;
+        public TestController(IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository, IStationService _stationService, IOperatorService _operatorService)
         {
             operatorCompletedTrainingRepository = _operatorCompletedTrainingRepository;
+            stationService = _stationService;
+            operatorService = _operatorService;
+
         }
+       
         [HttpGet("{operatorID}")]
-        public async Task<List<OperatorCompletedTraining>> GetTraining(int operatorID)
+        public async Task<List<TrainingRequirement>> GetStuff(int operatorID)
         {
-            return await operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
+            return await operatorService.GetDetailedTrainingRequirementsForOperator(operatorID);
         }
+
     }
 }
