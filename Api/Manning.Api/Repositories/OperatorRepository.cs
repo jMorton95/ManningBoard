@@ -14,12 +14,12 @@ namespace Manning.Api.Repositories
 
       public async Task<OperatorAndTrainingDTO> GroupOperatorWithTraining(int operatorID)
       {
-        List<OperatorCompletedTraining>? allTraining = await _operatorCompletedTrainingRepository.GetAll();
+        List<OperatorCompletedTraining>? operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(operatorID);
 
         return new OperatorAndTrainingDTO()
         {
           Operator = await GetById(operatorID),
-          TrainingIDs = allTraining.Where(op => op.OperatorID == operatorID).Select(t => t.ID).ToArray()
+          TrainingIDs = operatorTraining.Select(t => t.TrainingRequirementID).ToArray()
         };
       }
 
