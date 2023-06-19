@@ -12,27 +12,15 @@ namespace Manning.Api.Controllers
     public class TrainingRequirementController : ControllerBase
     {
         private readonly ITrainingRequirementService _trainingRequirementService;
-        private readonly ITrainingRequirementRepository _trainingRequirementRepository;
-        public TrainingRequirementController(ITrainingRequirementService trainingRequirementService, ITrainingRequirementRepository trainingRequirementRepository)
+        public TrainingRequirementController(ITrainingRequirementService trainingRequirementService)
         {
             _trainingRequirementService = trainingRequirementService;
-            _trainingRequirementRepository = trainingRequirementRepository;
         }
 
         [HttpPost]
         public async Task<TrainingRequirement> CreateNewPrerequisite(string requirementDescription, int stationID)
         {
             return await _trainingRequirementService.AddNewPrerequisite(requirementDescription, stationID);
-        }
-        [HttpGet("{ID}")]
-        public async Task<ActionResult<TrainingRequirement>> GetByIdTask(int ID)
-        {
-            var trainingRequirement = await _trainingRequirementRepository.GetById(ID);
-            if (trainingRequirement == null)
-            {
-                return NotFound();
-            }
-            return Ok(trainingRequirement);
         }
     }
 }

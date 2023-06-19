@@ -1,28 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Manning.Api.Models.DataTransferObjects;
 using Manning.Api.Services.Interfaces;
-using Manning.Api.Services;
 using Manning.Api.Models;
-using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Manning.Api.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class StationController : ControllerBase
+    public class StationManagementController : ControllerBase
     {
-        private readonly ILineService _lineService;
         private readonly IStationService _stationService;
-        public StationController(ILineService lineService, IStationService stationService)
+        public StationManagementController(IStationService stationService)
         {
-            _lineService = lineService;
             _stationService = stationService;
         }
-        [HttpGet]
-        public async Task<ActionResult<Station>> GetStationById(int id) => await _lineService.GetStationById(id);
 
         [HttpGet("{stationID}")]
-        public async Task<ActionResult<StationAssignableOperatorsDTO>> GetAssignableOperators(int stationID) => Ok(await _stationService.GetAssignableOperatorsGrouped(stationID));          
+        public async Task<ActionResult<StationAssignableOperatorsDTO>> GetAssignableOperators(int stationID)
+        {
+          return Ok(await _stationService.GetAssignableOperatorsGrouped(stationID));
+        } 
 
         [HttpPost("AddOperatorToStation")]
         public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
