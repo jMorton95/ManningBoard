@@ -15,6 +15,16 @@ namespace Manning.Api.Services
       _operatorRepository = operatorRepository;
       _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
     }
+    public async Task<Operator> GetOperatorByID(int operatorID)
+    {
+      return await _operatorRepository.GetById(operatorID);
+    }
+
+    public async Task<List<Operator>> GetAllOperators()
+    {
+      return await _operatorRepository.GetAll();
+    }
+
     public async Task<List<TrainingRequirement>> GetDetailedTrainingRequirementsForOperator(int operatorID)
     {
       OperatorAndTrainingDTO operatorWithTraining = await _operatorRepository.GroupOperatorWithTraining(operatorID);
@@ -37,5 +47,7 @@ namespace Manning.Api.Services
 
       return await _trainingRequirementRepository.GetManyByExcludedID(operatorTrainingIDs);
     }
+
+   
   }
 }
