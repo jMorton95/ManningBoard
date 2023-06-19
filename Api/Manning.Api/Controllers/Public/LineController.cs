@@ -19,6 +19,6 @@ namespace Manning.Api.Controllers
         [HttpGet("Stations")]
         public async Task<List<Station>> GetAllStations() => await _lineService.GetAllStations();
         [HttpGet("GetLineState")]
-        public async Task<LineStateDTO> GetLineState() => await _lineService.GetLineState();
+        public async Task<List<ZoneStateDTO>> GetLineState() => await _lineService.GetLineState();
     }
 }

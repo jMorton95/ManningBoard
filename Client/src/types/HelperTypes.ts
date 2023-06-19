@@ -6,10 +6,10 @@ type NonNegativeInteger<N extends number> = `${N}` extends `-${string}` ? never 
 /**
  * Post Request Parameters
  */
-interface PostParams<T extends object> {
+type PostParams<T extends object> = {
   endpoint: string
   data: T
   request: RequestInit
 }
 
-export type { NonNegativeInteger, PostParams }
+export type { NonNegativeInteger, PostParams };

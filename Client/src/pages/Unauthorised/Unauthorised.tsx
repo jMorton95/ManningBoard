@@ -3,5 +3,5 @@ export default function NotAuthorized(): JSX.Element {
     <div>
       Not Authorized to view this!
     </div>
-  )
+  );
 };

@@ -1,4 +1,4 @@
-import { type NonNegativeInteger, type PostParams } from '../types/GenericTypes'
+import { type NonNegativeInteger, type PostParams } from '../types/HelperTypes';
 
 /**
  * Gets your base API Url Stored in your Environment Variables & appends the Endpoint you pass in.
@@ -6,7 +6,7 @@ import { type NonNegativeInteger, type PostParams } from '../types/GenericTypes'
  * @returns A full URL path to your Endpoint.
  */
 const BuildUrl = (endpoint: string): string =>
-  `${import.meta.env.VITE_BASE_API_URL}/api/${endpoint}`
+  `${import.meta.env.VITE_BASE_API_URL}/api/${endpoint}`;
 /**
  * A wrapper on SetState & Fetch
  * @param T The type you expect returned.
@@ -25,13 +25,13 @@ const AsyncFetchEndpointAndSetState = async <T>(
     }
   })
     .then(async(res) => {
-      const data: T = await res.json()
-      setState(data)
+      const data: T = await res.json();
+      setState(data);
     })
     .catch((error) => {
-      console.error(error)
-    })
-}
+      console.error(error);
+    });
+};
 /**
  * A wrapper on SetState & Fetch
  * @param T The type you expect returned.
@@ -45,7 +45,7 @@ const AsyncFetchEndpointAndSetStateWithRetry = async <T, N extends number>(
   retryAttempts: NonNegativeInteger<N>,
   token?: string
 ): Promise<void> => {
-  let retry: NonNegativeInteger<N> = retryAttempts
+  let retry: NonNegativeInteger<N> = retryAttempts;
   while (retry > 0) {
     await fetch(BuildUrl(endpoint), {
       headers: {
@@ -53,31 +53,31 @@ const AsyncFetchEndpointAndSetStateWithRetry = async <T, N extends number>(
       }
     })
       .then(async res => {
-        const data: T = await res.json()
-        setState(data)
-        retry = 0 as NonNegativeInteger<N>
+        const data: T = await res.json();
+        setState(data);
+        retry = 0 as NonNegativeInteger<N>;
       })
       .catch((error) => {
-        console.error(error)
-        retry--
-      })
+        console.error(error);
+        retry--;
+      });
   }
-}
+};
 /**
  * @param data Any Object you wish to build a query string from
  * @returns A string built from destructuring an Objects Keys & Values
  */
 const BuildQueryStringFromObject = <T extends object>(data: T): string => {
-  let queryString: string = '?'
-  const dataArray = Object.entries(data)
+  let queryString: string = '?';
+  const dataArray = Object.entries(data);
   dataArray.forEach((entry: [string, string], index) => {
-    queryString += `${entry[0]}=${entry[1]}`
+    queryString += `${entry[0]}=${entry[1]}`;
     if (dataArray.length !== index + 1) {
-      queryString += '&'
+      queryString += '&';
     }
-  })
-  return queryString
-}
+  });
+  return queryString;
+};
 /**
  *  @returns An Object Literal with a method 'POST' and JSON Headers.
  */
@@ -89,7 +89,7 @@ function PostRequestBase(token: string): RequestInit {
       'Access-Control-Allow-Origin': '*',
       Authorization: `Bearer ${token}`
     }
-  }
+  };
 }
 /**
  * @param param0 Pass an object literal with an Endpoint, Post-Data and request headers.
@@ -105,13 +105,13 @@ const FetchPost = async <R, T extends object>(
   return await fetch(
     BuildUrl(`${endpoint}/${BuildQueryStringFromObject(data)}`), request
   ).then(async(res) => {
-    const data: R = await res.json()
-    return await Promise.resolve(data)
+    const data: R = await res.json();
+    return await Promise.resolve(data);
   })
     .catch(async(error) => {
-      console.error(error)
-      return await Promise.reject(error)
-    })
-}
+      console.error(error);
+      return await Promise.reject(error);
+    });
+};
 
-export { AsyncFetchEndpointAndSetState, AsyncFetchEndpointAndSetStateWithRetry, FetchPost, PostRequestBase, BuildUrl }
+export { AsyncFetchEndpointAndSetState, AsyncFetchEndpointAndSetStateWithRetry, FetchPost, PostRequestBase, BuildUrl };

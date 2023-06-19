@@ -13,7 +13,7 @@ namespace SignalRChat.Hubs
         }
         public async Task PushLineState()
         {
-            LineStateDTO lineStateDTO = await _lineService.GetLineState();
+            List<ZoneStateDTO> lineStateDTO = await _lineService.GetLineState();
             await Clients.All.SendAsync("LineStateUpdate", lineStateDTO);
         }
     }
