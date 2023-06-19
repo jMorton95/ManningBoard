@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Manning.Api.Models;
 using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services.Interfaces;
-using System.Data;
 
 namespace Manning.Api.Controllers
 {

@@ -3,6 +3,7 @@ using Manning.Api.Models.DataTransferObjects;
 using Manning.Api.Services.Interfaces;
 using Manning.Api.Services;
 using Manning.Api.Models;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace Manning.Api.Controllers
 {
@@ -19,6 +20,9 @@ namespace Manning.Api.Controllers
         }
         [HttpGet]
         public async Task<ActionResult<Station>> GetStationById(int id) => await _lineService.GetStationById(id);
+
+        [HttpGet("{stationID}")]
+        public async Task<ActionResult<StationAssignableOperatorsDTO>> GetAssignableOperators(int stationID) => Ok(await _stationService.GetAssignableOperatorsGrouped(stationID));          
 
         [HttpPost("AddOperatorToStation")]
         public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)

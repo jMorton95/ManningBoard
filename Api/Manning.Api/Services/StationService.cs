@@ -20,10 +20,10 @@ namespace Manning.Api.Services
           IOperatorRepository operatorRepository
         )
         {
-            _stationRepository = stationRepository;
-            _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
-            _stationStateRepository = stationStateRepository;
-            _operatorRepository = operatorRepository;
+          _stationRepository = stationRepository;
+          _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
+          _stationStateRepository = stationStateRepository;
+          _operatorRepository = operatorRepository;
         }
 
         public async Task AddOperatorToStation(StationStateModel dto)
@@ -63,28 +63,25 @@ namespace Manning.Api.Services
           Station station = await _stationRepository.GetStationByID(stationID);
           List<OperatorAndTrainingDTO> opsAndTraining = await GroupOperatorsWithTraining();
 
-          if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1)
+          if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1 || opsAndTraining == null || opsAndTraining.Count < 1)
           {
             return new StationAssignableOperatorsDTO();
           }
 
           List<Operator?> validOperators = opsAndTraining
-          .Where(op => 
-            station.TrainingRequirements.All(req => op.TrainingIDs.Contains(req.ID))
+          .Where(op => op.TrainingIDs != null
+                && op.TrainingIDs.Length > 0
+                && station.TrainingRequirements.All(req => op.TrainingIDs.Contains(req.ID))
           )
-          .Select(x => x.Operator)
-          .ToList();
-
-          //validOperators = validOperators ?? new List<Operator?>();
+          .Select(x => x.Operator).ToList();
 
           List<Operator?> trainingOperators = opsAndTraining
-            .Where(op => validOperators.Exists(x => x.ID != op.Operator.ID) &&
-              station.TrainingRequirements.Any(req => op.TrainingIDs.Contains(req.ID))
+            .Where(op => op.TrainingIDs != null
+                && op.TrainingIDs.Length > 0 
+                && !validOperators.Select(x => x!.ID).Contains(op.Operator!.ID) 
+                && station.TrainingRequirements.Any(req => op.TrainingIDs.Contains(req.ID))
             )
-            .Select(x => x.Operator)
-            .ToList();
-
-            //trainingOperators = trainingOperators ?? new List<Operator?>();
+            .Select(x => x.Operator).ToList();
 
             return new StationAssignableOperatorsDTO()
             {
