@@ -4,9 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setLineState } from '../redux/slices/LineStateSlice';
 import { type LineStateDTO } from '../types/dtos/LineState';
 
-type LineStateHook = {
-  invoke: () => Promise<void>
-}
+export type LineStateHook = () => Promise<void>
 
 export const useLineState = (): LineStateHook => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
@@ -53,5 +51,5 @@ export const useLineState = (): LineStateHook => {
     };
   }, [connection]);
 
-  return { invoke };
+  return invoke;
 };
