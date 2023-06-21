@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
-import Header from "./Header";
+import { type ReactNode } from 'react';
+import Header from './Header';
 
 type LayoutProps = { children?: ReactNode }
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: LayoutProps): JSX.Element {
   return (
     <>
       <Header />

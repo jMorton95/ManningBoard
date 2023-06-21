@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLineState } from '../redux/slices/LineStateSlice';
 import { type LineStateDTO } from '../types/dtos/LineState';
-import { apiEndpint } from '../../config';
+import { API_ENDPOINTS } from '../../config';
 
 export type LineStateHook = () => Promise<void>
 
@@ -11,7 +11,7 @@ export const useLineState = (): LineStateHook => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
   const dispatch = useDispatch();
   console.log('I want to know that this has fired');
-  console.log(apiEndpint);
+  console.log(API_ENDPOINTS.base);
 
   const invoke = async(): Promise<void> => {
     try {
@@ -25,7 +25,7 @@ export const useLineState = (): LineStateHook => {
 
   useEffect(() => {
     const connection = new HubConnectionBuilder()
-      .withUrl(`${apiEndpint}/lineHub`)
+      .withUrl(`${API_ENDPOINTS.base}/lineHub`)
       .withAutomaticReconnect()
       .build();
 

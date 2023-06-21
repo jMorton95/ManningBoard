@@ -27,7 +27,7 @@ export default function StationMan(props: TStationManProps): JSX.Element {
         </Button>
       </div>
       {
-        requirements &&
+        requirements !== null &&
         <FilteredRequirementList
           filter={requirements}
           title={'Prerequisites'}

@@ -6,5 +6,5 @@ export default function OperatorManagement(): JSX.Element {
         <p>Manage your Operators Here</p>
       </div>
     </section>
-  )
+  );
 }
