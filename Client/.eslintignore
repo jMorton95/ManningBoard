@@ -1,1 +1,5 @@
-vite.config.ts
+# .estlintignore file
+next-env.d.ts
+.next
+build
+node_modules/

@@ -4,6 +4,7 @@ module.exports = {
     es2021: true
   },
   extends: [
+    'next/core-web-vitals',
     'standard-with-typescript',
     'plugin:react/recommended'
   ],

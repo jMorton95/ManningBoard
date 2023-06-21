@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
 import ClockOut from './ClockOut';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../redux/types/ReduxTypes';
 
@@ -16,18 +16,18 @@ export default function NavBar(props: TNavBarProps): JSX.Element {
       <div className="container-fluid">
         <div className="navbar-nav gap-5">
           <h1 className="navbar-brand display-1">Manning Board</h1>
-          <NavLink className="nav-link" to="/">
+          <Link className="nav-link" href="/">
             Home
-          </NavLink>
+          </Link>
           {
             isAdmin === true && (
               <>
-                <NavLink className="nav-link" to="/station-management">
-                Station Management
-                </NavLink>
-                <NavLink className="nav-link" to="/operator-management">
+                <Link className="nav-link" href="/station-management">
+                  Station Management
+                </Link>
+                <Link className="nav-link" href="/operator-management">
                   Operator Management
-                </NavLink>
+                </Link>
               </>
             )
           }
@@ -35,9 +35,9 @@ export default function NavBar(props: TNavBarProps): JSX.Element {
         </div>
         {
           (user != null) &&
-            <div>
-              {user.operatorName}
-            </div>
+          <div>
+            {user.operatorName}
+          </div>
         }
       </div>
     </nav>

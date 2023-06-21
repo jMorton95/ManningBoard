@@ -1,10 +1,11 @@
+import StationMan from '@/components/StationMan';
+import ZoneDropdown from '@/components/ZoneDropdown';
+import { RootState } from '@/redux/types/ReduxTypes';
+import { ZoneStateDTO } from '@/types/dtos/LineState';
+import { TStation } from '@/types/models/LineTypes';
 import { useState } from 'react';
-import { type TStation } from '../../src/types/models/LineTypes';
 import { useSelector } from 'react-redux';
-import { type RootState } from '../../src/redux/types/ReduxTypes';
-import StationMan from '../../src/components/StationMan';
-import ZoneDropdown from '../../src/components/ZoneDropdown';
-import { type ZoneStateDTO } from '../../src/types/dtos/LineState';
+
 
 const getSelectedZone = (zones: ZoneStateDTO[], station: TStation): string => zones.find(x => x.zone.id === station.zoneID)?.zone.zoneName ?? 'No Zone Found';
 

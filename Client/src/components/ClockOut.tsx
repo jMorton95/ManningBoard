@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { type RootState } from '../redux/types/ReduxTypes';
 import { clearToken } from '../redux/slices/AuthSlice';
 import { clearUser, clearSessionID } from '../redux/slices/UserSlice';
@@ -19,7 +19,7 @@ export default function ClockOut(props: TClockOutProps): JSX.Element {
     void clockOutAction();
   };
 
-  const clockOutAction = async(): Promise<void> => {
+  const clockOutAction = async (): Promise<void> => {
     await FetchPost({
       endpoint: 'Clock',
       data: {
@@ -39,6 +39,6 @@ export default function ClockOut(props: TClockOutProps): JSX.Element {
   };
 
   return (
-    <Link to="/" className="nav-link active" onClick={handleClockOut}>Clock Out</Link>
+    <Link href="/" className="nav-link active" onClick={handleClockOut}>Clock Out</Link>
   );
 };

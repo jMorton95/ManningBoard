@@ -26,10 +26,14 @@ export default function StationMan(props: TStationManProps): JSX.Element {
           Add Requirement
         </Button>
       </div>
-      <FilteredRequirementList
-        filter={requirements}
-        title={'Prerequisites'}
-      />
+      {
+        requirements &&
+        <FilteredRequirementList
+          filter={requirements}
+          title={'Prerequisites'}
+        />
+      }
+
       {addRequirement && (
         <AddRequirement
           closeModal={() => { setAddRequirement(false); }}

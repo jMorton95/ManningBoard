@@ -1,4 +1,5 @@
 import { type NonNegativeInteger, type PostParams } from '../types/HelperTypes';
+import { apiEndpint } from '../../config';
 
 /**
  * Gets your base API Url Stored in your Environment Variables & appends the Endpoint you pass in.
@@ -6,7 +7,7 @@ import { type NonNegativeInteger, type PostParams } from '../types/HelperTypes';
  * @returns A full URL path to your Endpoint.
  */
 const BuildUrl = (endpoint: string): string =>
-  `${import.meta.env.VITE_BASE_API_URL}/api/${endpoint}`;
+  `${apiEndpint}/api/${endpoint}`;
 /**
  * A wrapper on SetState & Fetch
  * @param T The type you expect returned.
