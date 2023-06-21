@@ -40,7 +40,8 @@ namespace Manning.Api.Services
           var stations = await _stationRepository.GetAll();
 
           var stationState = new List<StationStateDTO>();
-
+          
+          //TODO: Paralellize this
           foreach (var station in stations)
           {
             StationStateModel? state = await _stationStateRepository.GetStationStateByStationID(station.ID);
