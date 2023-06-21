@@ -25,7 +25,7 @@ module.exports = {
     }],
     'react/react-in-jsx-scope': 'off',
     'space-before-function-paren': ['error', 'never'],
-    '@typescript-eslint/space-before-function-paren': ['error', 'never'],
+    '@typescript-eslint/space-before-function-paren': 'off',
     'spaced-comment': ['error', 'never'],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type']
   }
