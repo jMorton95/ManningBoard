@@ -8,7 +8,7 @@ export type TLineStateContext = {
 type LineStateProviderProps = { children: ReactNode }
 
 const LineStateContext = createContext<TLineStateContext>({
-  invoke: async() => { await Promise.resolve(); }
+  invoke: async () => { await Promise.resolve(); }
 });
 
 const LineStateContextProvider: FC<LineStateProviderProps> = (props) => {

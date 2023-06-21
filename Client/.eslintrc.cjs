@@ -16,6 +16,7 @@ module.exports = {
     'react'
   ],
   rules: {
+    'prettier/prettier': 'off',
     semi: ['warn', 'always'],
     '@typescript-eslint/semi': ['off', 'never'],
     indent: ['warn', 2, {
@@ -24,8 +25,8 @@ module.exports = {
       ignoredNodes: ['ConditionalExpression']
     }],
     'react/react-in-jsx-scope': 'off',
-    'space-before-function-paren': ['error', 'never'],
-    '@typescript-eslint/space-before-function-paren': 'off',
+    'space-before-function-paren': ['off', 'off'],
+    '@typescript-eslint/space-before-function-paren': ['off', 'off'],
     'spaced-comment': ['error', 'never'],
     '@typescript-eslint/consistent-type-definitions': ['error', 'type']
   }

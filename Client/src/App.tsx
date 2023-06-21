@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import { useSelector } from 'react-redux';
 import { type RootState } from './redux/types/ReduxTypes';
-import NotAuthorized from './pages/Unauthorised/Unauthorised';
-import Home from './pages/Home';
-import OperatorManagement from './pages/OperatorManagement';
-import StationManagement from './pages/StationManagement';
+import NotAuthorized from '../pages/Unauthorised/Unauthorised';
+import Home from '../pages/Home';
+import OperatorManagement from '../pages/OperatorManagement';
+import StationManagement from '../pages/StationManagement';
 import { LineStateContextProvider } from './contexts/LineStateContext';
 import { type ReactNode } from 'react';
 

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { type TStation } from '../../types/models/LineTypes';
+import { type TStation } from '../../src/types/models/LineTypes';
 import { useSelector } from 'react-redux';
-import { type RootState } from '../../redux/types/ReduxTypes';
-import StationMan from '../../components/StationMan';
-import ZoneDropdown from '../../components/ZoneDropdown';
-import { type ZoneStateDTO } from '../../types/dtos/LineState';
+import { type RootState } from '../../src/redux/types/ReduxTypes';
+import StationMan from '../../src/components/StationMan';
+import ZoneDropdown from '../../src/components/ZoneDropdown';
+import { type ZoneStateDTO } from '../../src/types/dtos/LineState';
 
 const getSelectedZone = (zones: ZoneStateDTO[], station: TStation): string => zones.find(x => x.zone.id === station.zoneID)?.zone.zoneName ?? 'No Zone Found';
 
@@ -28,10 +28,10 @@ export default function StationManagement(): JSX.Element {
         {lineState.map((dto) => <ZoneDropdown key={dto.zone.id} zoneDTO={dto} setSelectedStation={setSelectedStation} />)}
       </div>
       {(selectedStation != null) && token !== null &&
-    <div className="station-editor">
-      {(lineState != null) && selectedStation !== null && <h2>{getSelectedZone(lineState, selectedStation)}</h2>}
-      {<StationMan selectedStation={selectedStation} token={token} />}
-    </div>
+        <div className="station-editor">
+          {(lineState != null) && selectedStation !== null && <h2>{getSelectedZone(lineState, selectedStation)}</h2>}
+          {<StationMan selectedStation={selectedStation} token={token} />}
+        </div>
       }
     </section>
   );
