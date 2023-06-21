@@ -1,33 +1,37 @@
-import { useEffect, useState } from 'react';
-import { type TStation, type TZone } from '../../types/models/LineTypes';
-import { AsyncFetchEndpointAndSetStateWithRetry } from '../../services/APIService';
-import { type NonNegativeInteger } from '../../types/HelperTypes';
+import { useState } from 'react';
+import { type TStation } from '../../types/models/LineTypes';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../../redux/types/ReduxTypes';
 import StationMan from '../../components/StationMan';
 import ZoneDropdown from '../../components/ZoneDropdown';
+import { type ZoneStateDTO } from '../../types/dtos/LineState';
 
-const getSelectedZone = (zones: TZone[], station: TStation): string => zones.find(x => x.id === station.zoneID)?.zoneName ?? 'No Zone Found';
+const getSelectedZone = (zones: ZoneStateDTO[], station: TStation): string => zones.find(x => x.zone.id === station.zoneID)?.zone.zoneName ?? 'No Zone Found';
 
 export default function StationManagement(): JSX.Element {
-  const [zones, setZones] = useState<TZone[]>();
   const [selectedStation, setSelectedStation] = useState<TStation>();
   const token = useSelector((state: RootState) => state.auth.token);
+  const lineState = useSelector((state: RootState) => state.lineState.lineStateDTO);
 
-  useEffect(() => {
-    if (zones == null) void AsyncFetchEndpointAndSetStateWithRetry<TZone[], NonNegativeInteger<3>>(setZones, 'Line', 3, token ?? '');
-  });
+  console.log(lineState);
+
+  //TODO: State Performance leak that causes whole section to re-render, probably due to the way data is being set here in state.
+  //MEMOISE some stuff, at least the ZoneDropDown - Possibly even make a context to share state here.
+
+  if (lineState == null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section>
       <div className="stations-list d-flex gap-2 flex-row mb-5">
-        {zones?.map((zone) => <ZoneDropdown key={zone.id} {...{ zone, setSelectedStation }} />)}
+        {lineState.map((dto) => <ZoneDropdown key={dto.zone.id} zoneDTO={dto} setSelectedStation={setSelectedStation} />)}
       </div>
       {(selectedStation != null) && token !== null &&
-        <div className="station-editor">
-          {(zones != null) && selectedStation !== null && <h2>{getSelectedZone(zones, selectedStation)}</h2>}
-          {<StationMan selectedStation={selectedStation} token={token} />}
-        </div>
+    <div className="station-editor">
+      {(lineState != null) && selectedStation !== null && <h2>{getSelectedZone(lineState, selectedStation)}</h2>}
+      {<StationMan selectedStation={selectedStation} token={token} />}
+    </div>
       }
     </section>
   );

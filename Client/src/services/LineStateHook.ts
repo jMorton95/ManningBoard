@@ -9,6 +9,7 @@ export type LineStateHook = () => Promise<void>
 export const useLineState = (): LineStateHook => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
   const dispatch = useDispatch();
+  console.log('I want to know that this has fired');
 
   const invoke = async(): Promise<void> => {
     try {

@@ -6,7 +6,7 @@ import NotAuthorized from './pages/Unauthorised/Unauthorised';
 import Home from './pages/home/Home';
 import OperatorManagement from './pages/operatorManagement/OperatorManagement';
 import StationManagement from './pages/stationManagement/StationManagement';
-import { } from './contexts/LineStateContext';
+import { LineStateContextProvider } from './contexts/LineStateContext';
 
 export default function App(): JSX.Element {
   const user = useSelector((state: RootState) => state.user.currentUser);
@@ -14,14 +14,15 @@ export default function App(): JSX.Element {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-
-          <Route index element={<Home />} />
-          <Route path="station-management" element={isAdmin === true ? <StationManagement /> : <NotAuthorized />} />
-          <Route path="operator-management" element={isAdmin === true ? <OperatorManagement /> : <NotAuthorized />}/>
-        </Route>
-      </Routes>
+      <LineStateContextProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="station-management" element={isAdmin === true ? <StationManagement /> : <NotAuthorized />} />
+            <Route path="operator-management" element={isAdmin === true ? <OperatorManagement /> : <NotAuthorized />}/>
+          </Route>
+        </Routes>
+      </LineStateContextProvider>
     </BrowserRouter>
   );
 }
