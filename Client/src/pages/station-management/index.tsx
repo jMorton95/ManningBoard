@@ -3,7 +3,7 @@ import { type TStation } from '@/types/models/LineTypes';
 
 export const getSelectedZone = (
   zones: ZoneStateDTO[],
-  station: TStation,
+  station: TStation
 ): string =>
   zones.find((x) => x.zone.id === station.zoneID)?.zone.zoneName ??
   'No Zone Found';
