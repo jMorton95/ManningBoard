@@ -18,4 +18,4 @@ type TTrainingRequirement = Base & {
   stationID: number
 }
 
-export type { TZone, TStation, TTrainingRequirement };
+export type { TZone, TStation, TStationWithTraining, TTrainingRequirement };
