@@ -1,5 +1,5 @@
-import { type ZoneStateDTO } from '@/types/dtos/LineState';
-import { type TStation } from '@/types/models/LineTypes';
+import { type ZoneStateDTO } from '@/src/types/dtos/LineState';
+import { type TStation } from '@/src/types/models/LineTypes';
 
 export const getSelectedZone = (
   zones: ZoneStateDTO[],

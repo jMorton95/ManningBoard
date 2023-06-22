@@ -20,8 +20,13 @@
     "noUnusedParameters": true,
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "src",
@@ -29,7 +34,9 @@
     "**/*.tsx",
     "environments/env.d.ts",
     "next.config.cjs",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    ".next/index.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
