@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "es2017",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -19,6 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "incremental": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     },
@@ -32,11 +33,14 @@
     "src",
     "**/*.ts",
     "**/*.tsx",
-    "environments/env.d.ts",
+    ".eslintrc.cjs",
     "next.config.cjs",
     "next-env.d.ts",
-    ".next/index.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs"
   ],
   "exclude": ["node_modules"]
 }

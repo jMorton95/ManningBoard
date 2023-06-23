@@ -26,7 +26,7 @@ const AsyncFetchEndpointAndSetState = async <T>(
     }
   })
     .then(async(res) => {
-      const data: T = await res.json();
+      const data: T = await res.json() as T;
       setState(data);
     })
     .catch((error) => {
@@ -54,7 +54,7 @@ const AsyncFetchEndpointAndSetStateWithRetry = async <T, N extends number>(
       }
     })
       .then(async res => {
-        const data: T = await res.json();
+        const data: T = await res.json() as T;
         setState(data);
         retry = 0 as NonNegativeInteger<N>;
       })
@@ -69,7 +69,7 @@ const AsyncFetchEndpointAndSetStateWithRetry = async <T, N extends number>(
  * @returns A string built from destructuring an Objects Keys & Values
  */
 const BuildQueryStringFromObject = <T extends object>(data: T): string => {
-  let queryString: string = '?';
+  let queryString = '?';
   const dataArray = Object.entries(data);
   dataArray.forEach((entry: [string, string], index) => {
     queryString += `${entry[0]}=${entry[1]}`;
@@ -106,7 +106,7 @@ const FetchPost = async <R, T extends object>(
   return await fetch(
     BuildUrl(`${endpoint}/${BuildQueryStringFromObject(data)}`), request
   ).then(async(res) => {
-    const data: R = await res.json();
+    const data: R = await res.json() as R;
     return await Promise.resolve(data);
   })
     .catch(async(error) => {

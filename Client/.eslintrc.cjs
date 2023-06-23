@@ -1,36 +1,35 @@
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-  },
-  extends: [
-    'next/core-web-vitals',
-    'standard-with-typescript',
-    'plugin:react/recommended',
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: './tsconfig.json',
-  },
-  plugins: [
-    'react',
-  ],
-  rules: {
-    'prettier/prettier': 'off',
-    semi: ['warn', 'always',],
-    '@typescript-eslint/semi': ['off', 'never',],
-    indent: ['warn', 2, {
-      SwitchCase: 1,
-      VariableDeclarator: { var: 2, let: 2, const: 3, },
-      ignoredNodes: ['ConditionalExpression',],
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require("path");
+
+/** @type {import("eslint").Linter.Config} */
+const config = {
+  overrides: [
+    {
+      extends: [
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      ],
+      files: ["*.ts", "*.tsx"],
+      parserOptions: {
+        project: path.join(__dirname, "tsconfig.json"),
+      },
     },
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: path.join(__dirname, "tsconfig.json"),
+  },
+  plugins: ["@typescript-eslint"],
+  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  rules: {
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        prefer: "type-imports",
+        fixStyle: "inline-type-imports",
+      },
     ],
-    'comma-dangle': ['off', 'off',],
-    'react/react-in-jsx-scope': 'off',
-    'space-before-function-paren': ['off', 'off',],
-    '@typescript-eslint/space-before-function-paren': ['off', 'off',],
-    'spaced-comment': ['error', 'never',],
-    '@typescript-eslint/consistent-type-definitions': ['error', 'type',],
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
 };
+
+module.exports = config;

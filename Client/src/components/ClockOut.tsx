@@ -1,37 +1,35 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Link from 'next/link';
-import { type RootState } from '../redux/types/ReduxTypes';
-import { clearToken } from '../redux/slices/AuthSlice';
-import { clearUser, clearSessionID } from '../redux/slices/UserSlice';
-import { FetchPost, PostRequestBase } from '../services/APIService';
+import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import { type RootState } from "../redux/types/ReduxTypes";
+import { clearToken } from "../redux/slices/AuthSlice";
+import { clearUser, clearSessionID } from "../redux/slices/UserSlice";
+import { FetchPost, PostRequestBase } from "../services/APIService";
 
 type TClockOutProps = {
-  setEnableLogin?: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setEnableLogin?: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export default function ClockOut(props: TClockOutProps): JSX.Element {
+export default function ClockOut(props: TClockOutProps) {
   const token = useSelector((state: RootState) => state.auth.token);
   const sessionID = useSelector((state: RootState) => state.user.sessionID);
 
   const dispatch = useDispatch();
-
   const handleClockOut = (): void => {
     void clockOutAction();
   };
 
   const clockOutAction = async (): Promise<void> => {
     await FetchPost({
-      endpoint: 'Clock',
+      endpoint: "Clock",
       data: {
-        sessionID
+        sessionID,
       },
-      request: PostRequestBase(token ?? '')
-    })
-      .then(() => {
-        dispatch(clearToken());
-        dispatch(clearUser());
-        dispatch(clearSessionID());
-      });
+      request: PostRequestBase(token ?? ""),
+    }).then(() => {
+      dispatch(clearToken());
+      dispatch(clearUser());
+      dispatch(clearSessionID());
+    });
 
     if (props.setEnableLogin != null) {
       props.setEnableLogin(false);
@@ -39,6 +37,8 @@ export default function ClockOut(props: TClockOutProps): JSX.Element {
   };
 
   return (
-    <Link href="/" className="nav-link active" onClick={handleClockOut}>Clock Out</Link>
+    <Link href="/" className="nav-link active" onClick={handleClockOut}>
+      Clock Out
+    </Link>
   );
-};
+}

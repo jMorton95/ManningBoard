@@ -1,13 +1,3 @@
-import { type ZoneStateDTO } from '@/src/types/dtos/LineState';
-import { type TStation } from '@/src/types/models/LineTypes';
-
-export const getSelectedZone = (
-  zones: ZoneStateDTO[],
-  station: TStation
-): string =>
-  zones.find((x) => x.zone.id === station.zoneID)?.zone.zoneName ??
-  'No Zone Found';
-
 export default function StationManagement(): JSX.Element {
   //const [selectedStation, setSelectedStation] = useState<TStation>();
   //const token = useSelector((state: RootState) => state.auth.token);
@@ -19,9 +9,13 @@ export default function StationManagement(): JSX.Element {
   //return <div>Loading...</div>;
   //}
 
+  // const getSelectedZone = (zones: ZoneStateDTO[], station: TStation): string =>
+  //   zones.find((x) => x.zone.id === station.zoneID)?.zone.zoneName ??
+  //   "No Zone Found";
+
   return (
     <section>
-      <div className="stations-list d-flex gap-2 flex-row mb-5">
+      <div className="stations-list d-flex mb-5 flex-row gap-2">
         {/*{lineState.map((dto) => <ZoneDropdown key={dto.zone.id} zoneDTO={dto} setSelectedStation={setSelectedStation} />)} */}
       </div>
       {/*{(selectedStation != null) && token !== null &&

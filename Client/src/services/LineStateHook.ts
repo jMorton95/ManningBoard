@@ -52,7 +52,7 @@ export const useLineState = (): LineStateHook => {
         connection.off('LineStateUpdate');
       }
     };
-  }, [connection]);
+  });
 
   return invoke;
 };
