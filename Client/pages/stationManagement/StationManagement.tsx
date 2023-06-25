@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StationMan from "../../src/components/StationMan";
 import ZoneDropdown from "../../src/components/ZoneDropdown";
 import { TStation, TZone } from "../../src/types/models/LineTypes";
-import { ApiService } from "../../src/services/NewApiService";
+import { ApiService } from "../../src/services/ApiService";
 
 const getSelectedZone = (zones: TZone[], station: TStation): string =>
   zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";

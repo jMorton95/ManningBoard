@@ -1,5 +1,5 @@
 import { FC, ReactNode, createContext, useEffect, useState } from "react";
-import { AuthService } from "../services/NewApiService";
+import { AuthService } from "../services/ApiService";
 import {
   type AuthState,
   CurrentOperatorState,

@@ -1,11 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useDispatch } from "react-redux";
-import { setToken } from "../redux/slices/AuthSlice";
-import { BuildUrl } from "../services/APIService";
 import { setUser, setSessionID } from "../redux/slices/UserSlice";
 import { Form } from "react-bootstrap";
-import { type CurrentOperator } from "../redux/types/ReduxTypes";
-import { AuthService } from "../services/NewApiService";
+import { AuthService } from "../services/ApiService";
 
 export default function ClockIn(): JSX.Element {
   const dispatch = useDispatch();

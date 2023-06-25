@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { type RootState } from "../redux/types/ReduxTypes";
 import { clearToken } from "../redux/slices/AuthSlice";
 import { clearUser, clearSessionID } from "../redux/slices/UserSlice";
-import { FetchPost, PostRequestBase } from "../services/APIService";
+import { FetchPost, PostRequestBase } from "../services/ApiService";
 
 type TClockOutProps = {
   setEnableLogin?: React.Dispatch<React.SetStateAction<boolean>>;
