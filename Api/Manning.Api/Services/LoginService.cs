@@ -63,5 +63,59 @@ namespace Manning.Api.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public async Task<ClockModel>? TryGetClockInFromJWT(string jwtToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)),
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"]
+            };
+
+            SecurityToken validatedToken;
+
+            try
+            {
+                handler.ValidateToken(jwtToken, validationParameters, out validatedToken);
+            }
+            catch (Exception ex)
+            {
+                //TODO: Logging.
+                return null;
+            }
+
+            DateTime validFrom = validatedToken.ValidFrom;
+
+            if (validFrom < DateTime.Now)
+            {
+                return null;
+            }
+
+            var securityToken = validatedToken as JwtSecurityToken;
+
+            string sub = securityToken.Claims.First(claim => claim.Type == "sub").Value;
+
+            bool clockCardResult = int.TryParse(sub, out int clockCard);
+
+            if (!clockCardResult)
+            {
+                return null;
+            }
+
+            var clockedOperator = await _clockInRepository.GetClockedInOperator(clockCard);
+
+            if (clockedOperator == null)
+            {
+                return null;
+            }
+
+            return clockedOperator;
+        }
     }
 }

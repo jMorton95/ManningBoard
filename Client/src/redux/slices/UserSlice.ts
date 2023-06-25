@@ -1,9 +1,9 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { type CurrentUserState } from '../types/ReduxTypes';
+import { type CurrentOperatorState } from '../types/ReduxTypes';
 import { type TOperator } from '../../types/models/Operator';
 
-const initialState: CurrentUserState = {
-  currentUser: null,
+const initialState: CurrentOperatorState = {
+  currentOperator: null,
   sessionID: null
 };
 const userSlice = createSlice({
@@ -11,13 +11,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<TOperator | null>) => {
-      state.currentUser = action.payload;
+      state.currentOperator = action.payload;
     },
     setSessionID: (state, action: PayloadAction<number | null>) => {
       state.sessionID = action.payload;
     },
     clearUser: (state) => {
-      state.currentUser = null;
+      state.currentOperator = null;
     },
     clearSessionID: (state) => {
       state.sessionID = null;

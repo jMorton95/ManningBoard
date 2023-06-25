@@ -2,6 +2,7 @@
 using Manning.Api.Models;
 using Manning.Api.Services.Interfaces;
 using Manning.Api.Models.DataTransferObjects;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Manning.Api.Controllers
 {
@@ -46,6 +47,32 @@ namespace Manning.Api.Controllers
             var msg = new { message = $"Clocked Out Session - {sessionId}" };
             await _loginService.ClockOperatorOut(sessionId);
             return Ok(msg);
+        }
+
+
+        [HttpGet("GetOperatorFromJWT")]
+        public async Task<ActionResult<ClockedInOperatorDTO>> GetOperatorFromJWT(string jwt)
+        {
+            //TODO: Refactor
+            ClockModel? clockedOperator = await _loginService.TryGetClockInFromJWT(jwt);
+
+            if (clockedOperator == null)
+            {
+                return BadRequest("Not Valid");
+            }
+
+            Operator? op = await _loginService.CheckClockCardAsync(clockedOperator.ClockCardNumber);
+
+            if (op == null)
+            {
+                return BadRequest("Operator Not Valid");
+            }
+
+            int sessionId = await _loginService.ClockOperatorIn(op);
+
+            ClockedInOperatorDTO validatedOperator = new(op, sessionId);
+
+            return Ok(validatedOperator);
         }
 
     }

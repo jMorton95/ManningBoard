@@ -8,5 +8,6 @@ namespace Manning.Api.Repositories.Interfaces
         Task<int> ClockOperatorIn(Operator _operator);
         Task<ClockModel> GetClockById(int clockInId);
         Task ClockOperatorOut(int clockInId);
+        Task<ClockModel?> GetClockedInOperator(int clockCardNumber);
     }
 }

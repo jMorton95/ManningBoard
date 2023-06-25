@@ -8,6 +8,7 @@ namespace Manning.Api.Services.Interfaces
         bool ClockCardIsInvalid(int clockCardNumber);
         Task<Operator?> CheckClockCardAsync(int clockCardNumber);
         Task<int> ClockOperatorIn(Operator op);
+        Task<ClockModel?> TryGetClockInFromJWT(string jwtToken);
         Task ClockOperatorOut(int sessionID);
     }
 }

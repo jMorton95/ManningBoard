@@ -1,11 +1,11 @@
 import { type LineStateDTO } from '../types/dtos/LineState';
-import { type CurrentUser } from '../redux/types/ReduxTypes';
+import { type CurrentOperator } from '../redux/types/ReduxTypes';
 import { API_ENDPOINTS } from '../config/config';
 import { TZone } from '../types/models/LineTypes';
 
 type TApiService = {
   GetLineState: () => Promise<LineStateDTO | undefined>
-  GetClockedOperator: (clockNumber: string) => Promise<CurrentUser | undefined>
+  GetClockedOperator: (clockNumber: string) => Promise<CurrentOperator | undefined>
   GetLine: () => Promise<TZone[] | undefined>
 }
 
@@ -37,7 +37,7 @@ function ApiService(): TApiService {
   }
 
   const GetLineState = async() => await GET<LineStateDTO>('Line/GetLineState');
-  const GetClockedOperator = async(clockNumber: string) => await GET<CurrentUser>(`Clock/${clockNumber}`);
+  const GetClockedOperator = async(clockNumber: string) => await GET<CurrentOperator>(`Clock/${clockNumber}`);
   const GetLine = async() => await GET<TZone[]>('Line');
 
   return {
@@ -48,8 +48,9 @@ function ApiService(): TApiService {
 }
 
 type TAuthService = {
-  ClockIn: (clockCardNumber: string) => Promise<CurrentUser>
+  ClockIn: (clockCardNumber: string) => Promise<CurrentOperator>
   GetToken(): string
+  GetCurrentlyClockedInOperator: () => Promise<CurrentOperator>
 }
 
 function AuthService(): TAuthService {
@@ -83,13 +84,26 @@ function AuthService(): TAuthService {
     setToken(res)
 
     return await res.json().then((data) => {
-      return data as CurrentUser;
+      return data as CurrentOperator;
+    });
+  }
+
+  async function GetCurrentlyClockedInOperator() {
+    const res = await GetResponseBase(`Clock/GetOperatorFromJWT/${GetToken()}`);
+
+    if (!res.ok) {
+      throw new Error('Response was not OK');
+    }
+
+    return await res.json().then((data) => {
+      return data as CurrentOperator;
     });
   }
 
   return {
     ClockIn,
-    GetToken
+    GetToken,
+    GetCurrentlyClockedInOperator
   };
 }
 

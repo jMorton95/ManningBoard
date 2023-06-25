@@ -4,7 +4,7 @@ import { setToken } from "../redux/slices/AuthSlice";
 import { BuildUrl } from "../services/APIService";
 import { setUser, setSessionID } from "../redux/slices/UserSlice";
 import { Form } from "react-bootstrap";
-import { type CurrentUser } from "../redux/types/ReduxTypes";
+import { type CurrentOperator } from "../redux/types/ReduxTypes";
 import { AuthService } from "../services/NewApiService";
 
 export default function ClockIn(): JSX.Element {

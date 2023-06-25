@@ -9,7 +9,7 @@ import Home from "../pages/home/Home";
 import NotAuthorized from "../pages/Unauthorised/Unauthorised";
 
 export default function App(): JSX.Element {
-  const user = useSelector((state: RootState) => state.user.currentUser);
+  const user = useSelector((state: RootState) => state.user.currentOperator);
   const isAdmin = user?.isAdministrator;
 
   return (

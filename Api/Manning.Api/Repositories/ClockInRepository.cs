@@ -14,6 +14,11 @@ namespace Manning.Api.Repositories
             return await _dbContext.Operator.SingleOrDefaultAsync(o => o.ClockCardNumber == clockCardNumber);
         }
 
+        public async Task<ClockModel?> GetClockedInOperator(int clockCardNumber)
+        {
+            return await _dbContext.ClockModel.LastAsync(c => c.ClockCardNumber == clockCardNumber);
+        }
+
         public async Task<int> ClockOperatorIn(Operator _operator)
         {
             ClockModel clockIn = new()
