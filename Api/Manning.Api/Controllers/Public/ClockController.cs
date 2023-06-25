@@ -31,8 +31,11 @@ namespace Manning.Api.Controllers
             }
 
             int sessionId = await _loginService.ClockOperatorIn(op);
+            string jwt = _loginService.GenerateJwtToken(op);
 
-            ClockedInOperatorDTO validatedOperator = new(op, _loginService.GenerateJwtToken(op), sessionId);
+            ClockedInOperatorDTO validatedOperator = new(op, sessionId);
+
+            Response.Headers.Append("JWT", jwt);
 
             return Ok(validatedOperator);
         }

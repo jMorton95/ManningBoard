@@ -15,7 +15,10 @@ namespace Manning.Api.Controllers
             _lineService = lineService;
         }
         [HttpGet]
-        public async Task<List<Zone>> GetAllZonesAndStations() => await _lineService.GetAllZonesAndStations();
+        public async Task<List<Zone>> GetAllZonesAndStations()
+        {
+            return await _lineService.GetAllZonesAndStations();
+        }
         [HttpGet("Stations")]
         public async Task<List<Station>> GetAllStations() => await _lineService.GetAllStations();
         [HttpGet("GetLineState")]

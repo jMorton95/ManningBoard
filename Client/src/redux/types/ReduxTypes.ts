@@ -3,7 +3,6 @@ import { type TOperator } from '../../types/models/Operator';
 
 export type CurrentUser = {
   currentOperator: TOperator
-  jsonWebToken: string
   sessionID: number
 }
 

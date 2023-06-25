@@ -1,21 +1,28 @@
-import { API_ENDPOINTS } from '../../../../../config';
 import { type LineStateDTO } from '../types/dtos/LineState';
 import { type CurrentUser } from '../redux/types/ReduxTypes';
+import { API_ENDPOINTS } from '../config/config';
+import { TZone } from '../types/models/LineTypes';
 
 type TApiService = {
-  GET: <T> (username: string, _cacheOption?: RequestCache) => Promise<T | undefined>
-  GetLineState: (_cacheOption?: RequestCache) => Promise<LineStateDTO | undefined>
-  GetClockedOperator: (clockNumber: string, _cacheOption?: RequestCache) => Promise<CurrentUser | undefined>
+  GetLineState: () => Promise<LineStateDTO | undefined>
+  GetClockedOperator: (clockNumber: string) => Promise<CurrentUser | undefined>
+  GetLine: () => Promise<TZone[] | undefined>
 }
 
-const ResponseBase = async(endpoint: string, _cacheOption?: RequestCache): Promise<Response> => {
-  return await fetch(`${API_ENDPOINTS.base}${endpoint}`, { cache: `${_cacheOption ?? 'force-cache'}` });
+const GetResponseBase = async(endpoint: string): Promise<Response> => {
+  return await fetch(`${API_ENDPOINTS.base}/${endpoint}`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
 function ApiService(): TApiService {
-  async function GET<T>(endpoint: string, _cacheOption?: RequestCache): Promise<T | undefined> {
+  async function GET<T>(endpoint: string): Promise<T | undefined> {
     try {
-      const res = await ResponseBase(endpoint, _cacheOption);
+      const res = await GetResponseBase(endpoint);
 
       if (!res.ok) {
         throw new Error('Response was not OK');
@@ -29,28 +36,60 @@ function ApiService(): TApiService {
     }
   }
 
-  const GetLineState = async(_cacheOption?: RequestCache) => await GET<LineStateDTO>('Line/GetLineState', _cacheOption);
-  const GetClockedOperator = async(clockNumber: string, _cacheOption?: RequestCache) => await GET<CurrentUser>(`Clock/${clockNumber}`, _cacheOption);
+  const GetLineState = async() => await GET<LineStateDTO>('Line/GetLineState');
+  const GetClockedOperator = async(clockNumber: string) => await GET<CurrentUser>(`Clock/${clockNumber}`);
+  const GetLine = async() => await GET<TZone[]>('Line');
 
   return {
-    GET,
     GetLineState,
-    GetClockedOperator
+    GetClockedOperator,
+    GetLine
   };
 }
 
 type TAuthService = {
-  ClockIn: (clockCardNumber: string) => Promise<Response>
+  ClockIn: (clockCardNumber: string) => Promise<CurrentUser>
+  GetToken(): string
 }
 
 function AuthService(): TAuthService {
+
+  function setToken(res: Response){
+    try {
+      const jwt = res.headers.get('Jwt');
+      if (jwt){
+        localStorage.setItem('Jwt', jwt);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  function GetToken(): string {
+    const jwt = localStorage.getItem('Jwt');
+    if (!jwt) {
+      throw new Error("No Jwt found in localStorage");
+    }
+    return jwt ?? ''
+  }
+
   async function ClockIn(clockCardNumber: string) {
-    const res = await ResponseBase(`Clock/${clockCardNumber}`, 'no-cache');
-    return res;
+    const res = await GetResponseBase(`Clock/${clockCardNumber}`);
+    if (!res.ok) {
+      throw new Error('Response was not OK');
+    }
+
+    setToken(res)
+
+    return await res.json().then((data) => {
+      return data as CurrentUser;
+    });
   }
 
   return {
-    ClockIn
+    ClockIn,
+    GetToken
   };
 }
 

@@ -81,14 +81,18 @@ const BuildQueryStringFromObject = <T extends object>(data: T): string => {
 /**
  *  @returns An Object Literal with a method 'POST' and JSON Headers.
  */
-function PostRequestBase(token: string): RequestInit {
+function PostRequestBase(): RequestInit {
   return {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      Authorization: `Bearer ${token}`
-    }
+      'Access-Control-Allow-Origin': 'https://localhost:7001'
+    },
+    body: JSON.stringify({
+      requirementDescription: "New Requirement",
+      stationID: 3
+  })
   };
 }
 /**
@@ -105,13 +109,14 @@ const FetchPost = async <R, T extends object>(
   return await fetch(
     BuildUrl(`${endpoint}/${BuildQueryStringFromObject(data)}`), request
   ).then(async(res) => {
+    console.log(res);
     const data: R = await res.json();
-    return await Promise.resolve(data);
+    return await data;
   })
-    .catch(async(error) => {
-      console.error(error);
-      return await Promise.reject(error);
-    });
+  .catch(async(error) => {
+    console.error(error);
+    return await Promise.reject(error);
+  });
 };
 
 export { AsyncFetchEndpointAndSetState, AsyncFetchEndpointAndSetStateWithRetry, FetchPost, PostRequestBase, BuildUrl };

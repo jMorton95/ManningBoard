@@ -7,7 +7,7 @@ namespace Manning.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "Admin")]
     public class TrainingRequirementController : ControllerBase
     {
         private readonly ITrainingRequirementService _trainingRequirementService;

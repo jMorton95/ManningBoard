@@ -1,48 +1,52 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import StationMan from "../../src/components/StationMan";
 import ZoneDropdown from "../../src/components/ZoneDropdown";
-import { RootState } from "../../src/redux/types/ReduxTypes";
-import { ZoneStateDTO } from "../../src/types/dtos/LineState";
-import { TStation } from "../../src/types/models/LineTypes";
+import { TStation, TZone } from "../../src/types/models/LineTypes";
+import { ApiService } from "../../src/services/NewApiService";
 
-const getSelectedZone = (zones: ZoneStateDTO[], station: TStation): string =>
-  zones.find((x) => x.zone.id === station.zoneID)?.zone.zoneName ??
-  "No Zone Found";
+const getSelectedZone = (zones: TZone[], station: TStation): string =>
+  zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";
 
 export default function StationManagement(): JSX.Element {
+  const { GetLine } = ApiService();
   const [selectedStation, setSelectedStation] = useState<TStation>();
-  const token = useSelector((state: RootState) => state.auth.token);
-  const lineState = useSelector(
-    (state: RootState) => state.lineState.lineStateDTO
-  );
+  const [line, setLine] = useState<TZone[] | undefined>();
 
-  console.log(lineState);
+  useEffect(() => {
+    if (!line) {
+      handleLineState();
+    }
+  }, [line]);
+
+  const handleLineState = async () => {
+    const line = await GetLine();
+    setLine(line);
+  };
 
   //TODO: State Performance leak that causes whole section to re-render, probably due to the way data is being set here in state.
   //MEMOISE some stuff, at least the ZoneDropDown - Possibly even make a context to share state here.
 
-  if (lineState == null) {
+  if (line == null) {
     return <div>Loading...</div>;
   }
 
   return (
     <section>
       <div className="stations-list d-flex gap-2 flex-row mb-5">
-        {lineState.map((dto) => (
+        {line.map((zone) => (
           <ZoneDropdown
-            key={dto.zone.id}
-            zoneDTO={dto}
+            key={zone.id}
+            zone={zone}
             setSelectedStation={setSelectedStation}
           />
         ))}
       </div>
-      {selectedStation != null && token !== null && (
+      {selectedStation != null && (
         <div className="station-editor">
-          {lineState != null && selectedStation !== null && (
-            <h2>{getSelectedZone(lineState, selectedStation)}</h2>
+          {line != null && selectedStation !== null && (
+            <h2>{getSelectedZone(line, selectedStation)}</h2>
           )}
-          {<StationMan selectedStation={selectedStation} token={token} />}
+          {<StationMan selectedStation={selectedStation} />}
         </div>
       )}
     </section>

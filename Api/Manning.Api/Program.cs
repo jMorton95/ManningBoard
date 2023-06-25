@@ -36,6 +36,7 @@ namespace Manning.Api
                 {
                     policy.WithOrigins(FrontendUrl)
                     .AllowAnyHeader()
+                    .WithExposedHeaders("JWT")
                     .AllowAnyMethod()
                     .AllowCredentials();
                 });
@@ -60,20 +61,32 @@ namespace Manning.Api
             builder.Services.AddScoped<IOperatorService, OperatorService>();
 
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            builder.Services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                        ValidAudience = builder.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-                    };
-                });
+                        context.Token = context.Request.Cookies["JWT"];
+                        Console.WriteLine(context.Token);
+                        return Task.CompletedTask;
+                    }
+                };
+            });
 
             builder.Services.AddAuthorization(options =>
             {
@@ -96,8 +109,8 @@ namespace Manning.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseCors(CorsPolicy);
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.MapHub<LineHub>("/lineHub");

@@ -20,8 +20,14 @@
     "noUnusedParameters": true
   },
   "include": [
-    "src/**/*",
-    "pages/**/*",
+    "src",
+    "**/*.ts",
+    "**/*.tsx",
+    ".eslintrc.cjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
     "environments/env.d.ts",
     "./vite.config.ts"
   ],
