@@ -90,10 +90,13 @@ namespace Manning.Api.Services
                 return null;
             }
 
-            DateTime validFrom = validatedToken.ValidFrom;
+            DateTime validTo = validatedToken.ValidTo;
 
-            if (validFrom < DateTime.Now)
+            if (validTo < DateTime.Now)
             {
+                Console.WriteLine(validTo.ToString());
+                Console.WriteLine(DateTime.Now.ToString());
+                Console.WriteLine("Hit this");
                 return null;
             }
 

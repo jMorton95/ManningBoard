@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type TTrainingRequirement } from "../types/models/LineTypes";
 import { type TRequirementPostData } from "../types/TrainingTypes";
-import { FetchPost, PostRequestBase } from "../services/ApiService";
+import { PostQuery, PostRequestBase } from "../services/ApiService";
 
 type TAddRequirementProps = {
   closeModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -72,7 +72,7 @@ const PostRequirement = async (
   requirementDescription: string,
   stationID: number
 ): Promise<TTrainingRequirement | null> => {
-  const fetchedData = await FetchPost<
+  const fetchedData = await PostQuery<
     TTrainingRequirement,
     TRequirementPostData
   >({

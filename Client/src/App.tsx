@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+import Layout from "../pages/Layout";
 import { useSelector } from "react-redux";
 import { type RootState } from "./redux/types/ReduxTypes";
 import { LineStateContextProvider } from "./contexts/LineStateContext";
 import StationManagement from "../pages/stationManagement/StationManagement";
 import OperatorManagement from "../pages/operatorManagement/OperatorManagement";
-import Home from "../pages/home/Home";
+import Home from "../pages/Home";
 import NotAuthorized from "../pages/Unauthorised/Unauthorised";
 
 export default function App(): JSX.Element {

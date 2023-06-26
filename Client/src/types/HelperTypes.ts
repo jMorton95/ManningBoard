@@ -4,12 +4,16 @@
 type NonNegativeInteger<N extends number> = `${N}` extends `-${string}` ? never : N
 
 /**
- * Post Request Parameters
+ * PostQuery Request Parameters
  */
 type PostParams<T extends object> = {
   endpoint: string
   data: T
   request: RequestInit
+}
+
+export type ResponseMessage = {
+  message: string
 }
 
 export type { NonNegativeInteger, PostParams };

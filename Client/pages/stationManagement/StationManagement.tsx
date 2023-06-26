@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 import StationMan from "../../src/components/StationMan";
 import ZoneDropdown from "../../src/components/ZoneDropdown";
-import { TStation, TZone } from "../../src/types/models/LineTypes";
-import { ApiService } from "../../src/services/ApiService";
+import { type TStation, type TZone } from "../../src/types/models/LineTypes";
+import { PublicApiService } from "../../src/services/ApiService";
 
 const getSelectedZone = (zones: TZone[], station: TStation): string =>
   zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";
 
 export default function StationManagement(): JSX.Element {
-  const { GetLine } = ApiService();
+  const { GetLine } = PublicApiService();
   const [selectedStation, setSelectedStation] = useState<TStation>();
   const [line, setLine] = useState<TZone[] | undefined>();
 
   useEffect(() => {
+    const handleLineState = async () => {
+      const line = await GetLine();
+      setLine(line);
+    };
+
     if (!line) {
-      handleLineState();
+      void handleLineState();
     }
   }, [line]);
-
-  const handleLineState = async () => {
-    const line = await GetLine();
-    setLine(line);
-  };
 
   //TODO: State Performance leak that causes whole section to re-render, probably due to the way data is being set here in state.
   //MEMOISE some stuff, at least the ZoneDropDown - Possibly even make a context to share state here.

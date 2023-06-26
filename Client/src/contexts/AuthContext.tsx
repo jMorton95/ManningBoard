@@ -1,8 +1,14 @@
-import { FC, ReactNode, createContext, useEffect, useState } from "react";
-import { AuthService } from "../services/ApiService";
+import {
+  type FC,
+  type ReactNode,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import { PrivateApiService as AuthService } from "../services/ApiService";
 import {
   type AuthState,
-  CurrentOperatorState,
+  type CurrentOperatorState,
 } from "../redux/types/ReduxTypes";
 
 const initialState: ReduxState = {
@@ -28,17 +34,22 @@ export const AuthContext = createContext<TAuthContext>({
   CLOCKOUT: () => Promise.resolve(),
 });
 
-export const AuthProvider: FC<AuthProviderProps> = (props) => {
+export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
   const { children } = props;
   const [authState, setAuthState] = useState<ReduxState>(initialState);
   const authService = AuthService();
 
   useEffect(() => {
-    const resume = async () => {
+    const RESUME = async () => {
       const localToken = authService.GetToken();
 
-      if (localToken) {
-        let operatorDTO = await authService.GetCurrentlyClockedInOperator();
+      if (localToken && !authState.token) {
+        const operatorDTO = await authService.GetCurrentlyClockedInOperator();
+
+        if (!operatorDTO) {
+          console.error("Tried to resume session, session no longer valid");
+          return;
+        }
 
         setAuthState((currentState) => {
           return {
@@ -51,7 +62,9 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       }
     };
 
-    resume();
+    if (!authState.currentOperator) {
+      void RESUME();
+    }
   });
 
   const CLOCKIN = async (clockCardNumber: string) => {
@@ -68,8 +81,20 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
   };
 
   const CLOCKOUT = async () => {
-    //TODO:
-    //Implement
+    if (authState.sessionID) {
+      await authService.ClockOut(authState.sessionID);
+    } else {
+      throw new Error("No active session to clock out.");
+    }
+
+    setAuthState((currentState) => {
+      return {
+        ...currentState,
+        token: null,
+        currentOperator: null,
+        sessionID: null,
+      };
+    });
   };
 
   return (

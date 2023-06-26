@@ -1,37 +1,37 @@
 import { type LineStateDTO } from '../types/dtos/LineState';
 import { type CurrentOperator } from '../redux/types/ReduxTypes';
-import { TZone } from '../types/models/LineTypes';
-import { PostParams } from '../types/HelperTypes';
+import { type TZone } from '../types/models/LineTypes';
+import { type ResponseMessage, type PostParams } from '../types/HelperTypes';
 import { GET, GetResponseBase } from '../utilities/APIBase';
+import { API_ENDPOINTS } from '../config/config';
+import { type Base } from '../types/models/BaseType';
 
-type TApiService = {
+type TPublicApiService = {
   GetLineState: () => Promise<LineStateDTO | undefined>
-  GetClockedOperator: (clockNumber: string) => Promise<CurrentOperator | undefined>
   GetLine: () => Promise<TZone[] | undefined>
 }
 
-export const ApiService = (): TApiService => {
+export const PublicApiService = (): TPublicApiService => {
   
   const GetLineState = async() => await GET<LineStateDTO>('Line/GetLineState');
-  const GetClockedOperator = async(clockNumber: string) => await GET<CurrentOperator>(`Clock/${clockNumber}`);
   const GetLine = async() => await GET<TZone[]>('Line');
 
   return {
     GetLineState,
-    GetClockedOperator,
     GetLine
   };
 }
 
-type TAuthService = {
+type TPrivateApiService = {
   ClockIn: (clockCardNumber: string) => Promise<CurrentOperator>
+  ClockOut: (sessionID: number, ) => Promise<void>
   GetToken(): string
-  GetCurrentlyClockedInOperator: () => Promise<CurrentOperator>
+  GetCurrentlyClockedInOperator: () => Promise<CurrentOperator | undefined>
 }
 
-export const AuthService = (): TAuthService => {
+export const PrivateApiService = (): TPrivateApiService => {
 
-  const setToken = (res: Response) => {
+  const SetToken = (res: Response) => {
     try {
       const jwt = res.headers.get('Jwt');
       if (jwt){
@@ -45,10 +45,11 @@ export const AuthService = (): TAuthService => {
 
   const GetToken = (): string => {
     const jwt = localStorage.getItem('Jwt');
-    if (!jwt) {
-      throw new Error("No Jwt found in localStorage");
-    }
     return jwt ?? ''
+  }
+
+  const ClearToken = (): void => {
+    localStorage.removeItem('Jwt');
   }
 
    const ClockIn = async (clockCardNumber: string): Promise<CurrentOperator> => {
@@ -58,18 +59,30 @@ export const AuthService = (): TAuthService => {
       throw new Error('Response was not OK');
     }
 
-    setToken(res)
+    SetToken(res)
 
     return await res.json().then((data) => {
       return data as CurrentOperator;
     });
   }
 
-  const GetCurrentlyClockedInOperator = async (): Promise<CurrentOperator> => {
-    const res = await GetResponseBase(`Clock/GetOperatorFromJWT/${GetToken()}`);
+ 
+
+  const ClockOut = async (sessionID: number): Promise<void> => {
+    const message = await PostWithBody<ResponseMessage, number>("Clock", sessionID);
+
+    if (message) {
+      ClearToken();
+    }
+  }
+
+  const GetCurrentlyClockedInOperator = async (): Promise<CurrentOperator | undefined> => {
+    //TODO: Refactor this without the magic string for generating the endpoint.
+    const res = await GetResponseBase(`Clock/GetOperatorFromJWT?jwt=${GetToken()}`);
 
     if (!res.ok) {
-      throw new Error('Response was not OK');
+      ClearToken();
+      throw new Error(`Response was not OK, ${res.statusText}`);
     }
 
     return await res.json().then((data) => {
@@ -79,6 +92,7 @@ export const AuthService = (): TAuthService => {
 
   return {
     ClockIn,
+    ClockOut,
     GetToken,
     GetCurrentlyClockedInOperator
   };
@@ -91,46 +105,49 @@ export const AuthService = (): TAuthService => {
 //TODO: Integrate all the old Api stuff into new Service
 
 /**
- *  @returns An Object Literal with a method 'POST' and JSON Headers.
+ *  @returns An Object Literal with a method 'PostQuery' and JSON Headers.
  */
-export function PostRequestBase(): RequestInit {
+export function PostRequestBase(body?: BodyInit): RequestInit {
   //TODO: Integrate with new Service, use Config.
   return {
-    method: 'POST',
+    method: 'PostQuery',
     credentials: 'include',
     headers: {
       'Content-type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://localhost:7001'
-    }
+      'Access-Control-Allow-Origin': `${API_ENDPOINTS.domain}`
+    },
+    body: body ?? null
   };
 }
 
-/**
- * Gets your base API Url Stored in your Environment Variables & appends the Endpoint you pass in.
- * @param endpoint example: "Zones"
- * @returns A full URL path to your Endpoint.
- */
-const BuildUrl = (endpoint: string): string =>
-  `${import.meta.env.VITE_BASE_API_URL}/api/${endpoint}`;
+export const PostWithBody = async <T, R> (endpoint: string, body: R) => {
+  const res =  await fetch((`${API_ENDPOINTS.base}/${endpoint}`), PostRequestBase(JSON.stringify(body)))
+  
+  if (!res.ok) {
+    throw new Error(`Post Request Error, ${res.statusText}`)
+  }
 
+  return await res.json()
+  .then((data) => {
+    return data as T
+  })
+}
 
 /**
- * @param param0 Pass an object literal with an Endpoint, Post-Data and request headers.
+ * @param param0 Pass an object literal with an Endpoint, PostQuery-Data and request headers.
  * @returns
  */
-export const FetchPost = async <R, T extends object>(
+export const PostQuery = async <R, T extends object>(
   {
     endpoint,
+    request,
     data,
-    request
   }: PostParams<T>
 ): Promise<R> => {
-  return await fetch(
-    BuildUrl(`${endpoint}/${BuildQueryStringFromObject(data)}`), request
-  ).then(async(res) => {
-    console.log(res);
-    const data: R = await res.json();
-    return await data;
+  return await fetch((`${API_ENDPOINTS.base}/${endpoint}/${BuildQueryStringFromObject(data)}`), request)
+  .then(async(res) => {
+    const data: R = await res.json() as R;
+    return data;
   })
   .catch(async(error) => {
     console.error(error);
@@ -143,13 +160,16 @@ export const FetchPost = async <R, T extends object>(
  * @returns A string built from destructuring an Objects Keys & Values
  */
 export const BuildQueryStringFromObject = <T extends object>(data: T): string => {
-  let queryString: string = '?';
+  let queryString = '?';
   const dataArray = Object.entries(data);
+
   dataArray.forEach((entry: [string, string], index) => {
     queryString += `${entry[0]}=${entry[1]}`;
+
     if (dataArray.length !== index + 1) {
       queryString += '&';
     }
   });
+  
   return queryString;
 };

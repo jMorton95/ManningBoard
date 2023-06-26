@@ -1,6 +1,6 @@
 import { type SetStateAction } from "react";
 import { Dropdown } from "react-bootstrap";
-import { TZone, type TStation } from "../types/models/LineTypes";
+import { type TZone, type TStation } from "../types/models/LineTypes";
 
 type TZoneDropdownProps = {
   zone: TZone;

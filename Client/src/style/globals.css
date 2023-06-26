@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/*Post Bootstrap custom styles*/
+/*PostQuery Bootstrap custom styles*/
 :root {
   font-size: 20px;
 }

@@ -1,13 +1,10 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import { useDispatch } from "react-redux";
-import { setUser, setSessionID } from "../redux/slices/UserSlice";
+import { useState, type ChangeEvent, type FormEvent, useContext } from "react";
 import { Form } from "react-bootstrap";
-import { AuthService } from "../services/ApiService";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function ClockIn(): JSX.Element {
-  const dispatch = useDispatch();
   const [inputText, setInputText] = useState<string>("");
-  const { ClockIn } = AuthService();
+  const { CLOCKIN } = useContext(AuthContext);
 
   const handleLogin = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -19,10 +16,7 @@ export default function ClockIn(): JSX.Element {
   ): Promise<void> => {
     event.preventDefault();
     try {
-      const data = await ClockIn(inputText);
-
-      dispatch(setUser(data.currentOperator));
-      dispatch(setSessionID(data.sessionID));
+      await CLOCKIN(inputText);
     } catch (error) {
       console.error(error);
     }
