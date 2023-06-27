@@ -1,9 +1,9 @@
-import { type ZoneStateDTO } from '../types/dtos/LineState';
-import Station from './Station';
+import { type ZoneStateDTO } from "../../types/dtos/LineState";
+import Station from "./Station";
 
 type ZoneProps = {
-  zoneStateDTO: ZoneStateDTO
-}
+  zoneStateDTO: ZoneStateDTO;
+};
 
 export default function Zone({ zoneStateDTO }: ZoneProps): JSX.Element {
   const { zone, stationStateDTOs } = zoneStateDTO;

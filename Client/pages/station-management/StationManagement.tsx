@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import StationMan from "../../src/components/StationMan";
-import ZoneDropdown from "../../src/components/ZoneDropdown";
+import StationMan from "../../src/components/station-management/StationMan";
+import ZoneDropdown from "../../src/components/station-management/ZoneDropdown";
 import { type TStation, type TZone } from "../../src/types/models/LineTypes";
 import { PublicApiService } from "../../src/services/ApiService";
 

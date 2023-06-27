@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import AddRequirement from "./AddRequirement";
 import FilteredRequirementList from "./FilteredRequirementList";
-import { type TStation } from "../types/models/LineTypes";
+import { type TStation } from "../../types/models/LineTypes";
 
 type TStationManProps = {
   selectedStation: TStation;

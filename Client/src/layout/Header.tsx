@@ -1,14 +1,14 @@
-import ClockIn from "./ClockIn";
-import { useContext, useState } from "react";
+import ClockIn from "../components/ClockIn";
+import { useState } from "react";
 import NavBar from "./Navbar";
-import { AuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Header(): JSX.Element {
   const [enableLogin, setEnableLogin] = useState(false);
   const toggleLogin = (): void => {
     setEnableLogin(!enableLogin);
   };
-  const { token } = useContext(AuthContext);
+  const { token } = useAuthContext();
 
   return (
     <section className="d-flex header-component">

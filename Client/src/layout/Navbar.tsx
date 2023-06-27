@@ -1,15 +1,15 @@
 import { NavLink } from "react-router-dom";
-import ClockOut from "./ClockOut";
+import ClockOut from "../components/ClockOut";
 import { useSelector } from "react-redux";
 import { type RootState } from "../redux/types/ReduxTypes";
+import { useAuthContext } from "../auth/AuthContext";
 
 type TNavBarProps = {
   setEnableLogin: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function NavBar(props: TNavBarProps): JSX.Element {
-  const user = useSelector((state: RootState) => state.user.currentOperator);
-  const isAdmin = user?.isAdministrator;
+  const { currentOperator } = useAuthContext();
 
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light-10">
@@ -19,7 +19,7 @@ export default function NavBar(props: TNavBarProps): JSX.Element {
           <NavLink className="nav-link" to="/">
             Home
           </NavLink>
-          {isAdmin === true && (
+          {currentOperator?.isAdministrator === true && (
             <>
               <NavLink className="nav-link" to="/station-management">
                 Station Management
@@ -29,9 +29,9 @@ export default function NavBar(props: TNavBarProps): JSX.Element {
               </NavLink>
             </>
           )}
-          <ClockOut setEnableLogin={props.setEnableLogin} />
+          <ClockOut />
         </div>
-        {user != null && <div>{user.operatorName}</div>}
+        {currentOperator != null && <div>{currentOperator.operatorName}</div>}
       </div>
     </nav>
   );

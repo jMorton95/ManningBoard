@@ -1,10 +1,10 @@
-import { useState, type ChangeEvent, type FormEvent, useContext } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Form } from "react-bootstrap";
-import { AuthContext } from "../contexts/AuthContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function ClockIn(): JSX.Element {
   const [inputText, setInputText] = useState<string>("");
-  const { CLOCKIN } = useContext(AuthContext);
+  const { CLOCKIN } = useAuthContext();
 
   const handleLogin = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();

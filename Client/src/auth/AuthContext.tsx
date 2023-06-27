@@ -1,31 +1,23 @@
-import {
-  type FC,
-  type ReactNode,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { type FC, createContext, useEffect, useState } from "react";
 import { PrivateApiService as AuthService } from "../services/ApiService";
 import {
   type AuthState,
   type CurrentOperatorState,
 } from "../redux/types/ReduxTypes";
+import ClockIn from "../components/ClockIn";
+import { type AuthProviderProps } from "./AuthenticationProvider";
 
-const initialState: ReduxState = {
+const initialState: AuthenticationState = {
   token: null,
   currentOperator: null,
   sessionID: null,
 };
 
-type ReduxState = AuthState & CurrentOperatorState;
+type AuthenticationState = AuthState & CurrentOperatorState;
 
-export type TAuthContext = ReduxState & {
+type TAuthContext = AuthenticationState & {
   CLOCKIN: (clockCardNumber: string) => Promise<void>;
   CLOCKOUT: () => Promise<void>;
-};
-
-type AuthProviderProps = {
-  children: ReactNode;
 };
 
 export const AuthContext = createContext<TAuthContext>({
@@ -36,7 +28,7 @@ export const AuthContext = createContext<TAuthContext>({
 
 export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
   const { children } = props;
-  const [authState, setAuthState] = useState<ReduxState>(initialState);
+  const [authState, setAuthState] = useState<AuthenticationState>(initialState);
   const authService = AuthService();
 
   useEffect(() => {
@@ -99,7 +91,7 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
 
   return (
     <AuthContext.Provider value={{ ...authState, CLOCKIN, CLOCKOUT }}>
-      {children}
+      {authState.token ? children : <ClockIn />}
     </AuthContext.Provider>
   );
 };
