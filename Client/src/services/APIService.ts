@@ -52,7 +52,7 @@ export const PrivateApiService = (): TPrivateApiService => {
     localStorage.removeItem('Jwt');
   }
 
-   const ClockIn = async (clockCardNumber: string): Promise<CurrentOperator> => {
+  const ClockIn = async (clockCardNumber: string): Promise<CurrentOperator> => {
     const res = await GetResponseBase(`Clock/${clockCardNumber}`);
 
     if (!res.ok) {
@@ -110,7 +110,7 @@ export const PrivateApiService = (): TPrivateApiService => {
 export function PostRequestBase(body?: BodyInit): RequestInit {
   //TODO: Integrate with new Service, use Config.
   return {
-    method: 'PostQuery',
+    method: 'POST',
     credentials: 'include',
     headers: {
       'Content-type': 'application/json',

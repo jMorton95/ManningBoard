@@ -42,7 +42,7 @@ namespace Manning.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ClockOutOperator(int sessionId)
+        public async Task<ActionResult> ClockOutOperator([FromBody]int sessionId)
         {
             var msg = new { message = $"Clocked Out Session - {sessionId}" };
             await _loginService.ClockOperatorOut(sessionId);
