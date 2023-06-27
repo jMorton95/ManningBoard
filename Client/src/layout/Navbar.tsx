@@ -1,16 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 import ClockOut from "../components/ClockOut";
-import { useSelector } from "react-redux";
-import { type RootState } from "../redux/types/ReduxTypes";
-import { useAuthContext } from "../auth/AuthContext";
 
-type TNavBarProps = {
-  setEnableLogin: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-export default function NavBar(props: TNavBarProps): JSX.Element {
+export default function NavBar(): JSX.Element {
   const { currentOperator } = useAuthContext();
 
+  //TODO: Switch to Tabbed Layout if user is admin.
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light-10">
       <div className="container-fluid">

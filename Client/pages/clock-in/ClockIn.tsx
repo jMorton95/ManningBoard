@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Form } from "react-bootstrap";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useAuthContext } from "../../src/hooks/useAuthContext";
 
 export default function ClockIn(): JSX.Element {
   const [inputText, setInputText] = useState<string>("");

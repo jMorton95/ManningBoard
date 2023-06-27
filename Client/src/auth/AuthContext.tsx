@@ -4,7 +4,7 @@ import {
   type AuthState,
   type CurrentOperatorState,
 } from "../redux/types/ReduxTypes";
-import ClockIn from "../components/ClockIn";
+import ClockIn from "../../pages/clock-in/ClockIn";
 import { type AuthProviderProps } from "./AuthenticationProvider";
 
 const initialState: AuthenticationState = {

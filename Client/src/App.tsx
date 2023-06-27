@@ -1,41 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Router from "./components/Router";
+import "./style/globals.css";
+import store from "./redux/store/Store";
+import { Provider } from "react-redux";
+import { AuthenticationProvider } from "./auth/AuthenticationProvider";
 import Layout from "./layout/Layout";
-import StationManagement from "../pages/station-management/StationManagement";
-import OperatorManagement from "../pages/operator-management/OperatorManagement";
-import Home from "../pages/Home";
-import NotAuthorized from "../pages/unauthorised/Unauthorised";
-import { useAuthContext } from "./hooks/useAuthContext";
 
-export default function App(): JSX.Element {
-  const { currentOperator } = useAuthContext();
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route
-            path="station-management"
-            element={
-              currentOperator?.isAdministrator === true ? (
-                <StationManagement />
-              ) : (
-                <NotAuthorized />
-              )
-            }
-          />
-          <Route
-            path="operator-management"
-            element={
-              currentOperator?.isAdministrator === true ? (
-                <OperatorManagement />
-              ) : (
-                <NotAuthorized />
-              )
-            }
-          />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <Layout>
+        <AuthenticationProvider>
+          <Router />
+        </AuthenticationProvider>
+      </Layout>
+    </Provider>
+  </React.StrictMode>
+);
