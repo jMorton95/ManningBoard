@@ -5,19 +5,13 @@ const path = require('path');
 const config = {
   overrides: [
     {
-      extends: [
-        'plugin:@typescript-eslint/recommended-requiring-type-checking'
-      ],
+      plugins: ['@typescript-eslint', 'prettier'],
+      extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
+      parser: '@typescript-eslint/parser',
       files: ['*.ts', '*.tsx'],
-      parserOptions: {
-        project: path.join(__dirname, 'tsconfig.json')
-      },
     }
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: path.join(__dirname, 'tsconfig.json')
-  },
   plugins: ['@typescript-eslint'],
   extends: ['plugin:@typescript-eslint/recommended'],
   rules: {
@@ -28,7 +22,9 @@ const config = {
         fixStyle: 'inline-type-imports'
       }
     ],
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }]
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'indent': 'off',
+    '@typescript-eslint/indent': ['error', 2]
   }
 };
 

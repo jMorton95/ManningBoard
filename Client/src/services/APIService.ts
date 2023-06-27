@@ -4,7 +4,6 @@ import { type TZone } from '../types/models/LineTypes';
 import { type ResponseMessage, type PostParams } from '../types/HelperTypes';
 import { GET, GetResponseBase } from '../utilities/APIBase';
 import { API_ENDPOINTS } from '../config/config';
-import { type Base } from '../types/models/BaseType';
 
 type TPublicApiService = {
   GetLineState: () => Promise<LineStateDTO | undefined>
@@ -128,9 +127,9 @@ export const PostWithBody = async <T, R> (endpoint: string, body: R) => {
   }
 
   return await res.json()
-  .then((data) => {
-    return data as T
-  })
+    .then((data) => {
+      return data as T
+    })
 }
 
 /**
@@ -145,14 +144,14 @@ export const PostQuery = async <R, T extends object>(
   }: PostParams<T>
 ): Promise<R> => {
   return await fetch((`${API_ENDPOINTS.base}/${endpoint}/${BuildQueryStringFromObject(data)}`), request)
-  .then(async(res) => {
-    const data: R = await res.json() as R;
-    return data;
-  })
-  .catch(async(error) => {
-    console.error(error);
-    return await Promise.reject(error);
-  });
+    .then(async(res) => {
+      const data: R = await res.json() as R;
+      return data;
+    })
+    .catch(async(error) => {
+      console.error(error);
+      return await Promise.reject(error);
+    });
 };
 
 /**
