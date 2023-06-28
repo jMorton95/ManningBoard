@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RouterLayout from "../layout/RouterLayout";
 import StationManagement from "../../pages/station-management/StationManagement";
 import OperatorManagement from "../../pages/operator-management/OperatorManagement";
-import Home from "../../pages/Home";
+import Manning from "../../pages/Manning";
 import NotAuthorized from "../../pages/unauthorised/Unauthorised";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -13,7 +13,7 @@ export default function Router(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RouterLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Manning />} />
           <Route
             path="station-management"
             element={

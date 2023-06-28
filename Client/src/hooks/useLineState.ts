@@ -4,16 +4,17 @@ import { useDispatch } from 'react-redux';
 import { setLineState } from '../redux/slices/LineStateSlice';
 import { type LineStateDTO } from '../types/dtos/LineState';
 
-export type LineStateHook = () => Promise<void>
+export type LineStateSetterAction = React.Dispatch<React.SetStateAction<LineStateDTO | null>>
 
-export const useLineState = (): LineStateHook => {
+export type LineStateHook = (setStateAction: LineStateSetterAction) => () => Promise<void>
+
+export const useLineState: LineStateHook = (setStateAction: LineStateSetterAction) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
   const dispatch = useDispatch();
-  console.log('I want to know that this has fired');
 
-  const invoke = async(): Promise<void> => {
+  const pushLineState = async(): Promise<void> => {
     try {
-      if (connection != null) {
+      if (connection !== null) {
         await connection.invoke('PushLineState');
       }
     } catch (error) {
@@ -32,25 +33,25 @@ export const useLineState = (): LineStateHook => {
 
   useEffect(() => {
     if (connection !== null) {
+
       connection.start()
         .then(() => {
-          console.log('Connection Started');
-          void invoke();
+          void pushLineState();
         })
         .catch((err: ErrorConstructor) => { console.error(err); });
 
       connection.on('LineStateUpdate', (lineState: LineStateDTO) => {
-        console.log('Received LineStateUpdate:', lineState);
+        setStateAction(lineState);
         dispatch(setLineState(lineState));
       });
     }
 
     return () => {
-      if (connection != null) {
+      if (connection !== null) {
         connection.off('LineStateUpdate');
       }
     };
   }, [connection]);
 
-  return invoke;
+  return pushLineState;
 };

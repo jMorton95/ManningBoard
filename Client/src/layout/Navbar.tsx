@@ -12,7 +12,7 @@ export default function NavBar(): JSX.Element {
         <div className="navbar-nav gap-5">
           <h1 className="navbar-brand display-1">Manning Board</h1>
           <NavLink className="nav-link" to="/">
-            Home
+            Manning
           </NavLink>
           {currentOperator?.isAdministrator === true && (
             <>
