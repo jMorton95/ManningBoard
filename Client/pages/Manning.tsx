@@ -3,7 +3,7 @@ import Line from "../src/components/manning/Line";
 
 export default function Manning(): JSX.Element {
   return (
-    <section className={"manning flex-col bg-slate-900 text-slate-950"}>
+    <section className={"text-slate-950"}>
       Hello
       <LineProvider>
         <Line />

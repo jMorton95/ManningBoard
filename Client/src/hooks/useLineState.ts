@@ -1,6 +1,5 @@
 import { type HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { setLineState } from '../redux/slices/LineStateSlice';
 import { type LineStateDTO } from '../types/dtos/LineState';
 
@@ -10,7 +9,6 @@ export type LineStateHook = (setStateAction: LineStateSetterAction) => () => Pro
 
 export const useLineState: LineStateHook = (setStateAction: LineStateSetterAction) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
-  const dispatch = useDispatch();
 
   const pushLineState = async(): Promise<void> => {
     try {
@@ -34,15 +32,13 @@ export const useLineState: LineStateHook = (setStateAction: LineStateSetterActio
   useEffect(() => {
     if (connection !== null) {
 
-      connection.start()
-        .then(() => {
+      connection.start().then(() => {
           void pushLineState();
         })
         .catch((err: ErrorConstructor) => { console.error(err); });
 
       connection.on('LineStateUpdate', (lineState: LineStateDTO) => {
         setStateAction(lineState);
-        dispatch(setLineState(lineState));
       });
     }
 

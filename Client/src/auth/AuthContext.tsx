@@ -18,17 +18,20 @@ type AuthenticationState = AuthState & CurrentOperatorState;
 type TAuthContext = AuthenticationState & {
   CLOCKIN: (clockCardNumber: string) => Promise<void>;
   CLOCKOUT: () => Promise<void>;
+  toggleEditorMode: () => void;
 };
 
 export const AuthContext = createContext<TAuthContext>({
   ...initialState,
   CLOCKIN: () => Promise.resolve(),
   CLOCKOUT: () => Promise.resolve(),
+  toggleEditorMode: () => Promise.resolve(),
 });
 
 export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
   const { children } = props;
   const [authState, setAuthState] = useState<AuthenticationState>(initialState);
+  const [editorMode, setEditorMode] = useState<boolean>(false);
   const authService = AuthService();
 
   useEffect(() => {
@@ -89,8 +92,16 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
     });
   };
 
+  const toggleEditorMode = () => {
+    if (authState.currentOperator?.isAdministrator) {
+      setEditorMode(!editorMode);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ ...authState, CLOCKIN, CLOCKOUT }}>
+    <AuthContext.Provider
+      value={{ ...authState, CLOCKIN, CLOCKOUT, toggleEditorMode }}
+    >
       {authState.token ? children : <ClockIn />}
     </AuthContext.Provider>
   );

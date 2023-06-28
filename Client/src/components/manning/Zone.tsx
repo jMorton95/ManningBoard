@@ -9,7 +9,7 @@ export default function Zone({ zoneStateDTO }: ZoneProps): JSX.Element {
   const { zone, stationStateDTOs } = zoneStateDTO;
 
   return (
-    <div className={"bg-slate-700"}>
+    <div className={""}>
       <h2>{zone.zoneName}</h2>
       <div className="zone row">
         {stationStateDTOs.map((dto) => (
