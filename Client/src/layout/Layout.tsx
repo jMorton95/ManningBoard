@@ -1,8 +1,8 @@
 import { type ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { useAuthContext } from "../hooks/useAuthContext";
-import ClockIn from "../../pages/clock-in/ClockIn";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import ClockIn from "@/pages/clock-in/ClockIn";
 
 type LayoutProps = {
   children: ReactNode;

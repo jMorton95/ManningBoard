@@ -1,4 +1,5 @@
-import { API_ENDPOINTS } from "../../config";
+import { API_ENDPOINTS } from "config";
+
 
 export const GetResponseBase = async(endpoint: string): Promise<Response> => {
   return await fetch(`${API_ENDPOINTS.base}/${endpoint}`, {

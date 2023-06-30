@@ -1,5 +1,5 @@
-import { type TStation, type TZone } from '../models/LineTypes';
-import { type TOperator } from '../models/Operator';
+import { type TStation, type TZone } from "../models/LineTypes";
+import { type TOperator } from "../models/Operator";
 
 type LineStateDTO = ZoneStateDTO[];
 

@@ -1,10 +1,10 @@
+import { useAuthContext } from "@/hooks/useAuthContext";
+import RouterLayout from "@/layout/RouterLayout";
+import Manning from "@/pages/Manning";
+import OperatorManagement from "@/pages/operator-management/OperatorManagement";
+import StationManagement from "@/pages/station-management/StationManagement";
+import NotAuthorized from "@/pages/unauthorised/Unauthorised";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RouterLayout from "../layout/RouterLayout";
-import StationManagement from "../../pages/station-management/StationManagement";
-import OperatorManagement from "../../pages/operator-management/OperatorManagement";
-import Manning from "../../pages/Manning";
-import NotAuthorized from "../../pages/unauthorised/Unauthorised";
-import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Router(): JSX.Element {
   const { currentOperator } = useAuthContext();

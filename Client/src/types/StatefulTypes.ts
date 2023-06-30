@@ -1,5 +1,5 @@
-import { type LineStateDTO } from '../../types/dtos/LineState';
-import { type TOperator } from '../../types/models/Operator';
+import { type LineStateDTO } from "@/types/dtos/LineState"
+import { type TOperator } from "@/types/models/Operator"
 
 export type CurrentOperator = {
   currentOperator: TOperator

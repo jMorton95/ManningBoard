@@ -1,5 +1,5 @@
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { type StationStateDTO } from "../../types/dtos/LineState";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { type StationStateDTO } from "@/types/dtos/LineState";
 
 export default function Station(props: StationStateDTO): JSX.Element {
   const { station, operator } = props;

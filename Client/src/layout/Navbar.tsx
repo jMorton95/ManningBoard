@@ -1,5 +1,5 @@
+import { useAuthContext } from "@/hooks/useAuthContext";
 import { NavLink } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function NavBar(): JSX.Element {
   const { currentOperator } = useAuthContext();

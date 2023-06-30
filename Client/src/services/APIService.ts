@@ -1,5 +1,5 @@
 import { type LineStateDTO } from '../types/dtos/LineState';
-import { type CurrentOperator } from '../redux/types/ReduxTypes';
+import { type CurrentOperator } from '../types/StatefulTypes';
 import { type TZone } from '../types/models/LineTypes';
 import { type ResponseMessage, type PostParams } from '../types/HelperTypes';
 import { GET, GetResponseBase } from '../utilities/APIBase';

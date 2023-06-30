@@ -1,5 +1,5 @@
-import { LineProvider } from "../src/contexts/LineProvider";
-import Line from "../src/components/manning/Line";
+import Line from "@/components/manning/Line";
+import { LineProvider } from "@/contexts/LineProvider";
 
 export default function Manning(): JSX.Element {
   return (

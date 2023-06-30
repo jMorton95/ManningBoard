@@ -1,7 +1,7 @@
+import ClockOut from "@/components/ClockOut";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { type ClassNameProp } from "@/types/HelperTypes";
 import { type FC } from "react";
-import { type ClassNameProp } from "../types/HelperTypes";
-import ClockOut from "../components/ClockOut";
-import { useAuthContext } from "../hooks/useAuthContext";
 
 type HeaderProps = ClassNameProp;
 

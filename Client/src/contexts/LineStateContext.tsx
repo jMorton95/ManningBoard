@@ -1,6 +1,6 @@
+import { useLineState } from "@/hooks/useLineState";
+import { type LineStateDTO } from "@/types/dtos/LineState";
 import { type FC, type ReactNode, createContext, useState } from "react";
-import { useLineState } from "../hooks/useLineState";
-import { type LineStateDTO } from "../types/dtos/LineState";
 
 export type TLineStateContext = {
   lineState: LineStateDTO | null;

@@ -17,11 +17,14 @@
     "jsx": "react-jsx",
     "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
     "src",
-    "pages",
     "**/*.ts",
     "**/*.tsx",
     ".eslintrc.cjs",

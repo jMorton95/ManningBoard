@@ -1,8 +1,8 @@
+import StationMan from "@/components/station-management/StationMan";
+import ZoneDropdown from "@/components/station-management/ZoneDropdown";
+import { PublicApiService } from "@/services/APIService";
+import { type TZone, type TStation } from "@/types/models/LineTypes";
 import { useEffect, useState } from "react";
-import StationMan from "../../src/components/station-management/StationMan";
-import ZoneDropdown from "../../src/components/station-management/ZoneDropdown";
-import { type TStation, type TZone } from "../../src/types/models/LineTypes";
-import { PublicApiService } from "../../src/services/APIService";
 
 const getSelectedZone = (zones: TZone[], station: TStation): string =>
   zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";

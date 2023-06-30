@@ -1,6 +1,6 @@
+import { type LineStateDTO } from '@/types/dtos/LineState';
 import { type HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { useEffect, useState } from 'react';
-import { type LineStateDTO } from '../types/dtos/LineState';
 
 export type LineStateSetterAction = React.Dispatch<React.SetStateAction<LineStateDTO | null>>
 

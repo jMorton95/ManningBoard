@@ -1,9 +1,9 @@
 import { type FC, createContext, useEffect, useState } from "react";
-import { PrivateApiService as AuthService } from "../services/APIService";
+import { PrivateApiService as AuthService } from "@/services/APIService";
 import {
   type AuthState,
   type CurrentOperatorState,
-} from "../redux/types/ReduxTypes";
+} from "../types/StatefulTypes";
 import { type AuthProviderProps } from "./AuthenticationProvider";
 
 const initialState: AuthenticationState = {

@@ -1,4 +1,4 @@
-import { type TTrainingRequirement } from "../../types/models/LineTypes";
+import { type TTrainingRequirement } from "@/types/models/LineTypes";
 
 type TFilteredRequirementProps = {
   filter: TTrainingRequirement[];

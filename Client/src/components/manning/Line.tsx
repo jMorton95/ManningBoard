@@ -1,4 +1,4 @@
-import { useLineContext } from "../../hooks/useLineContext";
+import { useLineContext } from "@/hooks/useLineContext";
 import Zone from "./Zone";
 
 export default function Line() {

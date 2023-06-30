@@ -1,4 +1,4 @@
-import { type ZoneStateDTO } from "../../types/dtos/LineState";
+import { type ZoneStateDTO } from "@/types/dtos/LineState";
 import Station from "./Station";
 
 type ZoneProps = {
