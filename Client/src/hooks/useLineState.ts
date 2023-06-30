@@ -1,6 +1,5 @@
 import { type HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { useEffect, useState } from 'react';
-import { setLineState } from '../redux/slices/LineStateSlice';
 import { type LineStateDTO } from '../types/dtos/LineState';
 
 export type LineStateSetterAction = React.Dispatch<React.SetStateAction<LineStateDTO | null>>

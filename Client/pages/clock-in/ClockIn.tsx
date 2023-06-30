@@ -1,5 +1,4 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Form } from "react-bootstrap";
 import { useAuthContext } from "../../src/hooks/useAuthContext";
 
 export default function ClockIn(): JSX.Element {
@@ -27,9 +26,9 @@ export default function ClockIn(): JSX.Element {
   };
 
   return (
-    <Form className="col-12 d-flex flex-row" onSubmit={handleLogin}>
-      <Form.Group className="col-6 d-flex flex-row">
-        <Form.Label className="col-2">Clock Card Number</Form.Label>
+    <form className="col-12 d-flex flex-row" onSubmit={handleLogin}>
+      <div className="col-6 d-flex flex-row">
+        <label className="col-2">Clock Card Number</label>
         <input
           type="text"
           className="col-2"
@@ -42,7 +41,7 @@ export default function ClockIn(): JSX.Element {
         <button className="col-1" type="submit">
           Clock In
         </button>
-      </Form.Group>
-    </Form>
+      </div>
+    </form>
   );
 }
