@@ -3,9 +3,13 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: {
+      sans: ['Graphik', 'sans-serif'],
+      serif: ['Merriweather', 'serif'],
+    },
     extend: {
       colors: {
-        'jcb-dark': {
+        'custom-dark': {
           '100': '#131313',
           '200': '#191919',
           DEFAULT: '#222222',
@@ -13,7 +17,7 @@ module.exports = {
           '400': '#2A2A2A',
           '500': '#323131'
         },
-        'jcb-main': {
+        'custom-main': {
           '100': '#FC9526',
           DEFAULT: '#FCB126',
           '200': '#FCB126',

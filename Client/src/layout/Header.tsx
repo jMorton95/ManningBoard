@@ -10,8 +10,15 @@ export default function Header(props: HeaderProps): ReturnType<FC> {
   return (
     <header className={`${props.className} py-2.5`}>
       <div className="flex flex-row justify-between items-center">
-        <div className={"text-jcb-main-200 font-semibold"}>Manning</div>
-        {currentOperator && <ClockOut />}
+        <div className={"text-custom-main-200 font-semibold"}>Manning</div>
+        {currentOperator && (
+          <div className="flex px-4">
+            <div className="flex">
+              <p>{currentOperator.operatorName}</p>
+            </div>
+            <ClockOut />
+          </div>
+        )}
       </div>
     </header>
   );

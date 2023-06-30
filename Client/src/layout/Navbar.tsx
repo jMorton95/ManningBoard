@@ -6,7 +6,7 @@ export default function NavBar(): JSX.Element {
 
   //TODO: Switch to Tabbed Layout if user is admin.
   return (
-    <nav className="navbar navbar-expand-sm navbar-light bg-light-10">
+    <nav className="">
       <div className="container-fluid">
         <div className="navbar-nav gap-5">
           <NavLink className="nav-link" to="/">

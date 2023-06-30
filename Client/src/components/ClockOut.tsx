@@ -8,7 +8,7 @@ export default function ClockOut() {
   return (
     <a
       href="/"
-      className="nav-link active text-jcb-main-200 font-semibold"
+      className="nav-link active text-custom-main-200 font-semibold"
       onClick={handleClockOut}
     >
       Clock Out
