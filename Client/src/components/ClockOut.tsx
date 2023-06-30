@@ -1,6 +1,11 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { type ClassNameProp } from "@/types/HelperTypes";
+import clockout from "@public/clock-out.png";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-export default function ClockOut() {
+type ClockOutProps = ClassNameProp;
+
+export default function ClockOut(props: ClockOutProps) {
   const { CLOCKOUT } = useAuthContext();
 
   const handleClockOut = (): void => void CLOCKOUT();
@@ -8,10 +13,15 @@ export default function ClockOut() {
   return (
     <a
       href="/"
-      className="nav-link active text-custom-main-200 font-semibold"
+      className={
+        "nav-link active text-custom-main-200 font-semibold " + props.className
+      }
       onClick={handleClockOut}
     >
-      Clock Out
+      <Avatar>
+        <AvatarImage src={clockout} />
+        <AvatarFallback>JM</AvatarFallback>
+      </Avatar>
     </a>
   );
 }

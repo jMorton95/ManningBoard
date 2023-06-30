@@ -68,11 +68,8 @@ export const PrivateApiService = (): TPrivateApiService => {
  
 
   const ClockOut = async (sessionID: number): Promise<void> => {
-    const message = await PostWithBody<ResponseMessage, number>("Clock", sessionID);
-
-    if (message) {
-      ClearToken();
-    }
+    ClearToken();
+    void await PostWithBody<ResponseMessage, number>("Clock", sessionID);
   }
 
   const GetCurrentlyClockedInOperator = async (): Promise<CurrentOperator | undefined> => {

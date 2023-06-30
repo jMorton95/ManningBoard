@@ -35,7 +35,7 @@ module.exports = {
         }
       },
       gridTemplateRows: {
-        'layout': '3rem 1fr 2rem'
+        'layout': '4rem 1fr 2.5rem'
       },
       keyframes: {
         "accordion-down": {
