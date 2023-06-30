@@ -2,7 +2,7 @@ import { type LineStateDTO } from '../types/dtos/LineState';
 import { type CurrentOperator } from '../redux/types/ReduxTypes';
 import { type TZone } from '../types/models/LineTypes';
 import { type ResponseMessage, type PostParams } from '../types/HelperTypes';
-import { GET, GetResponseBase } from '../utilities/APIBase';
+import { GET, GetResponseBase } from '../utils/APIBase';
 import { API_ENDPOINTS } from '../../config';
 
 type TPublicApiService = {
