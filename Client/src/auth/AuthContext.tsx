@@ -1,10 +1,9 @@
 import { type FC, createContext, useEffect, useState } from "react";
-import { PrivateApiService as AuthService } from "../services/ApiService";
+import { PrivateApiService as AuthService } from "../services/APIService";
 import {
   type AuthState,
   type CurrentOperatorState,
 } from "../redux/types/ReduxTypes";
-import ClockIn from "../../pages/clock-in/ClockIn";
 import { type AuthProviderProps } from "./AuthenticationProvider";
 
 const initialState: AuthenticationState = {
@@ -102,7 +101,7 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
     <AuthContext.Provider
       value={{ ...authState, CLOCKIN, CLOCKOUT, toggleEditorMode }}
     >
-      {authState.token ? children : <ClockIn />}
+      {children}
     </AuthContext.Provider>
   );
 };
