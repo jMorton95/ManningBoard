@@ -8,7 +8,11 @@ export default function Line() {
     return <div>Loading...</div>;
   }
 
-  return lineState.map((zone) => (
-    <Zone zoneStateDTO={zone} key={zone.zone.id} />
-  ));
+  return (
+    <div className="flex container justify-around">
+      {lineState.map((zone) => (
+        <Zone zoneStateDTO={zone} key={zone.zone.id} />
+      ))}
+    </div>
+  );
 }

@@ -11,10 +11,12 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const { token } = useAuthContext();
   return (
-    <>
-      <Header />
-      {token ? children : <ClockIn />}
-      <Footer />
-    </>
+    <div className="h-screen w-screen max-h-screen max-w-screen grid grid-rows-layout">
+      <Header className="bg-jcb-dark-500 w-full px-4" />
+      <main className="w-full flex flex-col h-full">
+        {token ? children : <ClockIn />}
+      </main>
+      <Footer className="bg-jcb-dark-500 w-full px-4" />
+    </div>
   );
 }

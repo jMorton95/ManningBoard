@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-import ClockOut from "../components/ClockOut";
 
 export default function NavBar(): JSX.Element {
   const { currentOperator } = useAuthContext();
@@ -10,7 +9,6 @@ export default function NavBar(): JSX.Element {
     <nav className="navbar navbar-expand-sm navbar-light bg-light-10">
       <div className="container-fluid">
         <div className="navbar-nav gap-5">
-          <h1 className="navbar-brand display-1">Manning Board</h1>
           <NavLink className="nav-link" to="/">
             Manning
           </NavLink>
@@ -24,7 +22,6 @@ export default function NavBar(): JSX.Element {
               </NavLink>
             </>
           )}
-          <ClockOut />
         </div>
         {currentOperator != null && <div>{currentOperator.operatorName}</div>}
       </div>

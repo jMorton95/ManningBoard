@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import StationMan from "../../src/components/station-management/StationMan";
 import ZoneDropdown from "../../src/components/station-management/ZoneDropdown";
 import { type TStation, type TZone } from "../../src/types/models/LineTypes";
-import { PublicApiService } from "../../src/services/ApiService";
+import { PublicApiService } from "../../src/services/APIService";
 
 const getSelectedZone = (zones: TZone[], station: TStation): string =>
   zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";
@@ -32,7 +32,7 @@ export default function StationManagement(): JSX.Element {
 
   return (
     <section>
-      <div className="stations-list d-flex gap-2 flex-row mb-5">
+      <div className="">
         {line.map((zone) => (
           <ZoneDropdown
             key={zone.id}
@@ -42,7 +42,7 @@ export default function StationManagement(): JSX.Element {
         ))}
       </div>
       {selectedStation != null && (
-        <div className="station-editor">
+        <div className="">
           {line != null && selectedStation !== null && (
             <h2>{getSelectedZone(line, selectedStation)}</h2>
           )}

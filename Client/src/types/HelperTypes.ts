@@ -12,8 +12,12 @@ type PostParams<T extends object> = {
   request: RequestInit
 }
 
-export type ResponseMessage = {
+type ClassNameProp = {
+  className?: string;
+};
+
+type ResponseMessage = {
   message: string
 }
 
-export type { NonNegativeInteger, PostParams };
+export type { NonNegativeInteger, PostParams, ResponseMessage, ClassNameProp};

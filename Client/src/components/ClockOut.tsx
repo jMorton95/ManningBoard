@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../auth/AuthContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function ClockOut() {
-  const { CLOCKOUT } = useContext(AuthContext);
+  const { CLOCKOUT } = useAuthContext();
 
   const handleClockOut = (): void => void CLOCKOUT();
 
   return (
-    <Link to="/" className="nav-link active" onClick={handleClockOut}>
+    <a
+      href="/"
+      className="nav-link active text-jcb-main-200 font-semibold"
+      onClick={handleClockOut}
+    >
       Clock Out
-    </Link>
+    </a>
   );
 }
