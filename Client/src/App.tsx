@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Router from "./components/Router";
-import "./style/globals.css";
+import "@/style/globals.css";
 import { AuthenticationProvider } from "./auth/AuthenticationProvider";
 import Layout from "./layout/Layout";
 

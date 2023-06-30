@@ -3,7 +3,7 @@ import { type CurrentOperator } from '../types/StatefulTypes';
 import { type TZone } from '../types/models/LineTypes';
 import { type ResponseMessage, type PostParams } from '../types/HelperTypes';
 import { GET, GetResponseBase } from '../utilities/APIBase';
-import { API_ENDPOINTS } from '../../config';
+import { API_ENDPOINTS } from '../environments/config';
 
 type TPublicApiService = {
   GetLineState: () => Promise<LineStateDTO | undefined>

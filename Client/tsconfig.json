@@ -32,7 +32,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "environments/env.d.ts",
+    "src/environments/env.d.ts",
     "./vite.config.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
