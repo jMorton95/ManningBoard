@@ -1,22 +1,20 @@
 import { type ReactNode } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
 import { useAuthContext } from "../hooks/useAuthContext";
+import ClockIn from "../../pages/clock-in/ClockIn";
 
 type LayoutProps = {
   children: ReactNode;
 };
 
 export default function Layout({ children }: LayoutProps) {
-  const { currentOperator, toggleEditorMode } = useAuthContext();
+  const { token } = useAuthContext();
   return (
     <>
-      <header>
-        {currentOperator?.isAdministrator == true && (
-          <button onClick={toggleEditorMode}>Editor Mode</button>
-        )}
-        Header
-      </header>
-      {children}
-      <footer>Footer</footer>
+      <Header />
+      {token ? children : <ClockIn />}
+      <Footer />
     </>
   );
 }
