@@ -1,12 +1,17 @@
 import { type FC } from "react";
 import { type ClassNameProp } from "../types/HelperTypes";
+import { useLiveDate } from "@/hooks/useLiveDate";
 
 type FooterProps = ClassNameProp;
 
-export default function Footer(props: FooterProps): ReturnType<FC> {
+export default function Footer({ className }: FooterProps): ReturnType<FC> {
+  const date = useLiveDate();
+
   return (
-    <footer className={`${props.className} `}>
-      <div>Footer</div>
+    <footer className={`${className} flex justify-end align-middle`}>
+      <div className="text-white font-semibold h-full leading-[3rem]">
+        {date}
+      </div>
     </footer>
   );
 }
