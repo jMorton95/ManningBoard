@@ -1,6 +1,6 @@
 import ClockOut from "@/components/ClockOut";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { type FC } from "react";
+import { SyntheticEvent, type FC } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import avatar from "@public/icons/operator.png";
 import { type ClassNameProp } from "@/types/HelperTypes";
@@ -10,11 +10,10 @@ import TabbedMenu from "./TabbedMenu";
 import ToggleEditorMode from "@/components/toggleEditor";
 import TabBackdrop from "@/components/tabBackdrop";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 type HeaderProps = ClassNameProp;
 
@@ -57,28 +56,25 @@ export default function Header({ className }: HeaderProps): ReturnType<FC> {
                     : "bg-custom-dark-500 border-custom-dark-100"
                 }`}
               >
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <ToggleEditorMode />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Toggle Editor Mode</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <ToggleEditorMode />
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-40 font-semibold text-xs">
+                    Toggle Editor Mode
+                  </HoverCardContent>
+                </HoverCard>
               </TabBackdrop>
+
               <TabBackdrop className="bg-custom-dark-700 border-custom-dark-100">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <ClockOut className="" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Clock Out</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <HoverCard>
+                  <HoverCardTrigger href="/">
+                    <ClockOut />
+                  </HoverCardTrigger>
+                  <HoverCardContent className="w-40 font-semibold text-xs">
+                    Clock Out
+                  </HoverCardContent>
+                </HoverCard>
               </TabBackdrop>
             </>
           )}

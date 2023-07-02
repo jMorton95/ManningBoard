@@ -11,8 +11,7 @@ export default function ClockOut(props: ClockOutProps) {
   const handleClockOut = (): void => void CLOCKOUT();
 
   return (
-    <a
-      href="/"
+    <p
       className={
         "nav-link active text-custom-main-200 font-semibold " + props.className
       }
@@ -22,6 +21,6 @@ export default function ClockOut(props: ClockOutProps) {
         <AvatarImage src={exit} />
         <AvatarFallback>JM</AvatarFallback>
       </Avatar>
-    </a>
+    </p>
   );
 }
