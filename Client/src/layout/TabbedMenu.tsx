@@ -23,7 +23,7 @@ export default function TabbedMenu({
           <TabsList className="h-full bg-custom-dark-500 gap-x-1">
             <TabBackdrop className="w-full border border-custom-dark-300 bg-custom-dark-700">
               <TabsTrigger
-                className="h-10 hover:scale-105 border-none data-[state=inactive]:filter data-[state=inactive]:grayscale"
+                className="h-10 border-none data-[state=inactive]:filter data-[state=inactive]:grayscale data-[state=inactive]:hover:grayscale-50"
                 value="manning"
               >
                 <NavLink className="nav-link w-full" to="/">
@@ -34,7 +34,7 @@ export default function TabbedMenu({
 
             <TabBackdrop className="w-full border border-custom-dark-300 bg-custom-dark-700">
               <TabsTrigger
-                className="h-10 hover:scale-105 data-[state=inactive]:filter data-[state=inactive]:grayscale"
+                className="h-10 data-[state=inactive]:filter data-[state=inactive]:grayscale data-[state=inactive]:hover:grayscale-50"
                 value="station-management"
               >
                 <NavLink className="nav-link" to="/station-management">
@@ -45,7 +45,7 @@ export default function TabbedMenu({
 
             <TabBackdrop className="w-full border border-custom-dark-300 bg-custom-dark-700">
               <TabsTrigger
-                className="h-10 hover:scale-105 data-[state=inactive]:filter data-[state=inactive]:grayscale"
+                className="h-10 data-[state=inactive]:filter data-[state=inactive]:grayscale data-[state=inactive]:hover:grayscale-50"
                 value="operator-management"
               >
                 <NavLink className="nav-link" to="/operator-management">
