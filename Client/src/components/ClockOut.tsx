@@ -1,6 +1,6 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { type ClassNameProp } from "@/types/HelperTypes";
-import clockout from "@public/icons/clock-out.png";
+import exit from "@public/icons/exit.png";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 type ClockOutProps = ClassNameProp;
@@ -18,8 +18,8 @@ export default function ClockOut(props: ClockOutProps) {
       }
       onClick={handleClockOut}
     >
-      <Avatar>
-        <AvatarImage src={clockout} />
+      <Avatar className="rounded-none hover:scale-105">
+        <AvatarImage src={exit} />
         <AvatarFallback>JM</AvatarFallback>
       </Avatar>
     </a>

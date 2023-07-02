@@ -1,19 +1,22 @@
 import { type ClassNameProp } from "@/types/HelperTypes";
 import { Toggle } from "./ui/toggle";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import editOff from "@public/icons/edit-off.png";
+import editOn from "@public/icons/edit-on.png";
 
 type ToggleEditorModeProps = ClassNameProp;
 
 export default function ToggleEditorMode({ className }: ToggleEditorModeProps) {
-  const { toggleEditorMode } = useAuthContext();
+  const { editorMode, toggleEditorMode } = useAuthContext();
 
   return (
     <Toggle
-      className={` ${className}`}
+      className={`h-10 w-10 ${className}`}
       variant={"default"}
+      size={"tab"}
       onClick={toggleEditorMode}
     >
-      Hi
+      <img src={editorMode ? editOn : editOff} />
     </Toggle>
   );
 }

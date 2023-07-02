@@ -4,9 +4,11 @@ type KeypadNumberButtonProps = ButtonProps & {
   value: string | number;
   classNames?: string;
 };
+
 type KeypadIconButtonProps = ButtonProps & {
-  imgsrc: string;
+  imgSrc: string;
   classNames?: string;
+  imgSize?: number;
 };
 
 export const kepadButtonTheme = `
@@ -22,7 +24,7 @@ export const KeypadButton = ({
   <Button
     variant={"outline"}
     size={"icon"}
-    className={`${kepadButtonTheme} ${classNames}`}
+    className={`${kepadButtonTheme} ${classNames} hover:scale-105`}
     type="button"
     {...props}
   >
@@ -31,17 +33,18 @@ export const KeypadButton = ({
 );
 
 export const KeypadIconButton = ({
-  imgsrc,
+  imgSrc,
   classNames,
+  imgSize,
   ...props
 }: KeypadIconButtonProps) => (
   <Button
     variant={"outline"}
     size={"icon"}
-    className={`${kepadButtonTheme} ${classNames}`}
+    className={`${kepadButtonTheme} ${classNames} hover:scale-105`}
     type="button"
     {...props}
   >
-    <img src={imgsrc} sizes="24" />
+    <img src={imgSrc} width={imgSize} />
   </Button>
 );

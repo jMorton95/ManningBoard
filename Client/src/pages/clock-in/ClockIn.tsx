@@ -39,10 +39,10 @@ export default function ClockIn(): JSX.Element {
     <form onSubmit={handleLogin} className="flex justify-center h-full">
       <div className="mt-[5%] h-80 w-64 justify-between items-center grid grid-cols-3 gap-3">
         <Input
-          type={"text"}
+          type={"password"}
           readOnly
           value={inputText}
-          className="w-[260px] col-span-3 rounded-none border border-gray-300"
+          className="w-[260px] col-span-3 rounded-none border border-gray-300 font-semibold text-xl text-center tracking-widest focus-within:border-gray-500 focus-within:shadow-none"
           max={6}
         />
         {numbers.map((num, i) => (
@@ -55,8 +55,10 @@ export default function ClockIn(): JSX.Element {
         ))}
         <KeypadIconButton
           classNames="bg-gray-200"
-          imgsrc={undo}
+          imgSrc={undo}
+          imgSize={28}
           onClick={handleBackspace}
+          disabled={inputText.length < 1}
         />
         <KeypadButton
           value={0}
@@ -64,9 +66,13 @@ export default function ClockIn(): JSX.Element {
           onClick={() => handleClick(0)}
         />
         <KeypadIconButton
-          classNames="bg-gray-200 hover:bg-custom-main-200 hover:border-custom-dark-500"
-          imgsrc={arrow}
+          classNames={`${
+            inputText.length >= 6 ? "bg-custom-main-200" : "bg-white"
+          } hover:bg-custom-main-200 hover:border-gray-500`}
+          imgSrc={arrow}
+          imgSize={28}
           type="submit"
+          disabled={inputText.length < 6}
         />
       </div>
     </form>
