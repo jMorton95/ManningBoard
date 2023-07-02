@@ -1,4 +1,4 @@
-import { Button, type ButtonProps } from "./buttonBase";
+import { Button, type ButtonProps } from "./ui/buttonBase";
 
 type KeypadNumberButtonProps = ButtonProps & {
   value: string | number;

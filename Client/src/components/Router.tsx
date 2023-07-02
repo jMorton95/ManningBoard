@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
-import RouterLayout from "@/layout/RouterLayout";
+import Layout from "@/layout/Layout";
 import Manning from "@/pages/Manning";
 import OperatorManagement from "@/pages/operator-management/OperatorManagement";
 import StationManagement from "@/pages/station-management/StationManagement";
@@ -12,7 +12,7 @@ export default function Router(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RouterLayout />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Manning />} />
           <Route
             path="station-management"

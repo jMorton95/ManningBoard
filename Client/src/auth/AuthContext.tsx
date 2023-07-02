@@ -12,9 +12,12 @@ const initialState: AuthenticationState = {
   sessionID: null,
 };
 
+const initialEditorModeState = false;
+
 type AuthenticationState = AuthState & CurrentOperatorState;
 
 type TAuthContext = AuthenticationState & {
+  editorMode: boolean;
   CLOCKIN: (clockCardNumber: string) => Promise<void>;
   CLOCKOUT: () => Promise<void>;
   toggleEditorMode: () => void;
@@ -22,15 +25,15 @@ type TAuthContext = AuthenticationState & {
 
 export const AuthContext = createContext<TAuthContext>({
   ...initialState,
+  editorMode: initialEditorModeState,
   CLOCKIN: () => Promise.resolve(),
   CLOCKOUT: () => Promise.resolve(),
   toggleEditorMode: () => Promise.resolve(),
 });
 
 export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
-  const { children } = props;
   const [authState, setAuthState] = useState<AuthenticationState>(initialState);
-  const [editorMode, setEditorMode] = useState<boolean>(false);
+  const [editorMode, setEditorMode] = useState<boolean>(initialEditorModeState);
   const authService = AuthService();
 
   useEffect(() => {
@@ -99,9 +102,9 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ ...authState, CLOCKIN, CLOCKOUT, toggleEditorMode }}
+      value={{ ...authState, editorMode, CLOCKIN, CLOCKOUT, toggleEditorMode }}
     >
-      {children}
+      {props.children}
     </AuthContext.Provider>
   );
 };

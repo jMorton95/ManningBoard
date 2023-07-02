@@ -1,12 +1,16 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { type ClassNameProp } from "@/types/HelperTypes";
 import { NavLink } from "react-router-dom";
 
-export default function NavBar(): JSX.Element {
+type TabbedMenuProps = ClassNameProp;
+
+export default function TabbedMenu({
+  className,
+}: TabbedMenuProps): JSX.Element {
   const { currentOperator } = useAuthContext();
 
-  //TODO: Switch to Tabbed Layout if user is admin.
   return (
-    <nav className="">
+    <nav className={`d-flex ${className}`}>
       <div className="container-fluid">
         <div className="navbar-nav gap-5">
           <NavLink className="nav-link" to="/">
@@ -23,7 +27,6 @@ export default function NavBar(): JSX.Element {
             </>
           )}
         </div>
-        {currentOperator != null && <div>{currentOperator.operatorName}</div>}
       </div>
     </nav>
   );
