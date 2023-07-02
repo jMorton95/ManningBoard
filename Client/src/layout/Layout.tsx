@@ -13,10 +13,10 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="h-screen w-screen max-h-screen max-w-screen grid grid-rows-layout">
       <Header className="bg-custom-dark-500 w-full px-4" />
-      <main className="w-full flex flex-col h-full text-custom-main-200">
+      <main className="w-full flex flex-col h-full bg-gray-100 text-custom-main-200">
         {token ? children : <ClockIn />}
       </main>
-      <Footer className="bg-custom-dark-500 w-full px-4" />
+      {/* <Footer className="bg-custom-dark-500 w-full px-4" /> */}
     </div>
   );
 }

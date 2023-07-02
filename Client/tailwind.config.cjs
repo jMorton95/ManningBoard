@@ -35,7 +35,8 @@ module.exports = {
         }
       },
       gridTemplateRows: {
-        'layout': '4rem 1fr 3rem'
+        'layout': '4rem 1fr',
+        'layout-old': '4rem 1fr 3rem'
       },
       keyframes: {
         "accordion-down": {
@@ -51,7 +52,6 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-      
     },
   },
   plugins: [require("tailwindcss-animate")],
