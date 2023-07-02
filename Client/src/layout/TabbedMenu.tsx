@@ -1,6 +1,13 @@
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { type ClassNameProp } from "@/types/HelperTypes";
 import { NavLink } from "react-router-dom";
+
+import manning from "@public/icons/manning.png";
+import station from "@public/icons/station.png";
+import team from "@public/icons/team.png";
+
+import TabBackdrop from "@/components/tabBackdrop";
 
 type TabbedMenuProps = ClassNameProp;
 
@@ -11,23 +18,44 @@ export default function TabbedMenu({
 
   return (
     <nav className={`d-flex ${className}`}>
-      <div className="container-fluid">
-        <div className="navbar-nav gap-5">
-          <NavLink className="nav-link" to="/">
-            Manning
-          </NavLink>
-          {currentOperator?.isAdministrator === true && (
-            <>
-              <NavLink className="nav-link" to="/station-management">
-                Station Management
-              </NavLink>
-              <NavLink className="nav-link" to="/operator-management">
-                Operator Management
-              </NavLink>
-            </>
-          )}
-        </div>
-      </div>
+      {currentOperator?.isAdministrator === true && (
+        <Tabs defaultValue="manning" className="w-auto">
+          <TabsList className="h-full bg-custom-dark-500 gap-x-1">
+            <TabBackdrop className="w-full border border-custom-dark-300 bg-custom-dark-700">
+              <TabsTrigger
+                className="h-10 hover:scale-105 border-none data-[state=inactive]:filter data-[state=inactive]:grayscale"
+                value="manning"
+              >
+                <NavLink className="nav-link w-full" to="/">
+                  <img src={manning} width={40} />
+                </NavLink>
+              </TabsTrigger>
+            </TabBackdrop>
+
+            <TabBackdrop className="w-full border border-custom-dark-300 bg-custom-dark-700">
+              <TabsTrigger
+                className="h-10 hover:scale-105 data-[state=inactive]:filter data-[state=inactive]:grayscale"
+                value="station-management"
+              >
+                <NavLink className="nav-link" to="/station-management">
+                  <img src={station} width={40} />
+                </NavLink>
+              </TabsTrigger>
+            </TabBackdrop>
+
+            <TabBackdrop className="w-full border border-custom-dark-300 bg-custom-dark-700">
+              <TabsTrigger
+                className="h-10 hover:scale-105 data-[state=inactive]:filter data-[state=inactive]:grayscale"
+                value="operator-management"
+              >
+                <NavLink className="nav-link" to="/operator-management">
+                  <img src={team} width={40} />
+                </NavLink>
+              </TabsTrigger>
+            </TabBackdrop>
+          </TabsList>
+        </Tabs>
+      )}
     </nav>
   );
 }

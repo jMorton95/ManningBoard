@@ -29,7 +29,7 @@ export default function Layout() {
       }`}
     >
       {headerVisibility ? (
-        <Header className="bg-custom-dark-500 w-full px-4" />
+        <Header className="bg-custom-dark-500 w-full px-4 pt-1" />
       ) : (
         <div className="bg-custom-dark-500 w-full h-24"></div>
       )}
