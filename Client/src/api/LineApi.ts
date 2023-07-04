@@ -1,6 +1,6 @@
 import { type LineStateDTO } from "@/types/dtos/LineState";
 import { type TZone } from "@/types/models/LineTypes";
-import { GET } from "./BaseApi";
+import { GET, PostWithBodyNoReturnData } from "./BaseApi";
 import { type TStationAssignableOperatorsDTO } from "@/types/dtos/StationAssignableOperators";
 import { type TOperator } from "@/types/models/Operator";
 
@@ -8,12 +8,6 @@ type TLineApi = {
   GetLineState: () => Promise<LineStateDTO | undefined>
   GetLine: () => Promise<TZone[] | undefined>
 }
-
-type TLineApiAuthenticated = {
-  GetStationAssignableOperators: (stationID: number) => Promise<TStationAssignableOperatorsDTO | undefined>;
-}
-
-type TLineApiAuthenticatedExport = TLineApiAuthenticated | null
 
 export const LineApi = (): TLineApi => {
   
@@ -26,16 +20,4 @@ export const LineApi = (): TLineApi => {
   };
 }
 
-export const LineApiAuthenticated = (operator: TOperator, token: string): TLineApiAuthenticatedExport => {
-
-  if (!operator.isAdministrator) {
-    return null;
-  }
-
-  const GetStationAssignableOperators = async(stationID: number) => await GET<TStationAssignableOperatorsDTO>(`StationManagement/${stationID}`, token);
-
-  return {
-    GetStationAssignableOperators
-  }
-}
 

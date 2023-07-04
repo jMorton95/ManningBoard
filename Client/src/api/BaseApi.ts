@@ -17,13 +17,14 @@ export const GetResponseBase = async(endpoint: string, jwt?: string): Promise<Re
 /**
  *  @returns An Object Literal with a method 'PostQuery' and JSON Headers.
  */
-export function PostRequestBase(body?: BodyInit): RequestInit {
+export function PostRequestBase(body?: BodyInit, jwt?: string): RequestInit {
   return {
     method: 'POST',
     credentials: 'include',
     headers: {
       'Content-type': 'application/json',
-      'Access-Control-Allow-Origin': `${API_ENDPOINTS.domain}`
+      'Access-Control-Allow-Origin': `${API_ENDPOINTS.domain}`,
+      'Authorization': `Bearer ${jwt ?? ''}`
     },
     body: body ?? null
   };
@@ -67,8 +68,8 @@ export const BuildQueryStringFromObject = <T extends object>(data: T): string =>
 
 
 
-export const PostWithBody = async <T, R> (endpoint: string, body: R) => {
-  const res =  await fetch((`${API_ENDPOINTS.base}/${endpoint}`), PostRequestBase(JSON.stringify(body)))
+export const PostWithBody = async <T, R> (endpoint: string, body: R, jwt?: string) => {
+  const res =  await fetch((`${API_ENDPOINTS.base}/${endpoint}`), PostRequestBase(JSON.stringify(body), jwt))
   
   if (!res.ok) {
     throw new Error(`Post Request Error, ${res.statusText}`)
@@ -78,6 +79,10 @@ export const PostWithBody = async <T, R> (endpoint: string, body: R) => {
     .then((data) => {
       return data as T
     })
+}
+
+export const PostWithBodyNoReturnData = async <R> (endpoint: string, body: R, jwt?: string) => {
+  return await fetch((`${API_ENDPOINTS.base}/${endpoint}`), PostRequestBase(JSON.stringify(body), jwt))
 }
 
 /**
