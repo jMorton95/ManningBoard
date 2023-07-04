@@ -1,4 +1,4 @@
-import { type ClassNameProp } from "@/types/HelperTypes";
+import { type ClassNameProp } from "@/types/misc/HelperTypes";
 import { Toggle } from "./ui/toggle";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import editOff from "@/icons/edit-off.png";

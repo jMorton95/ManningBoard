@@ -1,10 +1,11 @@
 import { type FC, createContext, useEffect, useState } from "react";
-import { PrivateApiService as AuthService } from "@/services/APIService";
-import {
-  type AuthState,
-  type CurrentOperatorState,
-} from "../types/StatefulTypes";
+import { ClockApi as AuthService } from "@/api/ClockApi";
+
 import { type AuthProviderProps } from "./AuthenticationProvider";
+import {
+  type CurrentOperatorState,
+  type AuthState,
+} from "@/types/misc/StatefulTypes";
 
 const initialState: AuthenticationState = {
   token: null,

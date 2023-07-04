@@ -1,7 +1,7 @@
-import { PostQuery, PostRequestBase } from "@/services/APIService";
-import { type TRequirementPostData } from "@/types/TrainingTypes";
 import { type TTrainingRequirement } from "@/types/models/LineTypes";
+import { PostQuery, PostRequestBase } from "@/api/BaseApi";
 import { useState } from "react";
+import { type TRequirementPostData } from "@/types/misc/TrainingTypes";
 
 type TAddRequirementProps = {
   closeModal: React.Dispatch<React.SetStateAction<boolean>>;

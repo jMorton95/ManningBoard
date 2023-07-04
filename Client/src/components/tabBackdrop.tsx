@@ -1,4 +1,4 @@
-import { type ClassNameProp } from "@/types/HelperTypes";
+import { type ClassNameProp } from "@/types/misc/HelperTypes";
 import { type ReactNode } from "react";
 
 type TabBackdropProps = ClassNameProp & {

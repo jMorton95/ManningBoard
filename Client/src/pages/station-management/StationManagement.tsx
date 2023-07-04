@@ -1,6 +1,6 @@
 import StationMan from "@/components/station-management/StationMan";
 import ZoneDropdown from "@/components/station-management/ZoneDropdown";
-import { PublicApiService } from "@/services/APIService";
+import { LineApi } from "@/api/LineApi";
 import { type TZone, type TStation } from "@/types/models/LineTypes";
 import { useEffect, useState } from "react";
 
@@ -8,7 +8,7 @@ const getSelectedZone = (zones: TZone[], station: TStation): string =>
   zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";
 
 export default function StationManagement(): JSX.Element {
-  const { GetLine } = PublicApiService();
+  const { GetLine } = LineApi();
   const [selectedStation, setSelectedStation] = useState<TStation>();
   const [line, setLine] = useState<TZone[] | undefined>();
 

@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { type ClassNameProp } from "@/types/HelperTypes";
+import { type ClassNameProp } from "@/types/misc/HelperTypes";
 import exit from "@/icons/exit.png";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 

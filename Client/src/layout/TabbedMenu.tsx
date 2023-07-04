@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { type ClassNameProp } from "@/types/HelperTypes";
+import { type ClassNameProp } from "@/types/misc/HelperTypes";
 import { NavLink } from "react-router-dom";
 
 import manning from "@/icons/manning.png";

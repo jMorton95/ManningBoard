@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { type ClassNameProp } from "../types/HelperTypes";
+import { type ClassNameProp } from "../types/misc/HelperTypes";
 import { useLiveDate } from "@/hooks/useLiveDate";
 
 type FooterProps = ClassNameProp;
