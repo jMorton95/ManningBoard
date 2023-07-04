@@ -2,8 +2,8 @@ import { useState, type FormEvent } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { Input } from "@/components/ui/input";
 import { KeypadButton, KeypadIconButton } from "@/components/keypadButton";
-import undo from "@public/icons/undo.png";
-import arrow from "@public/icons/right-arrow.png";
+import undo from "@/icons/undo.png";
+import arrow from "@/icons/right-arrow.png";
 
 export default function ClockIn(): JSX.Element {
   const [inputText, setInputText] = useState<string>("");

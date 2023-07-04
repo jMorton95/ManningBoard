@@ -1,8 +1,9 @@
+console.log("thing");
 import ClockOut from "@/components/ClockOut";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { type FC } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import avatar from "@public/icons/operator.png";
+import avatar from "@/icons/operator.png";
 import { type ClassNameProp } from "@/types/HelperTypes";
 import { getInitials } from "@/utilities/Helpers";
 import { useLiveDate } from "@/hooks/useLiveDate";

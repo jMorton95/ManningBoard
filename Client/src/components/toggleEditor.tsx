@@ -1,8 +1,8 @@
 import { type ClassNameProp } from "@/types/HelperTypes";
 import { Toggle } from "./ui/toggle";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import editOff from "@public/icons/edit-off.png";
-import editOn from "@public/icons/edit-on.png";
+import editOff from "@/icons/edit-off.png";
+import editOn from "@/icons/edit-on.png";
 
 type ToggleEditorModeProps = ClassNameProp;
 

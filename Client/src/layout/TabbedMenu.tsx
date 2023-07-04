@@ -3,9 +3,9 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { type ClassNameProp } from "@/types/HelperTypes";
 import { NavLink } from "react-router-dom";
 
-import manning from "@public/icons/manning.png";
-import station from "@public/icons/station.png";
-import team from "@public/icons/team.png";
+import manning from "@/icons/manning.png";
+import station from "@/icons/station.png";
+import team from "@/icons/team.png";
 
 import TabBackdrop from "@/components/tabBackdrop";
 

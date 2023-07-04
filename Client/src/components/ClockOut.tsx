@@ -1,6 +1,6 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { type ClassNameProp } from "@/types/HelperTypes";
-import exit from "@public/icons/exit.png";
+import exit from "@/icons/exit.png";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 type ClockOutProps = ClassNameProp;
