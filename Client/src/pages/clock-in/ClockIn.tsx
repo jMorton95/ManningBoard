@@ -5,7 +5,9 @@ import { KeypadButton, KeypadIconButton } from "@/components/keypadButton";
 import undo from "@/icons/undo.png";
 import arrow from "@/icons/right-arrow.png";
 
-export default function ClockIn(): JSX.Element {
+type ClockInProps = React.HTMLAttributes<HTMLFormElement>;
+
+export default function ClockIn({}: ClockInProps): JSX.Element {
   const [inputText, setInputText] = useState<string>("");
   const { CLOCKIN } = useAuthContext();
 

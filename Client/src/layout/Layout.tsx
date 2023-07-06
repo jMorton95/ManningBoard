@@ -36,6 +36,7 @@ export default function Layout() {
       <main className="w-full flex flex-col h-full bg-gray-100 text-custom-main-200">
         {token ? <Outlet /> : <ClockIn />}
       </main>
+      <footer className="h-4 bg-custom-dark-500"></footer>
     </div>
   );
 }
