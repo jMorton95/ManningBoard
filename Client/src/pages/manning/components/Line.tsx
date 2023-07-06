@@ -16,15 +16,11 @@ export default function Line() {
         <Zone
           zoneStateDTO={zone}
           key={zone.zone.id}
-          className={`h-[${100 / (lineState.length + 1)}%]`}
+          className={`h-1/${lineState.length}`}
         />
       ))}
 
-      <Absences
-        className={`h-[${
-          100 / (lineState.length + 1)
-        }%] bg-custom-main-200 px-6`}
-      />
+      <Absences className={`h-20 bg-custom-main-200 px-6`} />
     </>
   );
 }

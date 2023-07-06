@@ -21,14 +21,6 @@ export default function Station({
   const { currentOperator } = useAuthContext();
 
   return (
-    // <div className={`${props.className}`}>
-    //   <p>{station.stationName}</p>
-    //   {operator != null ? <p>{operator.operatorName}</p> : <p>Unassigned</p>}
-    //   {currentOperator?.isAdministrator && (
-    //     <AssignablePopover stationId={station.id} />
-    //   )}
-    // </div>
-
     <Card className={`${props.className}`}>
       <CardHeader>
         <CardTitle className="text-md">{station.stationName}</CardTitle>
