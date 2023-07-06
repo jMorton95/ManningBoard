@@ -53,6 +53,7 @@ namespace Manning.Api
             builder.Services.AddScoped<IOperatorCompletedTrainingRepository, OperatorCompletedTrainingRepository>();
             builder.Services.AddScoped<IClockInRepository, ClockInRepository>();
             builder.Services.AddScoped<IStationStateRepository, StationStateRepository>();
+            builder.Services.AddScoped<IAvatarRepository, AvatarRepository>();
 
             builder.Services.AddScoped<ILineService, LineService>();
             builder.Services.AddScoped<ITrainingRequirementService, TrainingRequirementService>();

@@ -9,11 +9,13 @@ namespace Manning.Api.Services
     private readonly ITrainingRequirementRepository _trainingRequirementRepository;
     private readonly IOperatorRepository _operatorRepository;
     private readonly IOperatorCompletedTrainingRepository _operatorCompletedTrainingRepository;
-    public OperatorService(ITrainingRequirementRepository trainingRequirementRepository, IOperatorRepository operatorRepository, IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository)
+    private readonly IAvatarRepository _avatarRepository;
+    public OperatorService(ITrainingRequirementRepository trainingRequirementRepository, IOperatorRepository operatorRepository, IOperatorCompletedTrainingRepository operatorCompletedTrainingRepository, IAvatarRepository avatarRepository)
     {
       _trainingRequirementRepository = trainingRequirementRepository;
       _operatorRepository = operatorRepository;
       _operatorCompletedTrainingRepository = operatorCompletedTrainingRepository;
+      _avatarRepository = avatarRepository;
     }
     public async Task<Operator> GetOperatorByID(int operatorID)
     {
@@ -48,6 +50,29 @@ namespace Manning.Api.Services
       return await _trainingRequirementRepository.GetManyByExcludedID(operatorTrainingIDs);
     }
 
-   
+    public Task<List<OperatorAndAvatarDTO>> GetAllOperatorsAndAvatars()
+    {
+      throw new NotImplementedException();
+    }
+
+    public async Task<OperatorAndAvatarDTO> GetOperatorAndAvatarByID(int operatorID)
+    {
+      Operator op = await _operatorRepository.GetById(operatorID);
+      AvatarModel av = await _avatarRepository.GetAvatarModelByOperatorID(operatorID);
+
+      return new OperatorAndAvatarDTO()
+      {
+        Operator = op,
+        Avatar = ConvertAvatarToDto(av)
+      };
+    }
+
+    public AvatarDTO ConvertAvatarToDto(AvatarModel avatarModel) {
+      return new AvatarDTO(){
+          FileName = avatarModel.FileName,
+          FileContent = Convert.ToBase64String(avatarModel.FileContent),
+          ContentType = avatarModel.ContentType,
+        };
+    }
   }
 }

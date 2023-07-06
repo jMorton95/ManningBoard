@@ -34,6 +34,5 @@ namespace Manning.Api.Repositories
           TrainingIDs = allTraining.Where(x => x.OperatorID == op.ID).Select(x => x.TrainingRequirementID).ToArray()
         }).ToList();
       }
-
   }
 }
