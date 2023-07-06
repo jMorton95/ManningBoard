@@ -12,14 +12,14 @@ export default function Zone({
   const { zone, stationStateDTOs } = zoneStateDTO;
 
   return (
-    <div className={`${props.className} flex flex-col h-full`}>
+    <div className={`${props.className} flex flex-col py-2`}>
       <h2 className="w-full text-xl font-bold ps-12">{zone.zoneName}</h2>
-      <div className="flex justify-around h-full px-6">
+      <div className="flex justify-start gap-4 h-full px-6">
         {stationStateDTOs.map((dto) => (
           <Station
             key={dto.station.id}
             stationState={dto}
-            className="border border-gray-900 col py-2 h-full"
+            className="border border-gray-900 col py-2 h-full w-48"
           />
         ))}
       </div>
