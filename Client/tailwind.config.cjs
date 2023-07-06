@@ -58,6 +58,9 @@ module.exports = {
       },
       grayscale: {
         50: '50%',
+      },
+      transitionDuration: {
+        3000: '3000ms',
       }
     },
   },

@@ -1,4 +1,5 @@
 import { LineManagementApi } from "@/api/LineManagementApi";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useLineContext } from "@/hooks/useLineContext";
 import { type TAssignableOperators } from "@/types/dtos/StationAssignableOperators";
@@ -42,7 +43,7 @@ export default function AssignableOperators({
     }
   };
 
-  if (!assignableOperators) return <div>loading...</div>;
+  if (!assignableOperators) return <LoadingSpinner />;
 
   return (
     <div className=" text-red-500">
