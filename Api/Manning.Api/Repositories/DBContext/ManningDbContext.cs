@@ -19,5 +19,6 @@ namespace Manning.Api.Repositories
         public DbSet<ClockModel> ClockModel => Set<ClockModel>();
         public DbSet<AssignedOperatorsModel> AssignedOperatorsModels => Set<AssignedOperatorsModel>();
         public DbSet<StationStateModel> StationStateModel => Set<StationStateModel>();
+        public DbSet<AvatarModel> AvatarModels => Set<AvatarModel>();
     }
 }

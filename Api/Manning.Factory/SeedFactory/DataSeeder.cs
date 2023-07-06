@@ -17,13 +17,14 @@ public class DataSeeder
     public void RunDataSeed()
     {
         List<SeedDataRegistry> seedDataRegistries = new()
-      {
-        new SeedDataRegistry<Zone>(() => _dbContext.Zone, SeedLine, "Zone"),
-        new SeedDataRegistry<Operator>(() => _dbContext.Operator, SeedOperators, "Operators"),
-        new SeedDataRegistry<TrainingRequirement>(() => _dbContext.TrainingRequirement, SeedTraining, "Training Requirements"),
-        new SeedDataRegistry<OperatorCompletedTraining>(() => _dbContext.OperatorCompletedTraining, () => SeedCompletedTraining(5), "Operator Completed Training"),
-        new SeedDataRegistry<ShiftType>(() => _dbContext.ShiftType, SeedShiftType, "Shift Type"),
-      };
+        {
+          new SeedDataRegistry<Zone>(() => _dbContext.Zone, SeedLine, "Zone"),
+          new SeedDataRegistry<Operator>(() => _dbContext.Operator, SeedOperators, "Operators"),
+          new SeedDataRegistry<AvatarModel>(() => _dbContext.AvatarModels, SeedAvatars, "Avatar Models"),
+          new SeedDataRegistry<TrainingRequirement>(() => _dbContext.TrainingRequirement, SeedTraining, "Training Requirements"),
+          new SeedDataRegistry<OperatorCompletedTraining>(() => _dbContext.OperatorCompletedTraining, () => SeedCompletedTraining(5), "Operator Completed Training"),
+          new SeedDataRegistry<ShiftType>(() => _dbContext.ShiftType, SeedShiftType, "Shift Type"),
+        };
 
         SeedStrategy(seedDataRegistries);
     }
@@ -64,6 +65,45 @@ public class DataSeeder
         {
             Console.WriteLine($"An error occurred when saving changes:  {ex.Message}");
         }
+    }
+
+    public void SeedAvatars() {
+      
+      List<AvatarModel> AvatarData = new ();
+
+      foreach(var item in AvatarSeedData)
+      {
+        var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"assets/{item.fileName}");
+        Console.WriteLine($"{path} {item.fileName}");
+
+        if (!File.Exists(path))
+        {
+          Console.WriteLine($"Could not find: {item.fileName}");
+        } 
+        else
+        {
+          AvatarModel avatar = new()
+          {
+            FileName = item.fileName,
+            FileContent = File.ReadAllBytes(path),
+            ContentType = "image/png",
+            OperatorID = item.operatorID,
+          };
+          AvatarData.Add(avatar);
+        }
+      }
+
+       try
+        {
+            _dbContext.AvatarModels.AddRange(AvatarData);
+            _dbContext.SaveChanges();
+            Console.WriteLine($"Succesfully added {AvatarData.Count} Avatars!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred when saving Avatar Data: {ex.Message}");
+        }
+    
     }
 
     public void SeedTraining()

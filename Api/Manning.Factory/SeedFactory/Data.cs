@@ -53,6 +53,20 @@ public static class Data
         (258369, "Noah Butler", false),
     };
 
+    public readonly static (string fileName, int operatorID)[] AvatarSeedData = new (string fileName, int operatorID)[]
+    {
+      ("avatar-m-1.png", 1),
+      ("avatar-f-1.png", 2),
+      ("avatar-f-2.png", 3),
+      ("avatar-m-2.png", 4),
+      ("avatar-f-3.png", 5),
+      ("avatar-m-3.png", 6),
+      ("avatar-f-4.png", 7),
+      ("avatar-m-4.png", 8),
+      ("avatar-f-5.png", 9),
+      ("avatar-m-5.png", 10),
+    };
+
     public readonly static List<string> TrainingRequirementSeedData = new()
     {
         "Machine Safety Procedures",
