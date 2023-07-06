@@ -1,5 +1,6 @@
 import { type TStation, type TZone } from "../models/LineTypes";
 import { type TOperator } from "../models/Operator";
+import { type TAvatar } from "./AvatarDTO";
 
 type LineStateDTO = ZoneStateDTO[];
 
@@ -10,7 +11,12 @@ type ZoneStateDTO = {
 
 type StationStateDTO = {
   station: TStation
-  operator: TOperator | null
+  operatorAndAvatar: OperatorAndAvatarDTO | null
 }
 
-export type { LineStateDTO, ZoneStateDTO, StationStateDTO };
+type OperatorAndAvatarDTO = {
+  avatar: TAvatar;
+  operator: TOperator;
+}
+
+export type { LineStateDTO, ZoneStateDTO, StationStateDTO, OperatorAndAvatarDTO };

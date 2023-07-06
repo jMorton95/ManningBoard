@@ -8,6 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { binaryStringToImgSrc } from "@/utilities/Helpers";
+import InlineAvatar from "@/components/InlineAvatar";
+import blankAvatar from "@/icons/blankavatar.png";
 
 type StationProps = {
   stationState: StationStateDTO;
@@ -17,7 +20,7 @@ export default function Station({
   stationState,
   ...props
 }: StationProps): JSX.Element {
-  const { station, operator } = stationState;
+  const { station, operatorAndAvatar } = stationState;
   const { currentOperator } = useAuthContext();
 
   return (
@@ -26,7 +29,27 @@ export default function Station({
         <CardTitle className="text-md">{station.stationName}</CardTitle>
       </CardHeader>
       <CardContent>
-        {operator != null ? <p>{operator.operatorName}</p> : <p>Unassigned</p>}
+        {operatorAndAvatar != null ? (
+          <>
+            <p>{operatorAndAvatar.operator.operatorName}</p>
+            <InlineAvatar
+              width={64}
+              title={`${operatorAndAvatar.operator.operatorName} ${operatorAndAvatar.avatar.fileName}`}
+              src={binaryStringToImgSrc(operatorAndAvatar.avatar.fileContent)}
+              content={operatorAndAvatar.avatar.contentType}
+            />
+          </>
+        ) : (
+          <>
+            <p>Unassigned</p>
+            <InlineAvatar
+              width={64}
+              title={`Empty Avatar`}
+              src={blankAvatar}
+              className=" opacity-25"
+            />
+          </>
+        )}
       </CardContent>
       <CardFooter>
         {currentOperator?.isAdministrator && (

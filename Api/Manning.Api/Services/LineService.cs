@@ -10,19 +10,19 @@ namespace Manning.Api.Services
         private readonly IZonesRepository _zonesRepository;
         private readonly IStationRepository _stationRepository;
         private readonly IStationStateRepository _stationStateRepository;
-        private readonly IOperatorRepository _operatorRepository;
+        private readonly IOperatorService _operatorService;
         public LineService
         (
             IZonesRepository zonesRepository,
             IStationRepository stationRepository,
             IStationStateRepository stationStateRepository,
-            IOperatorRepository operatorRepository
+            IOperatorService operatorService
         )
         {
             _zonesRepository = zonesRepository;
             _stationRepository = stationRepository;
             _stationStateRepository = stationStateRepository;
-            _operatorRepository = operatorRepository;
+            _operatorService = operatorService;
         }
 
         public async Task<List<Zone>> GetAllZones() => await _zonesRepository.GetAll();
@@ -44,8 +44,8 @@ namespace Manning.Api.Services
           foreach (var station in stations)
           {
             StationStateModel? state = await _stationStateRepository.GetStationStateByStationID(station.ID);
-            Operator? stateOperator = state != null ? await _operatorRepository.GetById(state.OperatorID) : null;
-            stationState.Add(new StationStateDTO() { Station = station, Operator = stateOperator ?? null });
+            OperatorAndAvatarDTO? stateOperator = state != null ? await _operatorService.GetOperatorAndAvatarByID(state.OperatorID) : null;
+            stationState.Add(new StationStateDTO() { Station = station, OperatorAndAvatar = stateOperator ?? null });
           }
 
           var zoneState = new List<ZoneStateDTO>();
