@@ -1,8 +1,4 @@
-//eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
-
-/**@type {import("eslint").Linter.Config} */
-const config = {
+module.exports = {
   overrides: [
     {
       plugins: ['@typescript-eslint', 'prettier'],
@@ -11,9 +7,6 @@ const config = {
       files: ['*.ts', '*.tsx'],
     }
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
-  extends: ['plugin:@typescript-eslint/recommended'],
   rules: {
     '@typescript-eslint/consistent-type-imports': [
       'warn',
@@ -28,4 +21,3 @@ const config = {
   }
 };
 
-module.exports = config;

@@ -49,7 +49,7 @@ namespace Manning.Api.Services
           if (stationTrainingIds.Count < 1) return false;
 
           List<OperatorCompletedTraining> operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(dto.OperatorID);
-          return operatorTraining.All(x => stationTrainingIds.Contains(x.TrainingRequirementID));
+          return stationTrainingIds.All(x => operatorTraining.Any(y => y.TrainingRequirementID == x));
         }
 
         public async Task RemoveOperatorFromStation(StationStateModel dto)

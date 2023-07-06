@@ -1,9 +1,9 @@
-import Line from "@/components/manning/Line";
+import Line from "./components/Line";
 import { LineProvider } from "@/contexts/LineProvider";
 
 export default function Manning(): JSX.Element {
   return (
-    <section className={"text-slate-950"}>
+    <section className={"text-slate-900 container-fluid"}>
       <LineProvider>
         <Line />
       </LineProvider>

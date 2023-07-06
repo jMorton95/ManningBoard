@@ -1,8 +1,8 @@
-import StationMan from "@/components/station-management/StationMan";
-import ZoneDropdown from "@/components/station-management/ZoneDropdown";
 import { LineApi } from "@/api/LineApi";
 import { type TZone, type TStation } from "@/types/models/LineTypes";
 import { useEffect, useState } from "react";
+import StationMan from "./components/StationMan";
+import ZoneDropdown from "./components/ZoneDropdown";
 
 const getSelectedZone = (zones: TZone[], station: TStation): string =>
   zones.find((x) => x.id === station.zoneID)?.zoneName ?? "No Zone Found";

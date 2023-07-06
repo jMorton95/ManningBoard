@@ -1,6 +1,6 @@
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Layout from "@/layout/Layout";
-import Manning from "@/pages/Manning";
+import Manning from "@/pages/manning/Manning";
 import OperatorManagement from "@/pages/operator-management/OperatorManagement";
 import StationManagement from "@/pages/station-management/StationManagement";
 import NotAuthorized from "@/pages/unauthorised/Unauthorised";
