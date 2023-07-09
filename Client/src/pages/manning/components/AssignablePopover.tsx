@@ -3,20 +3,54 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import AssignableOperators from "./AssignableOperators";
+import AssignableOperators, {
+  type TAssignmentOptions,
+} from "./AssignableOperators";
+import add from "@/icons/add.png";
+import { Button } from "@/components/ui/buttonBase";
+import { useAssignableOperators } from "@/hooks/useAssignableOperators";
 
 type AssignablePopoverProps = {
   stationId: number;
-};
+  assignType: TAssignmentOptions;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function AssignablePopover({
   stationId,
+  assignType,
+  ...props
 }: AssignablePopoverProps) {
+  const assignableOperators = useAssignableOperators(stationId);
+  const flavourText = assignType === "operator" ? "Assign" : "Train";
+
+  if (
+    (assignType === "operator" && !assignableOperators) ||
+    (assignableOperators && assignableOperators.validOperators.length < 1)
+  ) {
+    return null;
+  }
+
+  if (
+    (assignType === "training" && !assignableOperators) ||
+    (assignableOperators && assignableOperators.trainingOperators.length < 1)
+  ) {
+    return null;
+  }
+
   return (
     <Popover>
-      <PopoverTrigger>Open</PopoverTrigger>
+      <PopoverTrigger>
+        <Button variant={"outline"} size={"sm"}>
+          <img src={add} width={14} alt={flavourText} />
+          {flavourText}
+        </Button>
+      </PopoverTrigger>
       <PopoverContent className="flex justify-center">
-        <AssignableOperators stationId={stationId} />
+        <AssignableOperators
+          stationId={stationId}
+          assignType={assignType}
+          assignableOperators={assignableOperators}
+        />
       </PopoverContent>
     </Popover>
   );

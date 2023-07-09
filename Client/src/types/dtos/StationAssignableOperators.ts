@@ -1,6 +1,6 @@
 import { type TOperator } from "../models/Operator";
 
-export type TAssignableOperators = {
+export type TStationAssignableOperatorsDTO = {
   validOperators: TOperator[];
   trainingOperators: TOperator[];
 }

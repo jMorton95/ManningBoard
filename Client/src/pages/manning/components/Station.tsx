@@ -26,14 +26,16 @@ export default function Station({
   return (
     <Card className={`${props.className}`}>
       <CardHeader>
-        <CardTitle className="text-md">{station.stationName}</CardTitle>
+        <CardTitle className="text-lg font-semibold">
+          {station.stationName}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {operatorAndAvatar != null ? (
           <>
             <p>{operatorAndAvatar.operator.operatorName}</p>
             <InlineAvatar
-              width={64}
+              width={54}
               title={`${operatorAndAvatar.operator.operatorName} ${operatorAndAvatar.avatar.fileName}`}
               src={binaryStringToImgSrc(operatorAndAvatar.avatar.fileContent)}
               content={operatorAndAvatar.avatar.contentType}
@@ -41,7 +43,7 @@ export default function Station({
           </>
         ) : (
           <>
-            <p>Unassigned</p>
+            <p className="font-semibold">Empty</p>
             <InlineAvatar
               width={64}
               title={`Empty Avatar`}
@@ -53,7 +55,14 @@ export default function Station({
       </CardContent>
       <CardFooter>
         {currentOperator?.isAdministrator && (
-          <AssignablePopover stationId={station.id} />
+          <>
+            <AssignablePopover stationId={station.id} assignType="operator">
+              Assign
+            </AssignablePopover>
+            <AssignablePopover stationId={station.id} assignType="training">
+              Train
+            </AssignablePopover>
+          </>
         )}
       </CardFooter>
     </Card>

@@ -2,62 +2,75 @@ import { LineManagementApi } from "@/api/LineManagementApi";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useLineContext } from "@/hooks/useLineContext";
-import { type TAssignableOperators } from "@/types/dtos/StationAssignableOperators";
-import { useState, useEffect } from "react";
+import { type TStationAssignableOperatorsDTO } from "@/types/dtos/StationAssignableOperators";
+
+export type TAssignmentOptions = "operator" | "training";
 
 type AssignableOperatorsProps = {
   stationId: number;
+  assignType: TAssignmentOptions;
+  assignableOperators: TStationAssignableOperatorsDTO;
 };
 
 export default function AssignableOperators({
   stationId,
+  assignType,
+  assignableOperators,
 }: AssignableOperatorsProps) {
-  const { currentOperator, token } = useAuthContext();
-  const [assignableOperators, setAssignableOperators] = useState<
-    TAssignableOperators | undefined
-  >();
-  const LineApi =
-    currentOperator && token ? LineManagementApi(currentOperator, token) : null;
+  if (!assignableOperators) return <LoadingSpinner />;
+
   const { pushLineState } = useLineContext();
-
-  useEffect(() => {
-    const getAssignableOperators = async () => {
-      const assignable = await LineApi?.GetStationAssignableOperators(
-        stationId
-      );
-      setAssignableOperators(assignable);
-    };
-
-    getAssignableOperators();
-  }, []);
+  const { currentOperator, token } = useAuthContext();
 
   const addAssignableOperator = async (
     operatorID: number,
     stationID: number
   ) => {
+    const LineApi =
+      currentOperator && token
+        ? LineManagementApi(currentOperator, token)
+        : null;
+
     const resp = await LineApi?.AddOperatorToStation(operatorID, stationID);
+
     if (resp) {
       //TODO: Add Toast.
       pushLineState();
-      console.log(`Added operator ${operatorID} to station ${stationID}`);
     }
   };
 
-  if (!assignableOperators) return <LoadingSpinner />;
-
   return (
     <div className=" text-red-500">
-      Assignable:
-      {assignableOperators.validOperators.map((x) => (
-        <p
-          key={x.id}
-          onClick={() => {
-            addAssignableOperator(x.id, stationId);
-          }}
-        >
-          {x.operatorName}
-        </p>
-      ))}
+      {assignType === "operator" ? (
+        <>
+          {assignableOperators.validOperators.map((x) => (
+            <p
+              key={x.id}
+              onClick={() => {
+                addAssignableOperator(x.id, stationId);
+              }}
+            >
+              {x.operatorName}
+            </p>
+          ))}
+        </>
+      ) : (
+        <>
+          {assignableOperators.trainingOperators.map((x) => (
+            <p
+              key={x.id}
+              // onClick={() => {
+              //   {
+              //     /**Needs to be moved to AddTrainingOperator once created */
+              //   }
+              //   addAssignableOperator(x.id, stationId);
+              // }}
+            >
+              {x.operatorName}
+            </p>
+          ))}
+        </>
+      )}
     </div>
   );
 }
