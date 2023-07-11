@@ -4,6 +4,7 @@ import AssignablePopover from "./AssignablePopover";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import AssignedOperator from "./AssignedOperator";
 import BlankOperator from "./BlankOperator";
+import { SmallSpacer } from "@/components/ui/smallSpacer";
 
 type StationProps = {
   stationState: StationStateDTO;
@@ -14,7 +15,7 @@ export default function Station({ stationState, ...props }: StationProps): JSX.E
   const { currentOperator } = useAuthContext();
 
   return (
-    <Card className={`${props.className}`}>
+    <Card className={`${props.className} rounded-none`}>
       <CardHeader>
         <CardTitle className="text-lg text-center font-semibold">{station.stationName}</CardTitle>
       </CardHeader>
@@ -24,8 +25,8 @@ export default function Station({ stationState, ...props }: StationProps): JSX.E
           {traineeAndAvatar && <AssignedOperator dto={traineeAndAvatar} />}
         </div>
       </CardContent>
-      <CardFooter>
-        {currentOperator?.isAdministrator && (
+      <CardFooter className="flex justify-center">
+        {currentOperator?.isAdministrator ? (
           <>
             <AssignablePopover stationId={station.id} assignType="operator">
               Assign
@@ -34,6 +35,8 @@ export default function Station({ stationState, ...props }: StationProps): JSX.E
               Train
             </AssignablePopover>
           </>
+        ) : (
+          <SmallSpacer />
         )}
       </CardFooter>
     </Card>

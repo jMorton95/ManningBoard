@@ -3,6 +3,7 @@ import AssignableOperators, { type TAssignmentOptions } from "./AssignableOperat
 import add from "@/icons/add.png";
 import { Button } from "@/components/ui/buttonBase";
 import { useAssignableOperators } from "@/hooks/useAssignableOperators";
+import { SmallSpacer } from "@/components/ui/smallSpacer";
 
 type AssignablePopoverProps = {
   stationId: number;
@@ -17,7 +18,7 @@ export default function AssignablePopover({ stationId, assignType }: AssignableP
     (assignType === "operator" && assignableOperators && assignableOperators.validOperators.length < 1) ||
     (assignType === "training" && assignableOperators && assignableOperators.trainingOperators.length < 1)
   ) {
-    return <div className="h-8 rounded-md px-3"></div>;
+    return <SmallSpacer />;
   }
 
   return (
