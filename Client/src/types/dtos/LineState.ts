@@ -10,8 +10,9 @@ type ZoneStateDTO = {
 }
 
 type StationStateDTO = {
-  station: TStation
-  operatorAndAvatar: OperatorAndAvatarDTO | null
+  station: TStation;
+  operatorAndAvatar: OperatorAndAvatarDTO | null;
+  traineeAndAvatar?: OperatorAndAvatarDTO  | null;
 }
 
 type OperatorAndAvatarDTO = {

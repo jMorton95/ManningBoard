@@ -8,6 +8,7 @@ module.exports = {
     }
   ],
   rules: {
+    'printWidth': 160,
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {
