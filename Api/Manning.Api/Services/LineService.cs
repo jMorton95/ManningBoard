@@ -43,9 +43,13 @@ namespace Manning.Api.Services
 
           foreach (var station in stations)
           {
-            StationStateModel? state = await _stationStateRepository.GetStationStateByStationID(station.ID);
-            OperatorAndAvatarDTO? stateOperator = state != null ? await _operatorService.GetOperatorAndAvatarByID(state.OperatorID) : null;
-            stationState.Add(new StationStateDTO() { Station = station, OperatorAndAvatar = stateOperator ?? null });
+            List<StationStateModel?> state = await _stationStateRepository.GetStationStateByStationID(station.ID);
+            var op = state.FirstOrDefault(s => !s.IsTrainee);
+            var trainee = state.FirstOrDefault(s => s.IsTrainee);
+            OperatorAndAvatarDTO operatorAndAvatar = (op != null) ? await _operatorService.GetOperatorAndAvatarByID(op.OperatorID) : null; 
+            OperatorAndAvatarDTO traineeAndAvatar = (trainee != null) ? await _operatorService.GetOperatorAndAvatarByID(trainee.OperatorID) : null; 
+            stationState.Add(new StationStateDTO() { Station = station, OperatorAndAvatar = operatorAndAvatar, TraineeAndAvatar = traineeAndAvatar });
+            
           }
 
           var zoneState = new List<ZoneStateDTO>();

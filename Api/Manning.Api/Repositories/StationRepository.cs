@@ -38,7 +38,7 @@ namespace Manning.Api.Repositories
 
         public async Task<Station> AddOperatorToStation(StationStateModel dto)
         {
-          var findStationAssignment = await _dbContext.StationStateModel.FirstOrDefaultAsync(x => x.StationID == dto.StationID);
+          var findStationAssignment = await _dbContext.StationStateModel.FirstOrDefaultAsync(x => x.StationID == dto.StationID && x.IsTrainee == dto.IsTrainee);
 
           if (findStationAssignment == null)
           {

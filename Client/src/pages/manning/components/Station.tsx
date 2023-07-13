@@ -21,8 +21,8 @@ export default function Station({ stationState, ...props }: StationProps): JSX.E
       </CardHeader>
       <CardContent>
         <div className={`flex ${operatorAndAvatar && traineeAndAvatar ? "justify-between" : "justify-center"}`}>
-          {operatorAndAvatar ? <AssignedOperator dto={operatorAndAvatar} /> : <BlankOperator />}
-          {traineeAndAvatar && <AssignedOperator dto={traineeAndAvatar} />}
+          {operatorAndAvatar ? <AssignedOperator dto={operatorAndAvatar} children={"Operator"} /> : <BlankOperator />}
+          {traineeAndAvatar && <AssignedOperator dto={traineeAndAvatar} children={"Trainee"} />}
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">

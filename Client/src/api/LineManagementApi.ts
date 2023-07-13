@@ -4,7 +4,7 @@ import { GET, PostWithBodyNoReturnData } from "./BaseApi";
 
 type TLineManagementApi = {
   GetStationAssignableOperators: (stationID: number) => Promise<TStationAssignableOperatorsDTO | undefined>;
-  AddOperatorToStation: (operatorID: number, stationID: number) => Promise<boolean>;
+  AddOperatorToStation: (operatorID: number, stationID: number, isTrainee: boolean) => Promise<boolean>;
   RemoveOperatorFromStation: (operatorID: number, stationID: number) => Promise<boolean>
 }
 
@@ -18,8 +18,8 @@ export const LineManagementApi: TLineManagementApiExport = (operator: TOperator,
 
   const GetStationAssignableOperators = async(stationID: number) => await GET<TStationAssignableOperatorsDTO>(`StationManagement/${stationID}`, token);
 
-  const AddOperatorToStation = async(operatorID: number, stationID: number) => {
-    const resp = await PostWithBodyNoReturnData("StationManagement/AddOperatorToStation", {operatorID, stationID}, token)
+  const AddOperatorToStation = async(operatorID: number, stationID: number, isTrainee: boolean = false) => {
+    const resp = await PostWithBodyNoReturnData("StationManagement/AddOperatorToStation", {operatorID, stationID, isTrainee}, token)
     return (resp.status === 200)
   }
 

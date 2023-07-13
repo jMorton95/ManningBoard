@@ -75,19 +75,13 @@ namespace Manning.Api.Services
           )
           .Select(x => x.Operator).ToList();
 
-          List<Operator?> trainingOperators = opsAndTraining
-            .Where(op => op.TrainingIDs != null
-                && op.TrainingIDs.Length > 0 
-                && !validOperators.Select(x => x!.ID).Contains(op.Operator!.ID) 
-                && station.TrainingRequirements.Any(req => op.TrainingIDs.Contains(req.ID))
-            )
-            .Select(x => x.Operator).ToList();
+          List<Operator?> trainingOperators = opsAndTraining.Where(op => !validOperators.Select(x => x!.ID).Contains(op.Operator!.ID)).Select(x => x.Operator).ToList();
 
-            return new StationAssignableOperatorsDTO()
-            {
-                ValidOperators = validOperators,
-                TrainingOperators = trainingOperators
-            };
+          return new StationAssignableOperatorsDTO()
+          {
+              ValidOperators = validOperators,
+              TrainingOperators = trainingOperators
+          };
         }
 
         public async Task<List<OperatorAndTrainingDTO>> GroupOperatorsWithTraining()

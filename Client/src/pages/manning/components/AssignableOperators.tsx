@@ -12,26 +12,16 @@ type AssignableOperatorsProps = {
   assignableOperators: TStationAssignableOperatorsDTO;
 };
 
-export default function AssignableOperators({
-  stationId,
-  assignType,
-  assignableOperators,
-}: AssignableOperatorsProps) {
+export default function AssignableOperators({ stationId, assignType, assignableOperators }: AssignableOperatorsProps) {
   if (!assignableOperators) return <LoadingSpinner />;
 
   const { pushLineState } = useLineContext();
   const { currentOperator, token } = useAuthContext();
 
-  const addAssignableOperator = async (
-    operatorID: number,
-    stationID: number
-  ) => {
-    const LineApi =
-      currentOperator && token
-        ? LineManagementApi(currentOperator, token)
-        : null;
+  const addAssignableOperator = async (operatorID: number, stationID: number, isTrainee: boolean) => {
+    const LineApi = currentOperator && token ? LineManagementApi(currentOperator, token) : null;
 
-    const resp = await LineApi?.AddOperatorToStation(operatorID, stationID);
+    const resp = await LineApi?.AddOperatorToStation(operatorID, stationID, isTrainee);
 
     if (resp) {
       //TODO: Add Toast.
@@ -47,7 +37,7 @@ export default function AssignableOperators({
             <p
               key={x.id}
               onClick={() => {
-                addAssignableOperator(x.id, stationId);
+                addAssignableOperator(x.id, stationId, false);
               }}
             >
               {x.operatorName}
@@ -59,12 +49,12 @@ export default function AssignableOperators({
           {assignableOperators.trainingOperators.map((x) => (
             <p
               key={x.id}
-              // onClick={() => {
-              //   {
-              //     /**Needs to be moved to AddTrainingOperator once created */
-              //   }
-              //   addAssignableOperator(x.id, stationId);
-              // }}
+              onClick={() => {
+                {
+                  /**Needs to be moved to AddTrainingOperator once created */
+                }
+                addAssignableOperator(x.id, stationId, true);
+              }}
             >
               {x.operatorName}
             </p>

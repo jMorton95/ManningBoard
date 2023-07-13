@@ -27,8 +27,8 @@ namespace Manning.Api.Controllers
         public async Task<ActionResult> AddOperatorToStation([FromBody] OperatorAndStationIdDTO dto)
         {
           //SignalR State Trigger
-          StationStateModel stationFromDTO = new(){StationID = dto.StationID, OperatorID = dto.OperatorID};
-          if (!await _stationService.CheckOperatorIsTrainedOnStation(stationFromDTO))
+          StationStateModel stationFromDTO = new(){StationID = dto.StationID, OperatorID = dto.OperatorID, IsTrainee = dto.IsTrainee};
+          if (!stationFromDTO.IsTrainee && !await _stationService.CheckOperatorIsTrainedOnStation(stationFromDTO))
           {
             return BadRequest("Operator not trained on Station");
           }

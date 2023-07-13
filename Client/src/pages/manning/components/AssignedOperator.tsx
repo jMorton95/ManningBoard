@@ -7,7 +7,7 @@ type AssignedOperatorProps = { dto: OperatorAndAvatarDTO } & React.HTMLAttribute
 export default function AssignedOperator({ dto, ...props }: AssignedOperatorProps) {
   return (
     <div className={`${props.className} px-2 py-2 w-1/2 flex flex-col items-center`}>
-      <p className="font-semibold">Operator:</p>
+      <p className="font-semibold">{props.children}</p>
       <p>{dto.operator.operatorName}</p>
       <InlineAvatar
         width={54}
