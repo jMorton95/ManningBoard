@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Manning.Api.Migrations
 {
     [DbContext(typeof(ManningDbContext))]
-    [Migration("20230615220715_DontForgetToAddToDbSet")]
-    partial class DontForgetToAddToDbSet
+    [Migration("20230713181906_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,31 @@ namespace Manning.Api.Migrations
                     b.ToTable("AssignedOperatorsModels");
                 });
 
+            modelBuilder.Entity("Manning.Api.Models.AvatarModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("ContentType")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("FileContent")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("OperatorID")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("AvatarModels");
+                });
+
             modelBuilder.Entity("Manning.Api.Models.ClockModel", b =>
                 {
                     b.Property<int>("ID")
@@ -56,8 +81,7 @@ namespace Manning.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("ClockCardNumber")
-                        .IsRequired()
+                    b.Property<int>("ClockCardNumber")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("ClockInTime")
@@ -170,6 +194,9 @@ namespace Manning.Api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsTrainee")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("OperatorID")
                         .HasColumnType("integer");

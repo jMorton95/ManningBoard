@@ -7,11 +7,27 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Manning.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class FreshStart : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AvatarModels",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FileName = table.Column<string>(type: "text", nullable: true),
+                    FileContent = table.Column<byte[]>(type: "bytea", nullable: true),
+                    ContentType = table.Column<string>(type: "text", nullable: true),
+                    OperatorID = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AvatarModels", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "ClockModel",
                 columns: table => new
@@ -69,6 +85,21 @@ namespace Manning.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShiftType", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StationStateModel",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StationID = table.Column<int>(type: "integer", nullable: false),
+                    OperatorID = table.Column<int>(type: "integer", nullable: false),
+                    IsTrainee = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StationStateModel", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,10 +255,16 @@ namespace Manning.Api.Migrations
                 name: "AssignedOperatorsModels");
 
             migrationBuilder.DropTable(
+                name: "AvatarModels");
+
+            migrationBuilder.DropTable(
                 name: "ClockModel");
 
             migrationBuilder.DropTable(
                 name: "OperatorCompletedTraining");
+
+            migrationBuilder.DropTable(
+                name: "StationStateModel");
 
             migrationBuilder.DropTable(
                 name: "TrainingRequirement");
