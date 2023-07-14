@@ -1,7 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import AssignableOperators, { type TAssignmentOptions } from "./AssignableOperators";
 import add from "@/icons/add.png";
-import { Button } from "@/components/ui/buttonBase";
 import { useAssignableOperators } from "@/hooks/useAssignableOperators";
 
 type AssignablePopoverProps = {

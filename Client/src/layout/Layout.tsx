@@ -12,7 +12,7 @@ export default function Layout() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "F9") {
         setHeaderVisibility(!headerVisibility);
-        document.documentElement.requestFullscreen();
+        void document.documentElement.requestFullscreen();
       }
     };
 

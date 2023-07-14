@@ -1,14 +1,24 @@
 module.exports = {
   overrides: [
     {
-      plugins: ['@typescript-eslint', 'prettier'],
-      extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
+      plugins: ['@typescript-eslint', 'prettier', 'react-refresh'],
+      extends: [
+        'plugin:@typescript-eslint/recommended', 
+        'prettier', 
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:react-hooks/recommended'
+      ],
       parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.json',
+      },
       files: ['*.ts', '*.tsx'],
     }
   ],
   rules: {
-    'printWidth': 160,
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {

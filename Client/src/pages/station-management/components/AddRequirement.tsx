@@ -11,17 +11,11 @@ type TAddRequirementProps = {
 };
 
 //TODO: Bug here where updates to requirements aren't preserved across state updates. Need to pass down latest state always.
-export default function AddRequirement(
-  props: TAddRequirementProps
-): JSX.Element {
-  const [requirementDescription, setRequirementDescription] =
-    useState<string>("");
+export default function AddRequirement(props: TAddRequirementProps): JSX.Element {
+  const [requirementDescription, setRequirementDescription] = useState<string>("");
 
   const resolvePostData = async (): Promise<void> => {
-    const requirement = await PostRequirement(
-      requirementDescription,
-      props.stationID
-    );
+    const requirement = await PostRequirement(requirementDescription, props.stationID);
 
     if (requirement !== null) {
       props.setRequirements((requirements) => [...requirements, requirement]);
@@ -39,7 +33,7 @@ export default function AddRequirement(
     <div className={"addRequirementModal"}>
       <button
         type="button"
-        onClick={(_) => {
+        onClick={() => {
           props.closeModal(false);
         }}
       >
@@ -72,10 +66,7 @@ const PostRequirement = async (
   requirementDescription: string,
   stationID: number
 ): Promise<TTrainingRequirement | null> => {
-  const fetchedData = await PostQuery<
-    TTrainingRequirement,
-    TRequirementPostData
-  >({
+  const fetchedData = await PostQuery<TTrainingRequirement, TRequirementPostData>({
     endpoint: "TrainingRequirement",
     data: {
       requirementDescription,

@@ -12,9 +12,7 @@ export default function ClockOut(props: ClockOutProps) {
 
   return (
     <p
-      className={
-        "nav-link active text-custom-main-200 font-semibold " + props.className
-      }
+      className={`nav-link active text-custom-main-200 font-semibold ${props.className ?? ""}`}
       onClick={handleClockOut}
     >
       <Avatar className="rounded-none hover:scale-105">

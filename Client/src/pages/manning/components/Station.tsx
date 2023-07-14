@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import AssignedOperator from "./AssignedOperator";
 import BlankOperator from "./BlankOperator";
 import { SmallSpacer } from "@/components/ui/smallSpacer";
-import { ClassNameProp } from "@/types/misc/HelperTypes";
+import { type ClassNameProp } from "@/types/misc/HelperTypes";
 
 type StationProps = {
   stationState: StationStateDTO;
@@ -16,7 +16,9 @@ export default function Station({ stationState, ...props }: StationProps): JSX.E
   const { currentOperator } = useAuthContext();
 
   return (
-    <Card className={`${props.className} rounded-sm border-custom-main-200 shadow-custom-main-400 drop-shadow-sm`}>
+    <Card
+      className={`${props.className ?? ""} rounded-sm border-custom-main-200 shadow-custom-main-400 drop-shadow-sm`}
+    >
       <CardHeader className="py-0">
         <CardTitle className="text-lg text-center font-semibold">{station.stationName}</CardTitle>
       </CardHeader>

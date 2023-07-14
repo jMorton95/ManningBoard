@@ -1,8 +1,6 @@
 import { type LineStateDTO } from "@/types/dtos/LineState";
 import { type TZone } from "@/types/models/LineTypes";
-import { GET, PostWithBodyNoReturnData } from "./BaseApi";
-import { type TStationAssignableOperatorsDTO } from "@/types/dtos/StationAssignableOperators";
-import { type TOperator } from "@/types/models/Operator";
+import { GET } from "./BaseApi";
 
 type TLineApi = {
   GetLineState: () => Promise<LineStateDTO | undefined>
