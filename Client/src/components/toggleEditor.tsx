@@ -10,12 +10,7 @@ export default function ToggleEditorMode({ className }: ToggleEditorModeProps) {
   const { editorMode, toggleEditorMode } = useAuthContext();
 
   return (
-    <Toggle
-      className={`h-10 w-10 ${className}`}
-      variant={"default"}
-      size={"tab"}
-      onClick={toggleEditorMode}
-    >
+    <Toggle className={`h-10 w-10 ${className ?? ""}`} variant={"default"} size={"tab"} onClick={toggleEditorMode}>
       <img src={editorMode ? editOn : editOff} />
     </Toggle>
   );

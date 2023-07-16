@@ -13,10 +13,10 @@ type AssignableOperatorsProps = {
 };
 
 export default function AssignableOperators({ stationId, assignType, assignableOperators }: AssignableOperatorsProps) {
-  if (!assignableOperators) return <LoadingSpinner />;
-
   const { pushLineState } = useLineContext();
   const { currentOperator, token } = useAuthContext();
+
+  if (!assignableOperators) return <LoadingSpinner />;
 
   const addAssignableOperator = async (operatorID: number, stationID: number, isTrainee: boolean) => {
     const LineApi = currentOperator && token ? LineManagementApi(currentOperator, token) : null;
@@ -25,7 +25,7 @@ export default function AssignableOperators({ stationId, assignType, assignableO
 
     if (resp) {
       //TODO: Add Toast.
-      pushLineState();
+      void pushLineState();
     }
   };
 
@@ -37,7 +37,7 @@ export default function AssignableOperators({ stationId, assignType, assignableO
             <p
               key={x.id}
               onClick={() => {
-                addAssignableOperator(x.id, stationId, false);
+                void addAssignableOperator(x.id, stationId, false);
               }}
             >
               {x.operatorName}
@@ -53,7 +53,7 @@ export default function AssignableOperators({ stationId, assignType, assignableO
                 {
                   /**Needs to be moved to AddTrainingOperator once created */
                 }
-                addAssignableOperator(x.id, stationId, true);
+                void addAssignableOperator(x.id, stationId, true);
               }}
             >
               {x.operatorName}

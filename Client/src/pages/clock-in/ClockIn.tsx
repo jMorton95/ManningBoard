@@ -5,9 +5,7 @@ import { KeypadButton, KeypadIconButton } from "@/components/keypadButton";
 import undo from "@/icons/undo.png";
 import arrow from "@/icons/right-arrow.png";
 
-type ClockInProps = React.HTMLAttributes<HTMLFormElement>;
-
-export default function ClockIn({}: ClockInProps): JSX.Element {
+export default function ClockIn(): JSX.Element {
   const [inputText, setInputText] = useState<string>("");
   const { CLOCKIN } = useAuthContext();
 
@@ -16,9 +14,7 @@ export default function ClockIn({}: ClockInProps): JSX.Element {
     void submitForm(event);
   };
 
-  const submitForm = async (
-    event: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const submitForm = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     try {
       await CLOCKIN(inputText);
@@ -28,7 +24,7 @@ export default function ClockIn({}: ClockInProps): JSX.Element {
   };
 
   const handleClick = (value: number): void => {
-    setInputText((prev) => prev + value);
+    setInputText((prev) => prev + value.toString());
   };
 
   const handleBackspace = (): void => {
@@ -48,12 +44,7 @@ export default function ClockIn({}: ClockInProps): JSX.Element {
           max={6}
         />
         {numbers.map((num, i) => (
-          <KeypadButton
-            value={num}
-            key={i}
-            disabled={inputText.length >= 6}
-            onClick={() => handleClick(num)}
-          />
+          <KeypadButton value={num} key={i} disabled={inputText.length >= 6} onClick={() => handleClick(num)} />
         ))}
         <KeypadIconButton
           classNames="bg-gray-200"
@@ -62,11 +53,7 @@ export default function ClockIn({}: ClockInProps): JSX.Element {
           onClick={handleBackspace}
           disabled={inputText.length < 1}
         />
-        <KeypadButton
-          value={0}
-          disabled={inputText.length >= 6}
-          onClick={() => handleClick(0)}
-        />
+        <KeypadButton value={0} disabled={inputText.length >= 6} onClick={() => handleClick(0)} />
         <KeypadIconButton
           classNames={`${
             inputText.length >= 6 ? "bg-custom-main-200" : "bg-white"

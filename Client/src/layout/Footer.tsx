@@ -8,10 +8,8 @@ export default function Footer({ className }: FooterProps): ReturnType<FC> {
   const date = useLiveDate();
 
   return (
-    <footer className={`${className} flex justify-end align-middle`}>
-      <div className="text-white font-semibold h-full leading-[3rem]">
-        {date}
-      </div>
+    <footer className={`${className ?? ""} flex justify-end align-middle`}>
+      <div className="text-white font-semibold h-full leading-[3rem]">{date}</div>
     </footer>
   );
 }

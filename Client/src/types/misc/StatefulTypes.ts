@@ -18,9 +18,3 @@ export type CurrentOperatorState = {
 export type LineState = {
   lineStateDTO: LineStateDTO | null
 }
-
-// export type RootState = {
-//   auth: AuthState
-//   user: CurrentOperatorState
-//   lineState: LineState
-// }

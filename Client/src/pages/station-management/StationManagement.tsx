@@ -21,7 +21,7 @@ export default function StationManagement(): JSX.Element {
     if (!line) {
       void handleLineState();
     }
-  }, [line]);
+  }, [line, GetLine]);
 
   //TODO: State Performance leak that causes whole section to re-render, probably due to the way data is being set here in state.
   //MEMOISE some stuff, at least the ZoneDropDown - Possibly even make a context to share state here.
@@ -34,18 +34,12 @@ export default function StationManagement(): JSX.Element {
     <section>
       <div className="">
         {line.map((zone) => (
-          <ZoneDropdown
-            key={zone.id}
-            zone={zone}
-            setSelectedStation={setSelectedStation}
-          />
+          <ZoneDropdown key={zone.id} zone={zone} setSelectedStation={setSelectedStation} />
         ))}
       </div>
       {selectedStation != null && (
         <div className="">
-          {line != null && selectedStation !== null && (
-            <h2>{getSelectedZone(line, selectedStation)}</h2>
-          )}
+          {line != null && selectedStation !== null && <h2>{getSelectedZone(line, selectedStation)}</h2>}
           {<StationMan selectedStation={selectedStation} />}
         </div>
       )}

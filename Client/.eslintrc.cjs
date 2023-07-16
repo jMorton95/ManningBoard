@@ -3,11 +3,12 @@ module.exports = {
     {
       plugins: ['@typescript-eslint', 'prettier', 'react-refresh'],
       extends: [
-        'plugin:@typescript-eslint/recommended', 
         'prettier', 
         'eslint:recommended',
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
-        'plugin:react-hooks/recommended'
+        'plugin:react-hooks/recommended',
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {

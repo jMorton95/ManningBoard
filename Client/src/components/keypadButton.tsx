@@ -16,15 +16,11 @@ export const kepadButtonTheme = `
   hover:border-custom-main-300 hover:text-custom-main-200 hover:bg-white focus active:scale-90
 `;
 
-export const KeypadButton = ({
-  value,
-  classNames,
-  ...props
-}: KeypadNumberButtonProps) => (
+export const KeypadButton = ({ value, classNames, ...props }: KeypadNumberButtonProps) => (
   <Button
     variant={"outline"}
     size={"icon"}
-    className={`${kepadButtonTheme} ${classNames} hover:scale-105`}
+    className={`${kepadButtonTheme} ${classNames ?? ""} hover:scale-105`}
     type="button"
     {...props}
   >
@@ -32,16 +28,11 @@ export const KeypadButton = ({
   </Button>
 );
 
-export const KeypadIconButton = ({
-  imgSrc,
-  classNames,
-  imgSize,
-  ...props
-}: KeypadIconButtonProps) => (
+export const KeypadIconButton = ({ imgSrc, classNames, imgSize, ...props }: KeypadIconButtonProps) => (
   <Button
     variant={"outline"}
     size={"icon"}
-    className={`${kepadButtonTheme} ${classNames} hover:scale-105`}
+    className={`${kepadButtonTheme} ${classNames ?? ""} hover:scale-105`}
     type="button"
     {...props}
   >

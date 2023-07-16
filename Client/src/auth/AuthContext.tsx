@@ -2,10 +2,8 @@ import { type FC, createContext, useEffect, useState } from "react";
 import { ClockApi as AuthService } from "@/api/ClockApi";
 
 import { type AuthProviderProps } from "./AuthenticationProvider";
-import {
-  type CurrentOperatorState,
-  type AuthState,
-} from "@/types/misc/StatefulTypes";
+import { type CurrentOperatorState, type AuthState } from "@/types/misc/StatefulTypes";
+import { LineManagementApi, type TLineManagementApi } from "@/api/LineManagementApi";
 
 const initialState: AuthenticationState = {
   token: null,
@@ -22,6 +20,11 @@ type TAuthContext = AuthenticationState & {
   CLOCKIN: (clockCardNumber: string) => Promise<void>;
   CLOCKOUT: () => Promise<void>;
   toggleEditorMode: () => void;
+  Controller: TController;
+};
+
+type TController = {
+  LineManagementAPI: ReturnType<TLineManagementApi> | null;
 };
 
 export const AuthContext = createContext<TAuthContext>({
@@ -29,13 +32,20 @@ export const AuthContext = createContext<TAuthContext>({
   editorMode: initialEditorModeState,
   CLOCKIN: () => Promise.resolve(),
   CLOCKOUT: () => Promise.resolve(),
-  toggleEditorMode: () => Promise.resolve(),
+  toggleEditorMode: () => void {},
+  Controller: {
+    LineManagementAPI: null,
+  },
 });
 
 export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
   const [authState, setAuthState] = useState<AuthenticationState>(initialState);
   const [editorMode, setEditorMode] = useState<boolean>(initialEditorModeState);
   const authService = AuthService();
+
+  const Controller: TController = {
+    LineManagementAPI: authState.token ? LineManagementApi(authState.token) : null,
+  };
 
   useEffect(() => {
     const RESUME = async () => {
@@ -102,9 +112,7 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ ...authState, editorMode, CLOCKIN, CLOCKOUT, toggleEditorMode }}
-    >
+    <AuthContext.Provider value={{ ...authState, editorMode, CLOCKIN, CLOCKOUT, toggleEditorMode, Controller }}>
       {props.children}
     </AuthContext.Provider>
   );

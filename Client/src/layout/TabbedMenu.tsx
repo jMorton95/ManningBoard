@@ -15,7 +15,7 @@ export default function TabbedMenu({ className }: TabbedMenuProps): JSX.Element 
   const { currentOperator } = useAuthContext();
 
   return (
-    <nav className={`d-flex ${className}`}>
+    <nav className={`d-flex ${className ?? ""}`}>
       {currentOperator?.isAdministrator === true && (
         <Tabs defaultValue="manning" className="w-auto">
           <TabsList className="h-full bg-custom-dark-500 gap-x-1">
