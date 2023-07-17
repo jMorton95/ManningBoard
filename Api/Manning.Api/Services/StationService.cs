@@ -63,9 +63,9 @@ namespace Manning.Api.Services
           Station station = await _stationRepository.GetStationByID(stationID);
           List<OperatorAndTrainingDTO> opsAndTraining = await GroupOperatorsWithTraining();
 
-          if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1 || opsAndTraining == null || opsAndTraining.Count < 1)
+          if (station.TrainingRequirements == null || station.TrainingRequirements.Count < 1 && opsAndTraining != null && opsAndTraining.Count > 1)
           {
-            return new StationAssignableOperatorsDTO();
+            return new StationAssignableOperatorsDTO() { ValidOperators = opsAndTraining.Select(o => o.Operator).ToList() };
           }
 
           List<Operator?> validOperators = opsAndTraining

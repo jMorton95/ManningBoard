@@ -23,7 +23,7 @@ public class DataSeeder
           new SeedDataRegistry<AvatarModel>(() => _dbContext.AvatarModels, SeedAvatars, "Avatar Models"),
           new SeedDataRegistry<TrainingRequirement>(() => _dbContext.TrainingRequirement, SeedTraining, "Training Requirements"),
           new SeedDataRegistry<OperatorCompletedTraining>(() => _dbContext.OperatorCompletedTraining, () => SeedCompletedTraining(5), "Operator Completed Training"),
-          new SeedDataRegistry<ShiftType>(() => _dbContext.ShiftType, SeedShiftType, "Shift Type"),
+          //new SeedDataRegistry<ShiftType>(() => _dbContext.ShiftType, SeedShiftType, "Shift Type"),
         };
 
         SeedStrategy(seedDataRegistries);
@@ -168,7 +168,7 @@ public class DataSeeder
         }
     }
 
-    public void SeedShiftType()
+    /*public void SeedShiftType()
     {
         List<ShiftType> shiftsToSeed = ShiftTypeSeedData.Select(x => new ShiftType() { ShiftName = x }).ToList();
 
@@ -182,6 +182,6 @@ public class DataSeeder
       {
         Console.WriteLine($"An error occured when saving Shift Type Data: {ex.Message}");
       }
-    }
+    }*/
 
 }

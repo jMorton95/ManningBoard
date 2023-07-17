@@ -143,24 +143,6 @@ namespace Manning.Api.Migrations
                     b.ToTable("OperatorCompletedTraining");
                 });
 
-            modelBuilder.Entity("Manning.Api.Models.ShiftType", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("ShiftName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ShiftType");
-                });
-
             modelBuilder.Entity("Manning.Api.Models.Station", b =>
                 {
                     b.Property<int>("ID")
@@ -237,25 +219,19 @@ namespace Manning.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("OperatorID")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("ShiftDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("ShiftID")
-                        .HasColumnType("integer");
+                    b.Property<string>("ShiftName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("StationID")
+                    b.Property<int?>("StationStateID")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("OperatorID");
-
-                    b.HasIndex("ShiftID");
-
-                    b.HasIndex("StationID");
+                    b.HasIndex("StationStateID");
 
                     b.ToTable("WorkdayHistory");
                 });
@@ -311,29 +287,11 @@ namespace Manning.Api.Migrations
 
             modelBuilder.Entity("Manning.Api.Models.WorkingDayHistory", b =>
                 {
-                    b.HasOne("Manning.Api.Models.Operator", "Operator")
+                    b.HasOne("Manning.Api.Models.StationStateModel", "StationState")
                         .WithMany()
-                        .HasForeignKey("OperatorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationStateID");
 
-                    b.HasOne("Manning.Api.Models.ShiftType", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Manning.Api.Models.Station", "Station")
-                        .WithMany()
-                        .HasForeignKey("StationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Operator");
-
-                    b.Navigation("Shift");
-
-                    b.Navigation("Station");
+                    b.Navigation("StationState");
                 });
 
             modelBuilder.Entity("Manning.Api.Models.Station", b =>

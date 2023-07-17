@@ -14,21 +14,31 @@ namespace Manning.Api.Controllers
         private readonly IStationService stationService;
         private readonly IOperatorService operatorService;
         private readonly ILineService lineService;
+        private readonly IWorkingDayHistoryRepository workingDayHistoryRepository;
+        private readonly IStationStateRepository _stationStateRepository;
         public TestController(
-        IStationService _stationService,
-        IOperatorService _operatorService,
-        ILineService _lineService
+            IStationService _stationService,
+            IOperatorService _operatorService,
+            ILineService _lineService,
+            IWorkingDayHistoryRepository _workingDayHistory,
+            IStationStateRepository stationStateRepository
+
         )
         {
-          stationService = _stationService;
-          operatorService = _operatorService;
-          lineService = _lineService;
+            stationService = _stationService;
+            operatorService = _operatorService;
+            lineService = _lineService;
+            workingDayHistoryRepository = _workingDayHistory;
+            _stationStateRepository = stationStateRepository;
         }
-       
-        [HttpGet("{operatorID}")]
-        public async Task<OperatorAndAvatarDTO> GetStuff(int operatorID)
+
+        [HttpGet("GetStuff")]
+        public async Task<IActionResult> GetStuff()
         {
-            return await operatorService.GetOperatorAndAvatarByID(operatorID);
+            var shift = await _stationStateRepository.GetAll();
+            await workingDayHistoryRepository.SaveCurrentShift(shift, "Test Shift");
+            var memes = await workingDayHistoryRepository.GetAll();
+            return Ok(memes);
         }
         [HttpGet("AllZones")]
         public async Task<List<Zone>> AllZones() => await lineService.GetAllZones();
