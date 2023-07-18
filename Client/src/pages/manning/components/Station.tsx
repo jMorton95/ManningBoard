@@ -23,9 +23,17 @@ export default function Station({ stationState, ...props }: StationProps): JSX.E
         <CardTitle className="text-lg text-center font-semibold">{station.stationName}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className={`flex ${operatorAndAvatar && traineeAndAvatar ? "justify-between" : "justify-center"} gap-1`}>
-          {operatorAndAvatar ? <AssignedOperator dto={operatorAndAvatar} children={"Operator"} /> : <BlankOperator />}
-          {traineeAndAvatar && <AssignedOperator dto={traineeAndAvatar} children={"Trainee"} />}
+        <div className={`flex gap-1`}>
+          {operatorAndAvatar ? (
+            <AssignedOperator dto={operatorAndAvatar} children={"Operator"} />
+          ) : (
+            <BlankOperator children={"Operator"} className="opacity-20" />
+          )}
+          {traineeAndAvatar ? (
+            <AssignedOperator dto={traineeAndAvatar} children={"Trainee"} />
+          ) : (
+            <BlankOperator children={"Trainee"} className="opacity-20" />
+          )}
         </div>
       </CardContent>
       <CardFooter className="flex justify-around">

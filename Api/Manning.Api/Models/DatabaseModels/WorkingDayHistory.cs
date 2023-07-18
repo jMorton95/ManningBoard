@@ -8,7 +8,9 @@ namespace Manning.Api.Models
         public DateTime ShiftDate { get; set; }
         [Required]
         public string? ShiftName { get; set; }
-        public StationStateModel? StationState { get; set; }
+        public int StationID { get; set; }
+        public int OperatorID { get; set; }
+        public bool IsTrainee { get; set; }
 
     }
 }

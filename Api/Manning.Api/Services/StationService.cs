@@ -46,7 +46,7 @@ namespace Manning.Api.Services
         {
           List<int> stationTrainingIds = await _stationRepository.GetStationTrainingIDs(dto.StationID);
 
-          if (stationTrainingIds.Count < 1) return false;
+          if (stationTrainingIds.Count < 1) return true;
 
           List<OperatorCompletedTraining> operatorTraining = await _operatorCompletedTrainingRepository.GetOperatorCompletedTraining(dto.OperatorID);
           return stationTrainingIds.All(x => operatorTraining.Any(y => y.TrainingRequirementID == x));

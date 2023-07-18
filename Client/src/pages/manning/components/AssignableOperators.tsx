@@ -50,9 +50,6 @@ export default function AssignableOperators({ stationId, assignType, assignableO
             <p
               key={x.id}
               onClick={() => {
-                {
-                  /**Needs to be moved to AddTrainingOperator once created */
-                }
                 void addAssignableOperator(x.id, stationId, true);
               }}
             >
