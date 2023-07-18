@@ -2,7 +2,7 @@ import { type LineStateDTO } from "@/types/dtos/LineState";
 import { type TZone } from "@/types/models/LineTypes";
 import { GET } from "./BaseApi";
 
-type TLineApi = {
+export type TLineApi = {
   GetLineState: () => Promise<LineStateDTO | undefined>
   GetLine: () => Promise<TZone[] | undefined>
 }

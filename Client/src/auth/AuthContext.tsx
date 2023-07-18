@@ -1,9 +1,11 @@
 import { type FC, createContext, useEffect, useState } from "react";
 import { ClockApi as AuthService } from "@/api/ClockApi";
-
 import { type AuthProviderProps } from "./AuthenticationProvider";
 import { type CurrentOperatorState, type AuthState } from "@/types/misc/StatefulTypes";
-import { LineManagementApi, type TLineManagementApi } from "@/api/LineManagementApi";
+import { LineManagementApi } from "@/api/LineManagementApi";
+import { StationManagementApi } from "@/api/StationManagementApi";
+import { LineApi } from "@/api/LineApi";
+import { type TPrivateController, type TPublicController, type TController } from "@/api/controller";
 
 const initialState: AuthenticationState = {
   token: null,
@@ -23,10 +25,6 @@ type TAuthContext = AuthenticationState & {
   Controller: TController;
 };
 
-type TController = {
-  LineManagementAPI: ReturnType<TLineManagementApi> | null;
-};
-
 export const AuthContext = createContext<TAuthContext>({
   ...initialState,
   editorMode: initialEditorModeState,
@@ -34,7 +32,13 @@ export const AuthContext = createContext<TAuthContext>({
   CLOCKOUT: () => Promise.resolve(),
   toggleEditorMode: () => void {},
   Controller: {
-    LineManagementAPI: null,
+    public: {
+      LineApi: LineApi(),
+    },
+    private: {
+      LineManagementAPI: null,
+      StationManagementAPI: null,
+    },
   },
 });
 
@@ -43,8 +47,18 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
   const [editorMode, setEditorMode] = useState<boolean>(initialEditorModeState);
   const authService = AuthService();
 
+  const publicController: TPublicController = {
+    LineApi: LineApi(),
+  };
+
+  const privateController: TPrivateController = {
+    LineManagementAPI: LineManagementApi(authState.token ?? ""),
+    StationManagementAPI: StationManagementApi(authState.token ?? ""),
+  };
+
   const Controller: TController = {
-    LineManagementAPI: authState.token ? LineManagementApi(authState.token) : null,
+    public: publicController,
+    private: privateController,
   };
 
   useEffect(() => {
@@ -73,7 +87,7 @@ export const AuthContextProvider: FC<AuthProviderProps> = (props) => {
     if (!authState.currentOperator) {
       void RESUME();
     }
-  });
+  }, [authService, authState.currentOperator, authState.token]);
 
   const CLOCKIN = async (clockCardNumber: string) => {
     const operatorDTO = await authService.ClockIn(clockCardNumber);

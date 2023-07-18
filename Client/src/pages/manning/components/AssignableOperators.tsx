@@ -1,4 +1,3 @@
-import { LineManagementApi } from "@/api/LineManagementApi";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useLineContext } from "@/hooks/useLineContext";
@@ -14,14 +13,15 @@ type AssignableOperatorsProps = {
 
 export default function AssignableOperators({ stationId, assignType, assignableOperators }: AssignableOperatorsProps) {
   const { pushLineState } = useLineContext();
-  const { currentOperator, token } = useAuthContext();
+  const { Controller } = useAuthContext();
 
   if (!assignableOperators) return <LoadingSpinner />;
 
   const addAssignableOperator = async (operatorID: number, stationID: number, isTrainee: boolean) => {
-    const LineApi = currentOperator && token ? LineManagementApi(currentOperator, token) : null;
-
-    const resp = await LineApi?.AddOperatorToStation(operatorID, stationID, isTrainee);
+    const resp =
+      Controller.private?.LineManagementAPI !== null
+        ? await Controller.private?.LineManagementAPI?.AddOperatorToStation(operatorID, stationID, isTrainee)
+        : null;
 
     if (resp) {
       //TODO: Add Toast.

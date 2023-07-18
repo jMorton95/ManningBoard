@@ -1,3 +1,6 @@
+import { LineProvider } from "@/contexts/LineProvider";
+import { OperatorManagementProvider } from "@/contexts/OperatorManagementProvider";
+import { StationManagementProvider } from "@/contexts/StationManagementProvider";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Layout from "@/layout/Layout";
 import Manning from "@/pages/manning/Manning";
@@ -13,12 +16,21 @@ export default function Router(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Manning />} />
+          <Route
+            index
+            element={
+              <LineProvider>
+                <Manning />
+              </LineProvider>
+            }
+          />
           <Route
             path="station-management"
             element={
               currentOperator?.isAdministrator === true ? (
-                <StationManagement />
+                <StationManagementProvider>
+                  <StationManagement />
+                </StationManagementProvider>
               ) : (
                 <NotAuthorized />
               )
@@ -28,7 +40,9 @@ export default function Router(): JSX.Element {
             path="operator-management"
             element={
               currentOperator?.isAdministrator === true ? (
-                <OperatorManagement />
+                <OperatorManagementProvider>
+                  <OperatorManagement />
+                </OperatorManagementProvider>
               ) : (
                 <NotAuthorized />
               )

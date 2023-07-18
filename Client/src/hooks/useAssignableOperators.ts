@@ -12,11 +12,11 @@ export const useAssignableOperators: (stationId: number) => TStationAssignableOp
   const { Controller } = useAuthContext();
 
   const getAssignableOperators = useCallback( async () => {
-    const assignable = await Controller.LineManagementAPI?.GetStationAssignableOperators(stationId);
+    const assignable = await Controller.private.LineManagementAPI?.GetStationAssignableOperators(stationId);
     if (assignable) {
       setAssignableOperators(assignable);
     }
-  },[Controller.LineManagementAPI, stationId]);
+  },[Controller.private.LineManagementAPI, stationId]);
 
   useEffect(() => {
     void getAssignableOperators();
