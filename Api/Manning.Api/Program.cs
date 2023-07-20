@@ -5,7 +5,7 @@ using Manning.Api.Repositories.Interfaces;
 using Manning.Api.Services;
 using Manning.Api.Services.Interfaces;
 using System.Text;
-using SignalRChat.Hubs;
+using Hubs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Manning.Api

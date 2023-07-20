@@ -2,7 +2,7 @@
 using Manning.Api.Services.Interfaces;
 using Microsoft.AspNetCore.SignalR;
 
-namespace SignalRChat.Hubs
+namespace Hubs
 {
     public class LineHub : Hub
     {
